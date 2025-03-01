@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import adminSidebarReducer from "./adminSlice/adminSidebarSlice";
+import adminSidebarReducer from "./adminSlices/adminSidebarSlice";
+import studentsReducer from "../store/studentSlices/studentsSlice";
 const store = configureStore({
     reducer:{
         adminSideBar:adminSidebarReducer,
+        students:studentsReducer,
     }
 })
 

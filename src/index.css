@@ -5,3 +5,11 @@
 *{
     scroll-behavior: smooth;
 }
+
+.buttonStyle{
+    @apply bg-buttonblue hover:bg-buttonblue/60 rounded-md transition-all duration-500
+}
+
+.titleText{
+    @apply text-xl text-gray-700 font-medium
+}
