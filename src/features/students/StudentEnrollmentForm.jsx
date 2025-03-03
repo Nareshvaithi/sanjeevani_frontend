@@ -28,7 +28,7 @@ const StudentEnrollmentForm = () => {
       console.log("Form Data Submitted:", values);
     },
   });
-
+  console.log(formik.errors)
   const lable = {
     fullName: "Full Name",
     dob: "Date of Birth",
@@ -96,7 +96,7 @@ const StudentEnrollmentForm = () => {
                     error={formik.touched.currentStandard && Boolean(formik.errors.currentStandard)}
                   >
                     <MenuItem value="">Select Standard</MenuItem>
-                    {[...Array(12)].map((_, i) => (
+                    {Array.from({ length: 12 }, (_, i) => (
                       <MenuItem key={i + 1} value={`${i + 1}th Standard`}>{`${i + 1}th Standard`}</MenuItem>
                     ))}
                     <MenuItem value="UG">UG</MenuItem>

@@ -1,36 +1,32 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+
 const initialState = {
     data:[
         {
             id:1,
             title:'Home',
-            to:'/student/:userId',
-            icon:""
+            to:'/student/:userId', 
         },
         {
             id:2,
             title:'Class',
             to:'/student/:userId/class/',
-            icon:""
         },
         {
             id:3,
             title:'Attendance',
-            to:'/student/:userId/attendance',
-            icon:""
+            to:'/student/:userId/attendance', 
         },
         {
             id:4,
             title:'Apply Leave',
             to:'/student/:userId/apply_leave',
-            icon:""
         },
         {
             id:5,
             title:'Pay Fees',
             to:'/student/:userId/pay_fees',
-            icon:""
         },
         
     ],

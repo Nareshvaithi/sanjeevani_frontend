@@ -1,15 +1,11 @@
-import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { selectAllStudents } from "../../store/adminSlices/adminStudentsSlice";
+import { useOutletContext } from "react-router-dom";
 
 const StudentHome = ()=>{
-    const {userId} = useParams();
-    const studentsList = useSelector(selectAllStudents);
-    const user = studentsList.find((student) => student.id === parseInt(userId));
-    console.log(user);
+    const data = useOutletContext();
+    console.group(data);
     return(
         <section>
-            {user.name}
+            {data.name}
         </section>
     )
 }

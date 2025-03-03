@@ -21,7 +21,7 @@ const AddStudentForm = ({ setOpenModule }) => {
       residentialAddress: "",
       profilePic: null,
     },
-    validationSchema:studentRegistrationSchema,
+    // validationSchema:studentRegistrationSchema,
     onSubmit: (values) => {
       console.log("Form Data Submitted:", values);
     //   setOpenModule({ type: null }); // Close the form after submission
