@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { LuUser } from "react-icons/lu";
 import { RiParentLine } from "react-icons/ri";
 import { MdOutlineMail, MdOutlineDateRange } from "react-icons/md";
@@ -72,10 +72,10 @@ const EditStudentForm = ({ setOpenModule, studentData, onUpdate }) => {
               </div>
 
               <div className="flex gap-5">
-                <button type="submit" className="bg-green-500 hover:bg-green-300 px-5 py-2 text-white rounded-md">
+                <button onClick={() => setOpenModule({type:null})} type="submit" className="bg-green-500 hover:bg-white px-5 py-2 text-white border border-green-500 hover:text-green-500 rounded-md transition-all duration-300">
                   Save Changes
                 </button>
-                <button onClick={() => setopenModule(null)} className="bg-gray-500 hover:bg-gray-300 px-5 py-2 text-white rounded-md">
+                <button onClick={() => setOpenModule({type:null})} className="px-5 py-2 text-themeskyblue border border-themeskyblue rounded-md hover:bg-themeskyblue hover:text-white transition-all duration-300">
                   Cancel
                 </button>
               </div>
@@ -97,7 +97,7 @@ const InputField = ({ icon, label, name, value, onChange, disabled }) => (
         value={value}
         onChange={onChange}
         disabled={disabled}
-        className={`w-full p-2 border rounded ${disabled ? "bg-gray-200 cursor-not-allowed" : ""}`}
+        className={`w-full p-2 border rounded ${disabled ? "cursor-not-allowed" : ""}`}
       />
     </div>
   </div>

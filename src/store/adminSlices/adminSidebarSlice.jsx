@@ -7,6 +7,8 @@ import { FaChalkboardTeacher } from "react-icons/fa";
 import { FaBuilding } from "react-icons/fa";
 import { LuNotepadText } from "react-icons/lu";
 
+
+
 const initialState = {
   data: [
     {
@@ -60,6 +62,7 @@ const initialState = {
   sortOrder: "asc", // "asc" or "desc"
 }
 
+
 export const adminSideBar = createSlice({
   name: 'adminSideBar',
   initialState,
@@ -74,11 +77,11 @@ export const adminSideBar = createSlice({
     setStudents(state, action) {
       state.students = action.payload;
     },
-  },
-});
+
+}})
 
 export default adminSideBar.reducer;
-export const { setOpenSidebar, setBreadCrumb, sortStudents } = adminSideBar.actions;
+export const { setOpenSidebar, setBreadCrumb, sortStudents} = adminSideBar.actions;
 export const selectLogo = (state) => state.adminSideBar.logo;
 export const selectSmallLogo = (state) => state.adminSideBar.smallLogo;
 export const selectAdminSidebarData = (state) => state.adminSideBar.data;

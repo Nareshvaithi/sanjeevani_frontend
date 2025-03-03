@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FaPlus, FaDownload } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { AnimatePresence } from "framer-motion";
-import {selectAllStudents,selectStudentDataTitle,selectSortField,selectSortOrder,sortStudents,} from "../../store/studentSlices/studentsSlice";
+import {selectAllStudents,selectStudentDataTitle,selectSortField,selectSortOrder,sortStudents,} from "../../store/adminSlices/adminStudentsSlice";
 import AddStudentForm from "../../features/admin/AddStudentForm";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { BiSort } from "react-icons/bi";
@@ -29,7 +29,7 @@ const AdminStudentsList = () => {
   const [searchQuery, setSearchQuery] = useState({
     id: "",
     name: "",
-    department: "",
+    batch: "",
   });
 
   // Filter students based on search query
@@ -37,7 +37,7 @@ const AdminStudentsList = () => {
     return (
       student.id.toString().includes(searchQuery.id.toLowerCase()) &&
       student.name.toLowerCase().includes(searchQuery.name.toLowerCase()) &&
-      student.department.toLowerCase().includes(searchQuery.department.toLowerCase())
+      student.batch.toLowerCase().includes(searchQuery.batch.toLowerCase())
     );
   });
 
@@ -60,7 +60,7 @@ const AdminStudentsList = () => {
       ...searchQuery,
       [field]: e.target.value,
     });
-    setCurrentPage(1); // Reset to the first page when search query changes
+    setCurrentPage(1); 
   };
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -73,7 +73,7 @@ const AdminStudentsList = () => {
       </div>
 
       {/* Search Inputs */}
-      <div className="flex flex-col lg:flex-row items-center justify-between gap-5 py-5">
+      <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5 py-5">
         {["id", "name", "department"].map((field, index) => (
           <input
             key={index}
@@ -85,11 +85,13 @@ const AdminStudentsList = () => {
           />
         ))}
         <button className="buttonStyle px-10 py-2 text-white text-lg">Search</button>
+        <button onClick={()=>{setSearchQuery({id:"",name:"",batch:""})}} className="px-5 bg-green-500 py-2 text-white text-lg rounded-md">Reset</button>
       </div>
 
       <div className="font-mainFont1 px-2 lg:px-5 py-5 bg-white">
         <div className="flex justify-between pb-5">
-          <h3 className="titleText">Students</h3>
+          <h3 className="titleText">Students List</h3>
+          <h2 className="text-2xl text-gray-500">{currentStudents.length === 0 ? "No Student Found!" : ""}</h2>
           <div className="flex items-center gap-3">
             <button
               onClick={() => handleDownloadPDF(filteredStudents)}
@@ -141,7 +143,7 @@ const AdminStudentsList = () => {
                   <td className="py-4 px-2 whitespace-nowrap">
                     <span className={`${student.gender.toLowerCase() === "male" ? "bg-themeskyblue" : "bg-pink-400"} text-white px-2 py-1 rounded-xl`}>{student.gender}</span>
                   </td>
-                  <td className="py-4 px-2 whitespace-nowrap">{student.department}</td>
+                  <td className="py-4 px-2 whitespace-nowrap">{student.batch}</td>
                   <td className="py-4 px-2 whitespace-nowrap">
                     <span className={`${student.payment.toLowerCase() === "paid" ? "bg-green-400" : "bg-red-400"} text-white px-2 py-1 rounded-xl`}>{student.payment}</span>
                   </td>

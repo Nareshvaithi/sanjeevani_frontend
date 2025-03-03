@@ -55,12 +55,12 @@ export default function AttendanceChart() {
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto p-4 bg-white rounded-lg shadow-md">
+    <div className="w-full mx-auto bg-white rounded-lg shadow-md font-mainFont1">
       {/* Header & Dropdown */}
       <div className="flex justify-between items-center pb-3">
         <h3 className="text-lg font-semibold text-gray-800">Attendance</h3>
         <select
-          className="px-3 py-1 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="px-3 py-1 border rounded-md text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
           value={selectedBatch}
           onChange={handleBatchChange}
         >
@@ -73,7 +73,7 @@ export default function AttendanceChart() {
       </div>
 
       {/* Chart Container */}
-      <div className="w-full">
+      <div className="w-full h-[250px]">
         <Bar data={data} options={options} />
       </div>
     </div>

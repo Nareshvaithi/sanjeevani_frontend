@@ -78,14 +78,14 @@ const StudentDetails = ({ openModule, setOpenModule, studentData }) => {
         </Section>
 
         <div className="flex gap-5">
-          <button className="bg-green-500 hover:bg-green-300 px-5 py-2 text-white rounded-md">
-            Edit Student
+          <button onClick={()=>{setOpenModule({type:'edit',data:studentData})}} className="bg-green-500 hover:bg-white px-5 py-2 text-white border border-green-500 hover:text-green-500 rounded-md transition-all duration-300">
+            Edit
           </button>
           <button
             onClick={() => setShowDel(true)}
-            className="bg-red-500 hover:bg-red-300 px-5 py-2 text-white rounded-md"
+            className="bg-red-500 hover:bg-white px-5 py-2 text-white border border-red-500 hover:text-red-500 rounded-md transition-all duration-300"
           >
-            Delete Student
+            Delete
           </button>
         </div>
         {showDel && <DeletePopup name={name} showDel={showDel} setShowDel={setShowDel} />}

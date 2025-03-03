@@ -3,7 +3,7 @@ import { selectAdminSidebarData, selectBreadCrumb, selectLogo, selectOpenSidebar
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { useEffect } from "react";
 const AdminSideBar = () => {
    
   const navigate = useNavigate();
@@ -24,6 +24,26 @@ const AdminSideBar = () => {
       dispatch(setBreadCrumb({ bread }));
     }
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 400) {
+        dispatch(setOpenSidebar(false));
+      } else {
+        dispatch(setOpenSidebar(true));
+      }
+    };
+
+    // Initial check
+    handleResize();
+
+    // Add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup
+    return () => window.removeEventListener("resize", handleResize);
+  }, [dispatch]);
+
 
   return (
     <section>
