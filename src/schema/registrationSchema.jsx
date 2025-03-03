@@ -19,20 +19,17 @@ export const studentRegistrationSchema = Yup.object().shape({
     .matches(/^[0-9]{10}$/, "Phone number must be 10 digits")
     .required("Phone number is required"),
 
-  currentStandard: Yup.string()
+    currentStandard: Yup.string()
     .oneOf(
       [
-        ...Array(12).map((_, i) => `${i + 1}th Standard`),
-        "UG",
-        "PG",
-        "Working",
-        "Others",
+        "1th Standard", "2th Standard", "3th Standard", "4th Standard",
+        "5th Standard", "6th Standard", "7th Standard", "8th Standard",
+        "9th Standard", "10th Standard", "11th Standard", "12th Standard",
+        "UG", "PG", "Working", "Others",
       ],
       "Invalid Standard"
     )
-    .required("Current Standard is required"),
-
-  fatherName: Yup.string().required("Father's Name is required"),
+    .required("Current Standard is required"),  fatherName: Yup.string().required("Father's Name is required"),
 
   fatherPhone: Yup.string()
     .matches(/^[0-9]{10}$/, "Father's phone must be 10 digits")

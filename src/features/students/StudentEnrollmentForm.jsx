@@ -2,10 +2,27 @@ import { useFormik } from "formik";
 import { studentRegistrationSchema } from "../../schema/registrationSchema";
 import { format, differenceInYears, parse } from "date-fns";
 import { TextField, Select, MenuItem, FormControl, InputLabel } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { addStudentRecord } from "../../store/formSlices/RegisterFormSlice";
+import { useRazorpay, RazorpayOrderOptions } from "react-razorpay";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const StudentEnrollmentForm = () => {
+  const [order,setOrder]=useState({})
+const studentRecords=useSelector((state)=>state.studentEntrollRecords)
+  const dispatch=useDispatch()
+  console.log("studentRecords",studentRecords)
   const currentDate = format(new Date(), "yyyy-MM-dd"); // Correct format for input type="date"
-
+  const [data, setData] = useState([]);
+const { error, isLoading, Razorpay } = useRazorpay();
+useEffect( ()=>{
+  const fetdata=async ()=>{
+    const response=await axios.get("http://localhost:3000/payments/paymentsall")
+    setData(response.data)   
+  }
+  fetdata()
+},[])
   const formik = useFormik({
     initialValues: {
       fullName: "",
@@ -22,10 +39,50 @@ const StudentEnrollmentForm = () => {
       profilePic: null,
     },
     validationSchema: studentRegistrationSchema,
-    onSubmit: (values) => {
-      alert("good");
+    onSubmit: async (values) => {
+       alert("submit")
+       try{
+let id
+        if(values.age>18){
+          data.map((value)=>{
+            if(value.plan=="Adult")
+            id=value._id
+          })
+        }else{
+          data.map((value)=>{
+            if(value.plan=="Child")
+            id=value._id
+          })
+
+        }
+     
+        const response=await axios.get(`http://localhost:3000/payments?_id=${id}`,)
+        const orderDetails={received_payment:response.data.amount,paymentOderID:response.data.id}
+       
+    
+        const  handler= (response) => {
+          formik.setValues({
+            ...formik.values,
+            ...orderDetails,
+            paymentId: response.razorpay_payment_id, 
+          });
+        
+          alert("payment succesfully")
+          console.log(values)
+         dispatch(addStudentRecord({ ...formik.values, ...orderDetails, paymentId: response.razorpay_payment_id }))
+        }
+        const razorpayInstance = new Razorpay({...response.data,key:"rzp_test_Rk1g9fTmim96jn",handler});
+        console.log("razorpayInstance",razorpayInstance.options.amount)
+        razorpayInstance.open();
+      
+      }catch(error){
+        console.log(error.message)
+        alert("fail")
+      }
+     
       console.log("Form Errors:", formik.errors);
       console.log("Form Data Submitted:", values);
+  
     },
   });
 

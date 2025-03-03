@@ -21,7 +21,7 @@ function App() {
       </Route>
 
       {/* Standalone Route */}
-      <Route path="std_reg" element={<StudentRegistrationProcess />} />
+      <Route path="student-register" element={<StudentRegistrationProcess />} />
     </Routes>
   );
 }
