@@ -5,6 +5,7 @@ import AdminStudentsList from "./pages/Admin/AdminStudentList";
 import StudentRegistrationProcess from "./pages/Students/StudentRegistrationProcess";
 import StudentLayout from "./layouts/StudentLayout";
 import StudentHome from "./pages/Students/StudentHome";
+import Login from "./pages/auth/Login";
 
 function App() {
   return (
@@ -19,9 +20,10 @@ function App() {
       <Route path="student/:userId" element={<StudentLayout />}>
         <Route index element={<StudentHome />} />
       </Route>
-
+      {/* Login */}
+      <Route path="/login" element={<Login/>}/>
       {/* Standalone Route */}
-      <Route path="std_reg" element={<StudentRegistrationProcess />} />
+      <Route path="student_registration" element={<StudentRegistrationProcess />} />
     </Routes>
   );
 }

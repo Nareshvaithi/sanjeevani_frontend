@@ -64,7 +64,7 @@ const initialState = {
             payment: "Paid",
             status: "Active",
             contact_no: "1234567890",
-            batch:'Batch 4',
+            batch:'Batch 5',
             department: "Dance",
             DOB: "14/02/2004",
             address: "123, Mani street 6th cross puducherry puducherry - 605110",
