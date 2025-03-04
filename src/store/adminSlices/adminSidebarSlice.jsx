@@ -15,7 +15,7 @@ const initialState = {
       id: 1,
       title: 'Dashboard',
       sublinks: [
-        { id: 1, title: 'Admin Dashboard', to: '/', subBread: "Admin" },
+        { id: 1, title: 'Admin Dashboard', to: '/admin_dashboard', subBread: "Admin" },
         { id: 2, title: 'Teacher Dashboard', to: '/teacher_dashboard', subBread: "Teacher" },
         { id: 3, title: 'Student Dashboard', to: '/student_dashboard', subBread: "Student" },
       ],
@@ -26,7 +26,7 @@ const initialState = {
       id: 2,
       title: 'Students',
       sublinks: [
-        { id: 1, title: 'Student List', to: '/students', subBread: "Students List" },
+        { id: 1, title: 'Student List', to: '/admin_dashboard/students', subBread: "Students List" },
       ],
       icon: <FaGraduationCap />,
       bread: "Students",

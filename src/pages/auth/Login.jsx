@@ -1,5 +1,5 @@
-import { useSelector } from "react-redux";
-import { selectLoginImage } from "../../store/authSlice/loginSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectLoginImage, setLogin } from "../../store/authSlice/loginSlice";
 import { TextField, FormControl, InputAdornment, FormControlLabel, Checkbox } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup"; 
@@ -7,6 +7,7 @@ import { AccountCircle, Lock } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const loginImg = useSelector(selectLoginImage);
 
@@ -29,6 +30,8 @@ const Login = () => {
         onSubmit: (values) => {
             console.log("Login Submitted:", values);
             alert('Login successfully');
+            dispatch(setLogin());
+            navigate('/admin_dashboard');
         },
     });
 
