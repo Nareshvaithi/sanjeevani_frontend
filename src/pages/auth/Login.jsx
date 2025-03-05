@@ -31,12 +31,11 @@ const Login = () => {
         onSubmit: async (values) => {
             const resultAction = await dispatch(loginUser(values));
             
-            
             if (loginUser.fulfilled.match(resultAction)) {
                 console.log("Login Submitted:", values);
             alert('Login successfully');
             dispatch(setLogin());
-            navigate('/student_registration');
+            navigate('/student/');
             }else{
                 const resultAction = await dispatch(loginAdmin(values));
                 if(loginAdmin.fulfilled.match(resultAction)){

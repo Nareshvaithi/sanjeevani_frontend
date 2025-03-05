@@ -8,7 +8,7 @@ import { addStudentRecord } from "../../store/formSlices/RegisterFormSlice";
 
 const CreateStudentCredentials = () => {
     const dispatch = useDispatch();
-    const studentRecords=useSelector((state)=>state.studentsData)
+    const studentRecords=useSelector((state)=>state.studentRecord)
     console.log(studentRecords)
     const formik = useFormik({
         initialValues: {
