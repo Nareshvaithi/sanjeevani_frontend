@@ -5,7 +5,9 @@ import { CiBellOn } from "react-icons/ci";
 import { BiFullscreen } from "react-icons/bi";
 import { FaRegUserCircle } from "react-icons/fa";
 import { MdKeyboardArrowDown } from "react-icons/md";
-const StudentTopBar = ()=>{
+import { useState } from "react";
+const StudentTopBar = ({data})=>{
+    const [showProfile,setShowProfile] = useState(false);
     const openSidebar = useSelector(selectStudentSidebar);
     return(
         <section>
@@ -27,17 +29,36 @@ const StudentTopBar = ()=>{
                             <div className="bg-white p-2 rounded-full">
                                 <BiFullscreen/>
                             </div>
-                            <div className="">
-                                <div className="flex items-center gap-2">
-                                    <div className="bg-white p-2 rounded-2xl">
-                                        <FaRegUserCircle/>
+                            <div className="relative">
+                                <div onClick={(()=>setShowProfile(!showProfile))} className="cursor-pointer flex items-center gap-2">
+                                    <div className="w-10 rounded-full">
+                                        <img src={data.profile_pic} alt="" className="w-full h-full object-contain rounded-full"/>
                                     </div>
                                     <div className="font-mainFont1">
-                                        <h3 className="font-bold text-sm">{""}</h3>
-                                        <p className="p-0 text-sm text-buttonblue">Administrator</p>
+                                        <h3 className="font-bold text-sm">{data.name}</h3>
+                                        <p className="p-0 text-sm text-buttonblue">Student</p>
                                     </div>
                                     <div className="text-2xl text-buttonblue">
                                         <MdKeyboardArrowDown/>
+                                    </div>
+                                </div>
+                                <div className={`absolute top-12 h-auto w-full bg-white transition-all duration-500 ${showProfile ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"}`}>
+                                    <div className="border-b border-gray-300">
+                                        <div className="flex items-center gap-2 py-2">
+                                            <div className="w-10 rounded-full">
+                                                <img src={data.profile_pic} alt="" className="w-full h-full object-contain rounded-full"/>
+                                            </div>
+                                            <div className="font-mainFont1">
+                                                <h3 className="font-bold text-lg">{data.name}</h3>
+                                                <p className="p-0 text-sm text-buttonblue">Student</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="border-b border-gray-300 py-2">
+                                        <p>My Profile</p>
+                                    </div>
+                                    <div className="border-b border-gray-300 py-2">
+                                        <p>Logout</p>
                                     </div>
                                 </div>
                             </div>
