@@ -1,4 +1,9 @@
+import { useSelector } from "react-redux";
+import { selectEnrollProcess } from "../../store/studentSlices/studentsEnrollmentSlice";
+
 const EnrollmentProgressbar = ()=>{
+
+    const studentsEnrollment=useSelector(selectEnrollProcess)
     return(
         <div className="flex justify-center items-center py-5">
         <div className="w-fit h-auto flex justify-center relative">
@@ -21,7 +26,7 @@ const EnrollmentProgressbar = ()=>{
                 </div>
         </div>
         <div className="overflow-hidden absolute w-full translate-y-4 rounded-full -z-10">
-            <div className="p-1 bg-green-400 -translate-x-[70%] transition-transform duration-1000"></div>
+            <div className={` ${studentsEnrollment=="detailsForm" ? "-translate-x-[70%]" : studentsEnrollment=="userCredential" ? "-translate-x-[20%]" : studentsEnrollment=="confirm" ? "-translate-x-[10%]":studentsEnrollment=="payment" ? "-translate-x-[50%]" : studentsEnrollment=="payment" ? "-translate-x-[10%]" : ""}  p-1 bg-green-400  transition-transform duration-1000`}></div>
         </div>
         </div>
     </div>

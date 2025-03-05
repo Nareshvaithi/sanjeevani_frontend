@@ -6,6 +6,7 @@ import { FaGraduationCap } from "react-icons/fa";
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { FaBuilding } from "react-icons/fa";
 import { LuNotepadText } from "react-icons/lu";
+import { MdOutlineWc } from "react-icons/md";
 
 
 
@@ -51,7 +52,13 @@ const initialState = {
       title: 'Fees',
       icon: <LuNotepadText />,
       bread: "Fees",
-    }
+    },
+    // {
+    //   id: 6,
+    //   title: 'New Students',
+    //   icon: <MdOutlineWc />,
+    //   bread: "Fees",
+    // }
   ],
   logo: logo,
   smallLogo: smallLogo,

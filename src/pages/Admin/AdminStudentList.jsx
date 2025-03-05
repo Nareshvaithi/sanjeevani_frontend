@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FaPlus, FaDownload } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { AnimatePresence } from "framer-motion";
-import {selectAllStudents,selectStudentDataTitle,selectSortField,selectSortOrder,sortStudents,} from "../../store/adminSlices/adminStudentsSlice";
+import {selectAllStudents,selectStudentDataTitle,selectSortField,selectSortOrder,sortStudents, fetchStudentsRecord} from "../../store/adminSlices/adminStudentsSlice";
 import AddStudentForm from "../../features/admin/AddStudentForm";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { BiSort } from "react-icons/bi";
@@ -12,16 +12,21 @@ import StudentDetails from "../../features/admin/StudentsDetails";
 import { handleDownloadPDF } from "../../utils/studentsdownload";
 import EditStudentForm from "../../features/admin/EditStudentForm";
 import Breadcrumb from "../../components/Common/BreadCrumb";
-
+import { useEffect } from "react";
 const AdminStudentsList = () => {
   const breadcrumbItems = useSelector(selectBreadCrumb).map((item) => ({
     label: item,
     link: null, // You can set the link if needed
   }));
   const dispatch = useDispatch();
+  const studentList = useSelector(selectAllStudents);
+  console.log(studentList)
+   useEffect(() => {
+          dispatch(fetchStudentsRecord()); 
+      }, [dispatch]);
   const sortField = useSelector(selectSortField);
   const sortOrder = useSelector(selectSortOrder);
-  const studentList = useSelector(selectAllStudents);
+  // const studentList = useSelector(selectAllStudents);
   const studentDataTitle = useSelector(selectStudentDataTitle);
   const [openModule, setOpenModule] = useState({ type: null, data: null });
 
@@ -34,10 +39,12 @@ const AdminStudentsList = () => {
 
   // Filter students based on search query
   const filteredStudents = studentList.filter((student) => {
+    console.log(student.fullName,student._id,student.batchID)
     return (
-      student.id.toString().includes(searchQuery.id.toLowerCase()) &&
-      student.name.toLowerCase().includes(searchQuery.name.toLowerCase()) &&
-      student.batch.toLowerCase().includes(searchQuery.batch.toLowerCase())
+      // student._id.toString().includes(searchQuery._id.toLowerCase()) &&
+      student.fullName?.toLowerCase()? student.fullName.toLowerCase().includes(searchQuery.fullName.toLowerCase()) 
+      : true 
+      // &&student.batchID.toLowerCase().includes(searchQuery.batchID.toLowerCase())
     );
   });
 
@@ -134,7 +141,7 @@ const AdminStudentsList = () => {
             <tbody className="font-light">
               {currentStudents.map((student) => (
                 <tr key={student.id} className="odd:bg-gray-100">
-                  <td className="py-4 px-2 whitespace-nowrap">{student.id}</td>
+                  <td className="py-4 px-2 whitespace-nowrap">{studentList.id}</td>
                   <td className="py-4 px-2 flex gap-3 items-center whitespace-nowrap">
                     <img className="w-10 rounded-full" src={student.profile_pic} alt="" />
                     <span>{student.name}</span>

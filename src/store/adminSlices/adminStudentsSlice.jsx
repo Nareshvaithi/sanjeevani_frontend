@@ -1,77 +1,14 @@
-import { createSlice } from "@reduxjs/toolkit";
+
 import samplePic from "../../assets/images/admin/students/sample-pic.jpg";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+const API_URL ="http://localhost:3000/student/entroll"
 
 const initialState = {
-    studentsList: [
-        {
-            id: 1,
-            name: "Rajesh",
-            profile_pic: samplePic,
-            email: "example@gmail.com",
-            gender: "Male",
-            age: "21",
-            payment: "Paid",
-            status: "Active",
-            contact_no: "1234567890",
-            batch:'Batch 1',
-            department: "Dance",
-            DOB: "14/02/2004",
-            address: "123, Mani street 6th cross puducherry puducherry - 605110",
-            parent_contact_no: "1234567890",
-            join_date: "01/01/2000",
-        },
-        {
-            id: 2,
-            name: "Sanavana Pandy",
-            profile_pic: samplePic,
-            email: "example@gmail.com",
-            gender: "Male",
-            age: "21",
-            payment: "Unpaid",
-            status: "Active",
-            contact_no: "1234567890",
-            batch:'Batch 2',
-            department: "Dance",
-            DOB: "14/02/2004",
-            address: "123, Mani street 6th cross puducherry puducherry - 605110",
-            parent_contact_no: "1234567890",
-            join_date: "01/01/2000",
-        },
-        {
-            id: 3,
-            name: "Arun Kummar",
-            profile_pic: samplePic,
-            email: "example@gmail.com",
-            gender: "Male",
-            age: "21",
-            payment: "Paid",
-            status: "Active",
-            contact_no: "1234567890",
-            batch:'Batch 3',
-            department: "Dance",
-            DOB: "14/02/2004",
-            address: "123, Mani street 6th cross puducherry puducherry - 605110",
-            parent_contact_no: "1234567890",
-            join_date: "01/01/2000",
-        },
-        {
-            id: 4,
-            name: "Samantha",
-            profile_pic: samplePic,
-            email: "example@gmail.com",
-            gender: "Female",
-            age: "18",
-            payment: "Paid",
-            status: "Active",
-            contact_no: "1234567890",
-            batch:'Batch 4',
-            department: "Dance",
-            DOB: "14/02/2004",
-            address: "123, Mani street 6th cross puducherry puducherry - 605110",
-            parent_contact_no: "1234567890",
-            join_date: "01/01/2000",
-        },
-    ],
+  addsStudentsRecord: [],
+  addstatus: "Browse Files",
+  status: "idle",
+  error: null,
     studentDataTitle: [
         { id: 1, title: "ID" },
         { id: 2, title: "Name" },
@@ -86,6 +23,14 @@ const initialState = {
     sortField: null,
     sortOrder: "asc", // "asc" or "desc"
 };
+
+export const fetchStudentsRecord = createAsyncThunk(
+    "records/fetchStudentsRecord",
+    async () => {
+      const response = await axios.get(API_URL);
+      return response.data;
+    }
+  );
 
 const studentSlice = createSlice({
     name: "students",
@@ -122,11 +67,21 @@ const studentSlice = createSlice({
             });
         } 
     },
-});
+    extraReducers: (builder) => {
+        builder
+          .addCase(fetchStudentsRecord.fulfilled, (state, action) => {
+            state.status = "succeeded";
+            state.addsStudentsRecord = action.payload;
+          })
+          .addCase(fetchStudentsRecord.pending, (state, action) => {
+            state.status = "loading";
+          });
+        }
+})
 
 export default studentSlice.reducer;
 export const { sortStudents } = studentSlice.actions;
-export const selectAllStudents = (state) => state.students.studentsList;
+export const selectAllStudents = (state) => state.students.addsStudentsRecord;
 export const selectStudentDataTitle = (state) => state.students.studentDataTitle;
 export const selectSortField = (state) => state.students.sortField;
 export const selectSortOrder = (state) => state.students.sortOrder;
