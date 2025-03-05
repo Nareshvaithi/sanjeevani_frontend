@@ -11,7 +11,7 @@ import { FaHandHoldingDollar } from "react-icons/fa6";
 
 
 const StudentSideBar = ({data}) => {
-    const userId = data.id
+    const userId = data._id
     const logo = useSelector(selectLogo);
     const openSidebar = useSelector(selectStudentSidebar);
     const studentSidebarData = useSelector(selectStudentSidebarData);

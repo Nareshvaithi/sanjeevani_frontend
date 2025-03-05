@@ -5,7 +5,7 @@ const initialState = {
     {
       id: 1,
       title: "Home",
-      to: "/student/:userId", // Replace :userId dynamically
+      to: "/student/:userId", 
     },
     {
       id: 2,

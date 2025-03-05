@@ -2,7 +2,7 @@
 import samplePic from "../../assets/images/admin/students/sample-pic.jpg";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-const API_URL ="http://localhost:3000/student/entroll"
+const API_URL ="https://api-sanjeevani.konceptsdandd.com/student/entroll"
 
 const initialState = {
     addsStudentsRecord: [],
@@ -114,7 +114,7 @@ const studentSlice = createSlice({
                 state.sortOrder = "asc";
             }
         
-            state.studentsList.sort((a, b) => {
+            state.addsStudentsRecord.sort((a, b) => {
                 let valA = a[field];
                 let valB = b[field];
         

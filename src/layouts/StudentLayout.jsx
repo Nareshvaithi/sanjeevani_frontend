@@ -9,7 +9,7 @@ const StudentLayout = ()=>{
     const {userId} = useParams();
     const openSidebar = useSelector(selectStudentSidebar);
     const studentList = useSelector(selectAllStudents);
-    const studentDetails = studentList.find((student)=> student.id === parseInt(userId));
+    const studentDetails = studentList.find((student)=> student._id === userId);
     return(
         <main>
             <StudentSideBar data={studentDetails}/>
