@@ -2,7 +2,14 @@ import { useState } from "react";
 import { FaPlus, FaDownload } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { AnimatePresence } from "framer-motion";
-import {selectAllStudents,selectStudentDataTitle,selectSortField,selectSortOrder,sortStudents, fetchStudentsRecord} from "../../store/adminSlices/adminStudentsSlice";
+import {
+  selectAllStudents,
+  selectStudentDataTitle,
+  selectSortField,
+  selectSortOrder,
+  sortStudents,
+  fetchStudentsRecord,
+} from "../../store/adminSlices/adminStudentsSlice";
 import AddStudentForm from "../../features/admin/AddStudentForm";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { BiSort } from "react-icons/bi";
@@ -12,18 +19,23 @@ import StudentDetails from "../../features/admin/StudentsDetails";
 import { handleDownloadPDF } from "../../utils/studentsdownload";
 import EditStudentForm from "../../features/admin/EditStudentForm";
 import Breadcrumb from "../../components/Common/BreadCrumb";
-import { useEffect } from "react";
+import { useEffect,useContext } from "react";
+import { ContextProvide } from "../../Context";
+import { fetchSingleStudent, singleStudentRecord } from "../../store/formSlices/StudentDetailsSlice";
 const AdminStudentsList = () => {
+  const {month,setMonth}=useContext(ContextProvide);
   const breadcrumbItems = useSelector(selectBreadCrumb).map((item) => ({
     label: item,
     link: null, // You can set the link if needed
   }));
   const dispatch = useDispatch();
   const studentList = useSelector(selectAllStudents);
-  console.log(studentList)
-   useEffect(() => {
-          dispatch(fetchStudentsRecord()); 
-      }, [dispatch]);
+
+
+  console.log(studentList);
+  useEffect(() => {
+    dispatch(fetchStudentsRecord());
+  }, [dispatch]);
   const sortField = useSelector(selectSortField);
   const sortOrder = useSelector(selectSortOrder);
   // const studentList = useSelector(selectAllStudents);
@@ -36,21 +48,25 @@ const AdminStudentsList = () => {
     name: "",
     batch: "",
   });
-
+  const filteredStudents = [];
+  let paidstatus=""
   // Filter students based on search query
-  const filteredStudents = studentList.filter((student) => {
-    console.log(student.fullName,student._id,student.batchID)
-    return (
-      student._id.toString().includes(searchQuery._id.toLowerCase()) &&
-      student.fullName.toLowerCase().replaceAll(' ',"").includes(searchQuery.fullName.toLowerCase()) &&
-      student.batchID.toLowerCase().replaceAll(' ',"").includes(searchQuery.batchID.toLowerCase())
-    );
-  });
+  // const filteredStudents = studentList.filter((student) => {
+  //   console.log(student.fullName,student._id,student.batchID)
+  //   return (
+  //     student._id.toString().includes(searchQuery._id.toLowerCase()) &&
+  //     student.fullName.toLowerCase().replaceAll(' ',"").includes(searchQuery.fullName.toLowerCase()) &&
+  //     student.batchID.toLowerCase().replaceAll(' ',"").includes(searchQuery.batchID.toLowerCase())
+  //   );
+  // });
 
   // Pagination logic
   const studentsPerPage = 20;
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.max(1, Math.ceil(filteredStudents.length / studentsPerPage));
+  const totalPages = Math.max(
+    1,
+    Math.ceil(filteredStudents.length / studentsPerPage)
+  );
   const currentStudents = filteredStudents.slice(
     (currentPage - 1) * studentsPerPage,
     currentPage * studentsPerPage
@@ -66,7 +82,7 @@ const AdminStudentsList = () => {
       ...searchQuery,
       [field]: e.target.value,
     });
-    setCurrentPage(1); 
+    setCurrentPage(1);
   };
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -90,14 +106,25 @@ const AdminStudentsList = () => {
             className="outline-none text-sm px-3 py-3 border border-gray-300 w-full"
           />
         ))}
-        <button className="buttonStyle px-10 py-2 text-white text-lg">Search</button>
-        <button onClick={()=>{setSearchQuery({_id:"",fullName:"",batchID:""})}} className="px-5 bg-green-500 py-2 text-white text-lg rounded-md">Reset</button>
+        <button className="buttonStyle px-10 py-2 text-white text-lg">
+          Search
+        </button>
+        <button
+          onClick={() => {
+            setSearchQuery({ _id: "", fullName: "", batchID: "" });
+          }}
+          className="px-5 bg-green-500 py-2 text-white text-lg rounded-md"
+        >
+          Reset
+        </button>
       </div>
 
       <div className="font-mainFont1 px-2 lg:px-5 py-5 bg-white">
         <div className="flex justify-between pb-5">
           <h3 className="titleText">Students List</h3>
-          <h2 className="text-2xl text-gray-500">{currentStudents.length === 0 ? "No Student Found!" : ""}</h2>
+          <h2 className="text-2xl text-gray-500">
+            {currentStudents.length === 0 ? "No Student Found!" : ""}
+          </h2>
           <div className="flex items-center gap-3">
             <button
               onClick={() => handleDownloadPDF(filteredStudents)}
@@ -120,16 +147,25 @@ const AdminStudentsList = () => {
             <thead className="bg-gray-50">
               <tr>
                 {studentDataTitle.map(({ id, title }) => (
-                  <th key={id} className="border-b border-gray-300 py-4 px-2 whitespace-nowrap">
+                  <th
+                    key={id}
+                    className="border-b border-gray-300 py-4 px-2 whitespace-nowrap"
+                  >
                     <div className="w-full flex justify-between items-center">
                       <span>{title}</span>
-                      {(title == 'Name' || title == 'ID' || title == 'Gender' || title == 'Payment') && (
+                      {(title == "Name" ||
+                        title == "ID" ||
+                        title == "Gender" ||
+                        title == "Payment") && (
                         <div
-                          onClick={() => dispatch(sortStudents(title.toLowerCase()))}
+                          onClick={() =>
+                            dispatch(sortStudents(title.toLowerCase()))
+                          }
                           className="cursor-pointer text-gray-500 hover:text-gray-800 flex items-center"
                         >
                           <BiSort />
-                          {sortField === title.toLowerCase() && (sortOrder === "asc" ? "↑" : "↓")}
+                          {sortField === title.toLowerCase() &&
+                            (sortOrder === "asc" ? "↑" : "↓")}
                         </div>
                       )}
                     </div>
@@ -138,25 +174,71 @@ const AdminStudentsList = () => {
               </tr>
             </thead>
             <tbody className="font-light">
-              {currentStudents.map((student) => (
-                <tr key={student.id} className="odd:bg-gray-100">
-                  <td className="py-4 px-2 whitespace-nowrap">{studentList.id}</td>
+              {studentList.map((student) => (
+                
+                <tr key={student._id} className="odd:bg-gray-100">
+                  <td className="py-4 px-2 whitespace-nowrap">
+                    {student._id}
+                  </td>
                   <td className="py-4 px-2 flex gap-3 items-center whitespace-nowrap">
-                    <img className="w-10 rounded-full" src={student.profile_pic} alt="" />
-                    <span>{student.name}</span>
+                    <img
+                      className="w-10 rounded-full"
+                      src={student.image}
+                      alt=""
+                    />
+                    <span>{student.fullName}</span>
                   </td>
-                  <td className="py-4 px-2 whitespace-nowrap" title={student.email}>{`${student.email.substring(0, 20)}...`}</td>
+                  <td
+                    className="py-4 px-2 whitespace-nowrap"
+                    title={student.email}
+                  >{`${student.email.substring(0, 20)}...`}</td>
                   <td className="py-4 px-2 whitespace-nowrap">
-                    <span className={`${student.gender.toLowerCase() === "male" ? "bg-themelightblue" : "bg-pink-600"} text-[12px] text-white px-2 py-1 rounded-md`}>{student.gender}</span>
+                    <span
+                      className={`${
+                        student.gender.toLowerCase() === "male"
+                          ? "bg-themelightblue"
+                          : "bg-pink-600"
+                      } text-[12px] text-white px-2 py-1 rounded-md`}
+                    >
+                      {student.gender}
+                    </span>
                   </td>
-                  <td className="py-4 px-2 whitespace-nowrap">{student.batch}</td>
                   <td className="py-4 px-2 whitespace-nowrap">
-                    <span className={`${student.payment.toLowerCase() === "paid" ? "bg-green-600" : "bg-red-700"} text-[12px] text-white px-2 py-1 rounded-md`}>{student.payment}</span>
+                    {`${student.batchID ? student.batchID : "-"}`}
                   </td>
-                  <td className="py-4 px-2 whitespace-nowrap">{student.status}</td>
+                  <td className="py-4 px-2 whitespace-nowrap">
+                    {
+                    
+                      student.paymentRecords.map((value)=>{
+                        console.log(typeof value.month)
+                             value.month.map((data)=>{
+                                if(month==data.monthName){
+                                
+                                 return paidstatus=data.payment_status
+                                }
+                             })
+                      })
+                    }
+                    <span
+                      className={`${
+                        paidstatus === true
+                          ? "bg-green-600"
+                          : "bg-red-700"
+                      } text-[12px] text-white px-2 py-1 rounded-md`}
+                    >
+                      {paidstatus == true ? "paid" : "unpaid"}
+                    </span>
+                  </td>
+                  <td className="py-4 px-2 whitespace-nowrap">
+                    {student.status ? "Active" : "InActive"}
+                  </td>
                   <td className="flex py-4 px-2 items-center gap-5 whitespace-nowrap">
                     <div
-                      onClick={() => handleOpenModule("view", student)}
+                      onClick={() => {
+                        handleOpenModule("view", student)
+                        dispatch(fetchSingleStudent(student._id))
+                      }
+                    }
                       className="bg-gray-200 hover:bg-buttonblue hover:text-white rounded-full p-2 transition-colors duration-300"
                     >
                       <MdOutlineRemoveRedEye />
@@ -196,9 +278,23 @@ const AdminStudentsList = () => {
 
       {/* Modals */}
       <AnimatePresence>
-        {openModule?.type === "add" && <AddStudentForm setOpenModule={setOpenModule} />}
-        {openModule?.type === "view" && <StudentDetails studentData={openModule.data} openModule={openModule} setOpenModule={setOpenModule} />}
-        {openModule?.type === "edit" && <EditStudentForm studentData={openModule.data} openModule={openModule} setOpenModule={setOpenModule} />}
+        {openModule?.type === "add" && (
+          <AddStudentForm setOpenModule={setOpenModule} />
+        )}
+        {openModule?.type === "view" && (
+          <StudentDetails
+            studentData={openModule.data}
+            openModule={openModule}
+            setOpenModule={setOpenModule}
+          />
+        )}
+        {openModule?.type === "edit" && (
+          <EditStudentForm
+            studentData={openModule.data}
+            openModule={openModule}
+            setOpenModule={setOpenModule}
+          />
+        )}
       </AnimatePresence>
     </section>
   );

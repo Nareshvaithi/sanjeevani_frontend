@@ -6,7 +6,6 @@ const studentEntrollSlice = createSlice({
   initialState: initialValue,
   reducers: {
     addStudentRecord(state, action) {
-      alert("hello")
       console.log("action.payload",action.payload)
       return { ...state, ...action.payload }
     },

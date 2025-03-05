@@ -7,27 +7,67 @@ import { BsGenderAmbiguous } from "react-icons/bs";
 import { FaRegBuilding } from "react-icons/fa";
 import { useState } from "react";
 import DeletePopup from "../../components/Common/DeletePopup";
-
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect,useContext } from "react";
+import { ContextProvide } from "../../Context";
+import {
+  selectAllStudents,
+  selectStudentDataTitle,
+  selectSortField,
+  selectSortOrder,
+  sortStudents,
+  fetchStudentsRecord,
+} from "../../store/adminSlices/adminStudentsSlice";
 const StudentDetails = ({ openModule, setOpenModule, studentData }) => {
+  const {month,setMonth}=useContext(ContextProvide);
+  const dispatch=useDispatch()
+  const singleRecord=useSelector((state)=>state.singleStudentRecord.singleStudentDetails)
+  console.log("singleRecord",singleRecord)
+  useEffect(() => {
+      dispatch(fetchStudentsRecord());
+    }, [dispatch]);
   const [showDel, setShowDel] = useState(false);
   if (openModule.type !== "view") return null;
-
+  const studentList = useSelector(selectAllStudents);
   const {
-    id,
-    name,
-    profile_pic,
-    email,
-    gender,
-    payment,
+    fullName,
+    _id,
     status,
-    batch,
-    department,
-    parent_contact_no,
-    address,
-    DOB,
-    date_of_join,
-  } = studentData;
+    dob,
+    age,
+    gender,
+    email,
+    curent_proffession,
+    fatherName,
+    motherName,
+    fatherPhone,
+    personal_conductMOB,
 
+    paid_date,
+    join_date,
+    batchID,
+    password,
+    conform_password,
+    student_info,
+    payment_status,
+    received_payment,
+    paymentTotal,
+    paidMonthCount,
+    paymentPerMonthTotal,
+    paymentCount,
+    paymentDue,
+    DueMonthCount,
+    attentance,
+    imageUrls,
+    residentialAddress
+  } = singleRecord;
+
+  // singleRecord.map((value)=>{
+  //   value.paymentRecords.map((data)=>{
+
+
+  //   })
+  // })
   return (
     <motion.div
       initial={{ x: "100%" }}
@@ -46,10 +86,10 @@ const StudentDetails = ({ openModule, setOpenModule, studentData }) => {
         <h3 className="text-2xl pb-5">Student Details</h3>
         
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5 bg-gray-100 p-5 rounded-xl text-center">
-          <img src={profile_pic} alt={name} className="rounded-xl w-full lg:w-fit" />
+          <img src={imageUrls} alt={fullName} className="rounded-xl w-full lg:w-fit" />
           <div>
-            <h3 className="text-2xl">{name}</h3>
-            <p className="text-sm text-gray-600">{department}</p>
+            <h3 className="text-2xl">{fullName}</h3>
+            <p className="text-sm text-gray-600">{batchID}</p>
           </div>
           <div>
             <h3 className="text-2xl">98.7%</h3>
@@ -62,20 +102,20 @@ const StudentDetails = ({ openModule, setOpenModule, studentData }) => {
         </div>
 
         <Section title="Academic Details">
-          <Detail icon={LuUser} label="Student Id" value={id} />
-          <Detail icon={MdOutlineDateRange} label="Date of Join" value={date_of_join} />
-          <Detail icon={LuUser} label="Payment Status" value={payment} />
-          <Detail icon={LuUser} label="Student Status" value={status} />
-          <Detail icon={FaRegBuilding} label="Batch" value={batch} />
+          <Detail icon={LuUser} label="Student Id" value={_id} />
+          <Detail icon={MdOutlineDateRange} label="Date of Join" value={join_date} />
+          <Detail icon={LuUser} label="Payment Status" value={paymentTotal} />
+          <Detail icon={LuUser} label="Student Status" value={status ? "active" : "inactive"} />
+          <Detail icon={FaRegBuilding} label="Batch" value={batchID} />
         </Section>
 
         <Section title="Personal Details">
-          <Detail icon={LuUser} label="Name" value={name} />
-          <Detail icon={RiParentLine} label="Parents Mobile" value={parent_contact_no} />
+          <Detail icon={LuUser} label="Name" value={fullName} />
+          <Detail icon={RiParentLine} label="Parents Mobile" value={fatherPhone} />
           <Detail icon={MdOutlineMail} label="Email" value={email} />
           <Detail icon={BsGenderAmbiguous} label="Gender" value={gender} />
-          <Detail icon={MdOutlineDateRange} label="Date of Birth" value={DOB} />
-          <Detail icon={IoLocationOutline} label="Address" value={address} />
+          <Detail icon={MdOutlineDateRange} label="Date of Birth" value={dob} />
+          <Detail icon={IoLocationOutline} label="Address" value={residentialAddress} />
         </Section>
 
         <div className="flex gap-5">

@@ -11,7 +11,7 @@ import { selectEnrollProcess, setEnrollProcess } from "../../store/studentSlices
 
 const StudentEnrollmentForm = () => {
   const [order,setOrder]=useState({})
-const studentRecords=useSelector((state)=>state.studentsData)
+const studentRecords=useSelector((state)=>state.studentRecord)
 
   const dispatch=useDispatch()
   console.log("studentRecords",studentRecords)
