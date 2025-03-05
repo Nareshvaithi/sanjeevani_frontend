@@ -7,7 +7,7 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
 function Payments() {
-  const studentRecords = useSelector((state) => state.studentsData);
+  const studentRecords = useSelector((state) => state.studentRecord);
   console.log(studentRecords);
   const receiptRef = useRef();
   const downloadReceipt = () => {

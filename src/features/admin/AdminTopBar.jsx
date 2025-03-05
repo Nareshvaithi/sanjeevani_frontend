@@ -5,12 +5,15 @@ import { CiBellOn } from "react-icons/ci";
 import { BiFullscreen } from "react-icons/bi";
 import { FaRegUserCircle } from "react-icons/fa";
 import { MdKeyboardArrowDown } from "react-icons/md";
+import { useState } from "react";
 
 
 const AdminTopBar = ()=>{
+       const [showProfile,setShowProfile] = useState(false);
     const dispatch = useDispatch();
     const openSidebar = useSelector(selectOpenSidebar);
     const smallLogo = useSelector(selectSmallLogo);
+
     return (
         <section>
         <div 

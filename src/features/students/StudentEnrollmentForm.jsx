@@ -79,7 +79,7 @@ let id
             
           });
           dispatch(setEnrollProcess("payment"))
-          console.log(values)
+      
          dispatch(addStudentRecord({ ...formDataObject, ...orderDetails, paymentId: response.razorpay_payment_id }))
         }
         const razorpayInstance = new Razorpay({...response.data,key:"rzp_test_Rk1g9fTmim96jn",handler});
