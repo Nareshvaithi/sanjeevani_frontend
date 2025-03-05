@@ -5,6 +5,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup"; 
 import { AccountCircle, Lock } from "@mui/icons-material"; 
 import { useNavigate } from "react-router-dom";
+import { loginAdmin, loginUser } from "../../store/authSlice/AuthSlice";
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -12,9 +13,9 @@ const Login = () => {
     const loginImg = useSelector(selectLoginImage);
 
     const validationSchema = Yup.object({
-        username: Yup.string()
-            .required("Username is required")
-            .min(3, "Username must be at least 3 characters"),
+        userName: Yup.string()
+            .required("userName is required")
+            .min(3, "userName must be at least 3 characters"),
         password: Yup.string()
             .required("Password is required")
             .min(6, "Password must be at least 6 characters"),
@@ -22,17 +23,34 @@ const Login = () => {
 
     const formik = useFormik({
         initialValues: {
-            username: "",
+            userName: "",
             password: "",
             rememberMe: false, 
         },
         validationSchema,
-        onSubmit: (values) => {
-            console.log("Login Submitted:", values);
+        onSubmit: async (values) => {
+            const resultAction = await dispatch(loginUser(values));
+            
+            
+            if (loginUser.fulfilled.match(resultAction)) {
+                console.log("Login Submitted:", values);
             alert('Login successfully');
             dispatch(setLogin());
-            navigate('/student/1');
+            navigate('/student-register');
+            }else{
+                const resultAction = await dispatch(loginAdmin(values));
+                if(loginAdmin.fulfilled.match(resultAction)){
+                    alert('Login successfully');
+                    dispatch(setLogin());
+                    navigate('/admin_dashboard');
+                }else{
+                    alert("user not found")
+                }
+               
+            }
+            
         },
+        
     });
 
     return (
@@ -58,17 +76,17 @@ const Login = () => {
                         <h3 className="text-2xl font-bold">Sign in</h3>
 
                         <div className="flex flex-col items-center gap-5 pt-5">
-                            {/* Username Field with Icon & Error Handling */}
+                            {/* userName Field with Icon & Error Handling */}
                             <FormControl fullWidth>
                                 <TextField
-                                    label="Username"
+                                    label="userName"
                                     type="text"
-                                    name="username"
+                                    name="userName"
                                     onBlur={formik.handleBlur}
                                     onChange={formik.handleChange}
-                                    value={formik.values.username}
-                                    error={formik.touched.username && Boolean(formik.errors.username)}
-                                    helperText={formik.touched.username && formik.errors.username}
+                                    value={formik.values.userName}
+                                    error={formik.touched.userName && Boolean(formik.errors.userName)}
+                                    helperText={formik.touched.userName && formik.errors.userName}
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">

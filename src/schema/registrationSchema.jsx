@@ -44,7 +44,7 @@ export const studentRegistrationSchema = Yup.object().shape({
     .min(5, "Address is too short")
     .required("Residential Address is required"),
 
-  profilePic: Yup.mixed()
+  image: Yup.mixed()
     .required("Profile Picture is required")
     .test("fileType", "Only JPG or PNG files are allowed", (value) =>
       value && ["image/jpeg", "image/png"].includes(value.type)

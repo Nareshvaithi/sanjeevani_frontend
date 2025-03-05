@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 
 export const userCredentialSchema = Yup.object().shape({
-    username: Yup.string()
+  userName: Yup.string()
     .min(3, "Username must be at least 3 characters")
     .required("Username is required"),
   password: Yup.string()

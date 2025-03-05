@@ -4,6 +4,7 @@ import EnrollmentProgressbar from "../../features/students/EnrollmentProgressbar
 import StudentEnrollmentForm from "../../features/students/StudentEnrollmentForm";
 import { selectEnrollProcess } from "../../store/studentSlices/studentsEnrollmentSlice";
 import ConfirmNewStudent from "../../features/students/ConfirmNewStudent";
+import Payments from "../../features/students/Payments";
 
 const StudentRegistrationProcess = ()=>{
     const enrollProcess = useSelector(selectEnrollProcess);
@@ -13,6 +14,7 @@ const StudentRegistrationProcess = ()=>{
             {enrollProcess === 'detailsForm' && <StudentEnrollmentForm/>}
             {enrollProcess === 'userCredential' && <CreateStudentCredentials/>}
             {enrollProcess === 'confirm' && <ConfirmNewStudent/>}
+            {enrollProcess === 'payment' && <Payments />}
         </section>
     )
 }

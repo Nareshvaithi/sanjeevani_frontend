@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
-    enrollProcess : 'userCredential', //detailsForm // payment // userCredential // confirm
+    enrollProcess : 'detailsForm', //detailsForm // payment // userCredential // confirm
 };
 const studentsEnrollmentSlice = createSlice({
     name:'studentsEnrollment',

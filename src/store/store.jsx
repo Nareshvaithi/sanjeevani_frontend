@@ -4,6 +4,7 @@ import studentsReducer from "./adminSlices/adminStudentsSlice";
 import studentSidebarReducer from "./studentSlices/studentSidebarSlice";
 import studentEnrollmentReducer from "./studentSlices/studentsEnrollmentSlice";
 import loginReducer from "./authSlice/loginSlice";
+import studentLoginReducer from "./authSlice/AuthSlice"
 const store = configureStore({
     reducer:{
         adminSideBar:adminSidebarReducer,
@@ -11,6 +12,7 @@ const store = configureStore({
         studentSidebar:studentSidebarReducer,
         studentsEnrollment:studentEnrollmentReducer,
         login:loginReducer,
+        studentLogin:studentLoginReducer
     }
 })
 

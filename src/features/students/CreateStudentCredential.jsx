@@ -1,27 +1,33 @@
 import { useFormik } from "formik";
 import { TextField, FormControl } from "@mui/material";
 import { userCredentialSchema } from "../../schema/userCredentialsSchema";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { setEnrollProcess } from "../../store/studentSlices/studentsEnrollmentSlice";
+import { addStudentRecord } from "../../store/formSlices/RegisterFormSlice";
+
 
 const CreateStudentCredentials = () => {
     const dispatch = useDispatch();
+    const studentRecords=useSelector((state)=>state.studentsData)
+    console.log(studentRecords)
     const formik = useFormik({
         initialValues: {
-            username: "",
+            userName: "",
             password: "",
             confirm_password: "",
         },
     validationSchema:userCredentialSchema,
     onSubmit:(values)=>{
+  
         console.log(values);
+        dispatch(addStudentRecord(values))
+        console.log("dispatch after");
         dispatch(setEnrollProcess('confirm'));
-        alert('User Credentials');
     }
   });
 
   const fields = {
-    username: { label: "UserName", type: "text" },
+    userName: { label: "UserName", type: "text" },
     password: { label: "Password", type: "password" },
     confirm_password: { label: "Confirm Password", type: "password" },
   };
