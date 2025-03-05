@@ -41,9 +41,9 @@ const AdminStudentsList = () => {
   const filteredStudents = studentList.filter((student) => {
     console.log(student.fullName,student._id,student.batchID)
     return (
-      student.id.toString().includes(searchQuery.id.toLowerCase()) &&
-      student.name.toLowerCase().replaceAll(' ',"").includes(searchQuery.name.toLowerCase()) &&
-      student.batch.toLowerCase().replaceAll(' ',"").includes(searchQuery.batch.toLowerCase())
+      student._id.toString().includes(searchQuery.id.toLowerCase()) &&
+      student.fullName.toLowerCase().replaceAll(' ',"").includes(searchQuery.name.toLowerCase()) &&
+      student.batchID.toLowerCase().replaceAll(' ',"").includes(searchQuery.batch.toLowerCase())
     );
   });
 

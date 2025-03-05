@@ -18,7 +18,6 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-
 export const loginAdmin = createAsyncThunk(
       "auth/loginAdmin",
       async (adminData, { rejectWithValue }) => {
