@@ -41,10 +41,9 @@ const AdminStudentsList = () => {
   const filteredStudents = studentList.filter((student) => {
     console.log(student.fullName,student._id,student.batchID)
     return (
-      // student._id.toString().includes(searchQuery._id.toLowerCase()) &&
-      student.fullName?.toLowerCase()? student.fullName.toLowerCase().includes(searchQuery.fullName.toLowerCase()) 
-      : true 
-      // &&student.batchID.toLowerCase().includes(searchQuery.batchID.toLowerCase())
+      student.id.toString().includes(searchQuery.id.toLowerCase()) &&
+      student.name.toLowerCase().replaceAll(' ',"").includes(searchQuery.name.toLowerCase()) &&
+      student.batch.toLowerCase().replaceAll(' ',"").includes(searchQuery.batch.toLowerCase())
     );
   });
 
@@ -81,7 +80,7 @@ const AdminStudentsList = () => {
 
       {/* Search Inputs */}
       <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5 py-5">
-        {["id", "name", "department"].map((field, index) => (
+        {["id", "name", "batch"].map((field, index) => (
           <input
             key={index}
             type="text"
@@ -124,7 +123,7 @@ const AdminStudentsList = () => {
                   <th key={id} className="border-b border-gray-300 py-4 px-2 whitespace-nowrap">
                     <div className="w-full flex justify-between items-center">
                       <span>{title}</span>
-                      {(title === 'Name' || title == 'ID') && (
+                      {(title == 'Name' || title == 'ID' || title == 'Gender' || title == 'Payment') && (
                         <div
                           onClick={() => dispatch(sortStudents(title.toLowerCase()))}
                           className="cursor-pointer text-gray-500 hover:text-gray-800 flex items-center"
@@ -148,11 +147,11 @@ const AdminStudentsList = () => {
                   </td>
                   <td className="py-4 px-2 whitespace-nowrap" title={student.email}>{`${student.email.substring(0, 20)}...`}</td>
                   <td className="py-4 px-2 whitespace-nowrap">
-                    <span className={`${student.gender.toLowerCase() === "male" ? "bg-themeskyblue" : "bg-pink-400"} text-white px-2 py-1 rounded-xl`}>{student.gender}</span>
+                    <span className={`${student.gender.toLowerCase() === "male" ? "bg-themelightblue" : "bg-pink-600"} text-[12px] text-white px-2 py-1 rounded-md`}>{student.gender}</span>
                   </td>
                   <td className="py-4 px-2 whitespace-nowrap">{student.batch}</td>
                   <td className="py-4 px-2 whitespace-nowrap">
-                    <span className={`${student.payment.toLowerCase() === "paid" ? "bg-green-400" : "bg-red-400"} text-white px-2 py-1 rounded-xl`}>{student.payment}</span>
+                    <span className={`${student.payment.toLowerCase() === "paid" ? "bg-green-600" : "bg-red-700"} text-[12px] text-white px-2 py-1 rounded-md`}>{student.payment}</span>
                   </td>
                   <td className="py-4 px-2 whitespace-nowrap">{student.status}</td>
                   <td className="flex py-4 px-2 items-center gap-5 whitespace-nowrap">

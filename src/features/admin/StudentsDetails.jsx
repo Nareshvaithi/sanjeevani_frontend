@@ -20,6 +20,7 @@ const StudentDetails = ({ openModule, setOpenModule, studentData }) => {
     gender,
     payment,
     status,
+    batch,
     department,
     parent_contact_no,
     address,
@@ -44,7 +45,7 @@ const StudentDetails = ({ openModule, setOpenModule, studentData }) => {
       <div className="p-5 font-mainFont1">
         <h3 className="text-2xl pb-5">Student Details</h3>
         
-        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5 bg-gray-100 p-5 rounded-xl">
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5 bg-gray-100 p-5 rounded-xl text-center">
           <img src={profile_pic} alt={name} className="rounded-xl w-full lg:w-fit" />
           <div>
             <h3 className="text-2xl">{name}</h3>
@@ -65,7 +66,7 @@ const StudentDetails = ({ openModule, setOpenModule, studentData }) => {
           <Detail icon={MdOutlineDateRange} label="Date of Join" value={date_of_join} />
           <Detail icon={LuUser} label="Payment Status" value={payment} />
           <Detail icon={LuUser} label="Student Status" value={status} />
-          <Detail icon={FaRegBuilding} label="Department" value={department} />
+          <Detail icon={FaRegBuilding} label="Batch" value={batch} />
         </Section>
 
         <Section title="Personal Details">

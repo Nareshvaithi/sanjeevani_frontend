@@ -1,57 +1,24 @@
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import { GrCheckmark } from "react-icons/gr";
-import { useDispatch, useSelector } from "react-redux";
-import { setEnrollProcess } from "../../store/studentSlices/studentsEnrollmentSlice";
-import axios from "axios";
+
+import { motion } from 'framer-motion';
+
 const ConfirmNewStudent = () => {
-  const [showConfetti, setShowConfetti] = useState(false);
-  const studentRecords=useSelector((state)=>state.studentsData)
-  const dispatch=useDispatch()
-console.log("studentRecords",studentRecords)
-  useEffect(() => {
-    setTimeout(() => setShowConfetti(true), 500); // Delay confetti for effect
-  }, []);
-const hanldelSubmit= async ()=>{
-
-try{
-  const updateRecords=await axios.post("http://localhost:3000/student/entroll",studentRecords,{
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  })
-  alert("success")
-  dispatch(setEnrollProcess("detailsForm"))
-}catch(error){
-  console.log(error.message)
-}
-
-}
-
   return (
-    <>
-      <div className="flex justify-center items-center">
-        <div className="w-96 shadow-xl py-4">
-          <div className="border h-60 bg-green-800">
-
-            <p className="flex justify-center items-center h-40 text-8xl text-white"><GrCheckmark />
-            </p>
-          </div>
-          <div className="flex justify-center text-center mt-8">
-            <div>
-            <p className="text-3xl">Thank you for your registration</p>
-          <div className="text-xl mt-4">🎉 Username and Password Created Successfully! 🎉</div>
-          <div className=" flex justify-center">
-            <button className="border px-4 py-1 bg-green-800 text-white rounded-md mt-4" onClick={()=>hanldelSubmit()}>
-          Conform</button></div>
-
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </>
+    <motion.div
+      initial={{ scale: 0, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{
+        type: 'spring',
+        stiffness: 100,
+        damping: 10,
+      }}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      className="w-full"
+    >
+      <h2 className='w-1/2 my-auto mx-auto text-xl font-bold text-center p-5 bg-green-500 text-white rounded-lg shadow-lg animate-celebrate'>🎉 Username and Password Created Successfully! 🎉</h2>
+    </motion.div>
   );
-};
+}
+;
 
 export default ConfirmNewStudent;

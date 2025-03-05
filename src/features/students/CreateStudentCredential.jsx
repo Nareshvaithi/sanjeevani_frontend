@@ -35,7 +35,7 @@ const CreateStudentCredentials = () => {
   return (
     <section className="w-full flex flex-col items-center justify-center px-2">
         <h2 className="text-themedarkblue text-2xl">Register Student</h2>
-      <form onSubmit={formik.handleSubmit} className="w-full lg:w-1/3">
+      <form method="POST" onSubmit={formik.handleSubmit} className="w-full lg:w-1/3">
         {Object.keys(fields).map((field) => (
           <div key={field} className="py-3">
             <FormControl fullWidth>

@@ -5,10 +5,78 @@ import axios from "axios";
 const API_URL ="http://localhost:3000/student/entroll"
 
 const initialState = {
-  addsStudentsRecord: [],
-  addstatus: "Browse Files",
-  status: "idle",
-  error: null,
+    addsStudentsRecord: [],
+    status: "idle",
+    // studentsList: [
+    //     {
+    //         id: 1,
+    //         name: "Rajesh",
+    //         profile_pic: samplePic,
+    //         email: "example@gmail.com",
+    //         gender: "Male",
+    //         age: "21",
+    //         payment: "Paid",
+    //         status: "Active",
+    //         contact_no: "1234567890",
+    //         batch:'Batch 1',
+    //         department: "Dance",
+    //         DOB: "14/02/2004",
+    //         address: "123, Mani street 6th cross puducherry puducherry - 605110",
+    //         parent_contact_no: "1234567890",
+    //         join_date: "01/01/2000",
+    //     },
+    //     {
+    //         id: 2,
+    //         name: "Sanavana Pandy",
+    //         profile_pic: samplePic,
+    //         email: "example@gmail.com",
+    //         gender: "Male",
+    //         age: "21",
+    //         payment: "Unpaid",
+    //         status: "Active",
+    //         contact_no: "1234567890",
+    //         batch:'Batch 2',
+    //         department: "Dance",
+    //         DOB: "14/02/2004",
+    //         address: "123, Mani street 6th cross puducherry puducherry - 605110",
+    //         parent_contact_no: "1234567890",
+    //         join_date: "01/01/2000",
+    //     },
+    //     {
+    //         id: 3,
+    //         name: "Arun Kummar",
+    //         profile_pic: samplePic,
+    //         email: "example@gmail.com",
+    //         gender: "Male",
+    //         age: "21",
+    //         payment: "Paid",
+    //         status: "Active",
+    //         contact_no: "1234567890",
+    //         batch:'Batch 3',
+    //         department: "Dance",
+    //         DOB: "14/02/2004",
+    //         address: "123, Mani street 6th cross puducherry puducherry - 605110",
+    //         parent_contact_no: "1234567890",
+    //         join_date: "01/01/2000",
+    //     },
+    //     {
+    //         id: 4,
+    //         name: "Samantha",
+    //         profile_pic: samplePic,
+    //         email: "example@gmail.com",
+    //         gender: "Female",
+    //         age: "18",
+    //         payment: "Paid",
+    //         status: "Active",
+    //         contact_no: "1234567890",
+    //         batch:'Batch 5',
+    //         department: "Dance",
+    //         DOB: "14/02/2004",
+    //         address: "123, Mani street 6th cross puducherry puducherry - 605110",
+    //         parent_contact_no: "1234567890",
+    //         join_date: "01/01/2000",
+    //     },
+    // ],
     studentDataTitle: [
         { id: 1, title: "ID" },
         { id: 2, title: "Name" },
@@ -25,9 +93,10 @@ const initialState = {
 };
 
 export const fetchStudentsRecord = createAsyncThunk(
-    "records/fetchStudentsRecord",
+    "records/fetchStudentsRecords",
     async () => {
       const response = await axios.get(API_URL);
+     console.log("Fetched Data:", response.data);
       return response.data;
     }
   );
@@ -82,6 +151,7 @@ const studentSlice = createSlice({
 export default studentSlice.reducer;
 export const { sortStudents } = studentSlice.actions;
 export const selectAllStudents = (state) => state.students.addsStudentsRecord;
+
 export const selectStudentDataTitle = (state) => state.students.studentDataTitle;
 export const selectSortField = (state) => state.students.sortField;
 export const selectSortOrder = (state) => state.students.sortOrder;
