@@ -11,7 +11,7 @@ const StudentHome = ()=>{
         <section className="bg-gray-100 w-full h-auto">
             <div className="px-2 lg:px-5 w-full py-5">
                 <div className="flex items-center justify-between">
-                    <h2 className="text-xl lg:text-2xl font-medium text-gray-600">Welcome {data.name}!</h2>
+                    <h2 className="text-xl lg:text-2xl font-medium text-gray-600">Welcome!</h2>
                     <p className="text-sm font-bold">Home / Student</p>
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-5 pt-5">
