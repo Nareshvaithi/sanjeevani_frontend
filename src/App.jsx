@@ -7,8 +7,11 @@ import StudentLayout from "./layouts/StudentLayout";
 import StudentHome from "./pages/Students/StudentHome";
 import Login from "./pages/auth/Login";
 import ProtectedRoute from "./features/ProtectedRoute/ProtectedRoute";
+import AttendanceCalendar from "./pages/Students/StudentAttendance";
+
 
 function App() {
+
   return (
     <Routes>
       {/* Admin Routes with Protected Access */}
@@ -18,13 +21,12 @@ function App() {
       </Route>
 
       {/* Student Routes */}
-      <Route path="/student/:userId" element={<StudentLayout />}>
+      <Route path="/student/:userId" element={<ProtectedRoute> <StudentLayout/> </ProtectedRoute>}>
         <Route index element={<StudentHome />} />
       </Route>
-
+      <Route path="/attendance" element={<AttendanceCalendar/>}/>
       {/* Login */}
       <Route path="/" element={<Login />} />
-
       {/* Standalone Route */}
       <Route path="/student_registration" element={<StudentRegistrationProcess />} />
     </Routes>

@@ -4,6 +4,13 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { RxDashboard } from "react-icons/rx";
+import { FaGraduationCap } from "react-icons/fa";
+import { FaChalkboardTeacher } from "react-icons/fa";
+import { FaBuilding } from "react-icons/fa";
+import { LuNotepadText } from "react-icons/lu";
+import { CiCalendarDate } from "react-icons/ci";
+
 const AdminSideBar = () => {
    
   const navigate = useNavigate();
@@ -44,7 +51,9 @@ const AdminSideBar = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, [dispatch]);
 
-
+  const iconsList = {
+    
+  }
   return (
     <section>
       <div className={`hidden lg:block fixed top-0 left-0 ${openSidebar ? "w-60" : "w-0"} text-nowrap bg-themedarkblue h-screen text-white transition-all duration-500 ease-in-out overflow-hidden font-mainFont1`}>

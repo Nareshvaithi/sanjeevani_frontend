@@ -12,9 +12,9 @@ const StudentLayout = ()=>{
     const studentDetails = studentList.find((student)=> student.id === parseInt(userId));
     return(
         <main>
-            <StudentSideBar studentDetails={studentDetails}/>
-            <StudentTopBar studentDetails={studentDetails}/>
-            <div className={`${openSidebar ? "pl-0 lg:pl-60" : "pl-0"} bg-gray-100 w-full transition-all duration-500 ease-in-out`}>
+            <StudentSideBar data={studentDetails}/>
+            <StudentTopBar data={studentDetails}/>
+            <div className={`${openSidebar ? "pl-0 lg:pl-60" : "pl-0"} pt-16 bg-gray-100 w-full transition-all duration-500 ease-in-out font-mainFont1`}>
                 <Outlet context={studentDetails}/>
             </div>
         </main>

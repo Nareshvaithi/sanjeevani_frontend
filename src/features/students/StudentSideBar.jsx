@@ -8,7 +8,7 @@ import { SiGoogleclassroom } from "react-icons/si";
 import { CgCalendarDates } from "react-icons/cg";
 import { BsFillExclamationSquareFill } from "react-icons/bs";
 import { FaHandHoldingDollar } from "react-icons/fa6";
-import { TbLogout } from "react-icons/tb";
+
 
 const StudentSideBar = () => {
     const logo = useSelector(selectLogo);
@@ -52,12 +52,6 @@ const StudentSideBar = () => {
                             <div className={`${isActive(to) ? "-rotate-90" : "rotate-[90]"} transition-transform duration-300 text-2xl`}><MdKeyboardArrowDown/></div>
                         </div>
                     ))}
-                </div>
-                <div className="flex h-auto px-5 py-3 text-white hover:bg-white hover:text-themedarkblue transition-all duration-500 hover:scale-105">
-                    <div className="flex items-center gap-3 cursor-pointer">
-                        <span className="text-2xl"><TbLogout/></span>
-                        <h2 className="text-lg">Logout</h2>
-                    </div>
                 </div>
             </div>
         </section>

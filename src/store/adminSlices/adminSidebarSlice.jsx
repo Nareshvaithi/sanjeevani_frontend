@@ -6,7 +6,7 @@ import { FaGraduationCap } from "react-icons/fa";
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { FaBuilding } from "react-icons/fa";
 import { LuNotepadText } from "react-icons/lu";
-
+import { CiCalendarDate } from "react-icons/ci";
 
 
 const initialState = {
@@ -31,15 +31,8 @@ const initialState = {
       icon: <FaGraduationCap />,
       bread: "Students",
     },
-    {
-      id: 3,
-      title: 'Teachers',
-      sublinks: [
-        { id: 1, title: 'Teacher List', to: '/teachers', subBread: "Teacher List" },
-      ],
-      icon: <FaChalkboardTeacher />,
-      bread: "Teachers",
-    },
+   
+    
     {
       id: 4,
       title: 'Batch',

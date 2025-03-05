@@ -31,7 +31,7 @@ const Login = () => {
             console.log("Login Submitted:", values);
             alert('Login successfully');
             dispatch(setLogin());
-            navigate('/admin_dashboard');
+            navigate('/student/1');
         },
     });
 
