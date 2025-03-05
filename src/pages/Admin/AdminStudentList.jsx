@@ -41,9 +41,9 @@ const AdminStudentsList = () => {
   const filteredStudents = studentList.filter((student) => {
     console.log(student.fullName,student._id,student.batchID)
     return (
-      student.id.toString().includes(searchQuery.id.toLowerCase()) &&
-      student.name.toLowerCase().replaceAll(' ',"").includes(searchQuery.name.toLowerCase()) &&
-      student.batch.toLowerCase().replaceAll(' ',"").includes(searchQuery.batch.toLowerCase())
+      student._id.toString().includes(searchQuery._id.toLowerCase()) &&
+      student.fullName.toLowerCase().replaceAll(' ',"").includes(searchQuery.fullName.toLowerCase()) &&
+      student.batchID.toLowerCase().replaceAll(' ',"").includes(searchQuery.batchID.toLowerCase())
     );
   });
 
@@ -91,7 +91,7 @@ const AdminStudentsList = () => {
           />
         ))}
         <button className="buttonStyle px-10 py-2 text-white text-lg">Search</button>
-        <button onClick={()=>{setSearchQuery({id:"",name:"",batch:""})}} className="px-5 bg-green-500 py-2 text-white text-lg rounded-md">Reset</button>
+        <button onClick={()=>{setSearchQuery({_id:"",fullName:"",batchID:""})}} className="px-5 bg-green-500 py-2 text-white text-lg rounded-md">Reset</button>
       </div>
 
       <div className="font-mainFont1 px-2 lg:px-5 py-5 bg-white">
