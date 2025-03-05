@@ -36,7 +36,7 @@ const Login = () => {
                 console.log("Login Submitted:", values);
             alert('Login successfully');
             dispatch(setLogin());
-            navigate('/student-register');
+            navigate('/student_registration');
             }else{
                 const resultAction = await dispatch(loginAdmin(values));
                 if(loginAdmin.fulfilled.match(resultAction)){
