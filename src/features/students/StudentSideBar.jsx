@@ -10,14 +10,14 @@ import { BsFillExclamationSquareFill } from "react-icons/bs";
 import { FaHandHoldingDollar } from "react-icons/fa6";
 
 
-const StudentSideBar = () => {
+const StudentSideBar = ({data}) => {
+    const userId = data.id
     const logo = useSelector(selectLogo);
     const openSidebar = useSelector(selectStudentSidebar);
     const studentSidebarData = useSelector(selectStudentSidebarData);
     const location = useLocation();
     const navigate = useNavigate();
     const currentPath = location.pathname;
-
 
     const isActive = (path) => {
        
@@ -44,7 +44,7 @@ const StudentSideBar = () => {
                 </div>
                 <div>
                     {studentSidebarData.map(({ id, title, to }) => (
-                        <div key={id} onClick={()=>{navigate(to)}} className={`${isActive(to) ? "bg-white text-themedarkblue hover:text-themedarkblue" : "text-white hover:text-themedarkblue hover:bg-white"} hover:scale-105 w-full px-5 text-lg py-3 flex justify-between items-center gap-3 cursor-pointer transition-all duration-500 `}>
+                        <div key={id} onClick={()=>{navigate(to.replace(':userId',userId))}} className={`${isActive(to) ? "bg-white text-themedarkblue hover:text-themedarkblue" : "text-white hover:text-themedarkblue hover:bg-white"} hover:scale-105 w-full px-5 text-lg py-3 flex justify-between items-center gap-3 cursor-pointer transition-all duration-500 `}>
                             <div className="flex items-center gap-3">
                                 <span className="text-2xl">{iconList[title.toLowerCase().replaceAll(" ","_")]}</span>
                                 <h2 className="text-lg">{title}</h2>

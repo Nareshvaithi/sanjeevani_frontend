@@ -23,8 +23,8 @@ function App() {
       {/* Student Routes */}
       <Route path="/student/:userId" element={<ProtectedRoute> <StudentLayout/> </ProtectedRoute>}>
         <Route index element={<StudentHome />} />
+        <Route path="attendance" element={<AttendanceCalendar/>}/>
       </Route>
-      <Route path="/attendance" element={<AttendanceCalendar/>}/>
       {/* Login */}
       <Route path="/" element={<Login />} />
       {/* Standalone Route */}
