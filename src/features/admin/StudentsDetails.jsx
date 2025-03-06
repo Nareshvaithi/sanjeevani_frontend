@@ -7,26 +7,39 @@ import { BsGenderAmbiguous } from "react-icons/bs";
 import { FaRegBuilding } from "react-icons/fa";
 import { useState } from "react";
 import DeletePopup from "../../components/Common/DeletePopup";
+import { format } from "date-fns";
+import detailsDownload from "../../utils/studentDetailDownload";
+
 
 const StudentDetails = ({ openModule, setOpenModule, studentData }) => {
   const [showDel, setShowDel] = useState(false);
   if (openModule.type !== "view") return null;
-
   const {
-    id,
-    name,
-    profile_pic,
+    _id,
+    fullName,
+    imageUrls,
     email,
     gender,
-    payment,
     status,
-    batch,
-    department,
-    parent_contact_no,
-    address,
-    DOB,
-    date_of_join,
+    batchID,
+    join_date,
+    residentialAddress,
+    dob,
+    fatherName,
+    fatherPhone,
+    motherName,
+    paymentRecords,
+    paymentTotal
   } = studentData;
+  const paymentStatus = (payment)=>{
+    const getPayment = payment[0].month[0].payment_status;
+    return getPayment ? "Paid" : "UnPaid";
+  }
+  const formatDate = (dateString)=>{
+    const newDate = new Date(dateString);
+    const formatDateNew = format(newDate,'dd/MM/yyyy');
+    return formatDateNew;
+  }
 
   return (
     <motion.div
@@ -42,40 +55,43 @@ const StudentDetails = ({ openModule, setOpenModule, studentData }) => {
       >
         &times;
       </button>
-      <div className="p-5 font-mainFont1">
+      <div id="student-details" className="p-5 font-mainFont1">
         <h3 className="text-2xl pb-5">Student Details</h3>
         
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5 bg-gray-100 p-5 rounded-xl text-center">
-          <img src={profile_pic} alt={name} className="rounded-xl w-full lg:w-fit" />
+          <img src={imageUrls} alt={fullName} className="rounded-xl w-full lg:w-fit" />
           <div>
-            <h3 className="text-2xl">{name}</h3>
-            <p className="text-sm text-gray-600">{department}</p>
+            <h3 className="text-2xl">{"0001"}</h3>
+            <p className="text-sm text-gray-600">{'ID'}</p>
+          </div>
+          <div>
+            <h3 className="text-2xl">{fullName}</h3>
+            <p className="text-sm text-gray-600">{'Dance'}</p>
           </div>
           <div>
             <h3 className="text-2xl">98.7%</h3>
-            <p className="text-sm text-gray-600">Attendance Score</p>
-          </div>
-          <div>
-            <h3 className="text-2xl">A</h3>
-            <p className="text-sm text-gray-600">Grade</p>
+            <p className="text-sm text-gray-600">Attendance</p>
           </div>
         </div>
 
         <Section title="Academic Details">
-          <Detail icon={LuUser} label="Student Id" value={id} />
-          <Detail icon={MdOutlineDateRange} label="Date of Join" value={date_of_join} />
-          <Detail icon={LuUser} label="Payment Status" value={payment} />
+          <Detail icon={LuUser} label="Student Id" value={_id} />
+          <Detail icon={MdOutlineDateRange} label="Date of Join" value={formatDate(join_date)} />
+          <Detail icon={LuUser} label="Payment Status" value={paymentStatus(paymentRecords)} />
           <Detail icon={LuUser} label="Student Status" value={status} />
-          <Detail icon={FaRegBuilding} label="Batch" value={batch} />
+          <Detail icon={FaRegBuilding} label="Batch" value={batchID} />
+          <Detail icon={FaRegBuilding} label="Total Payment" value={paymentTotal} />
         </Section>
 
         <Section title="Personal Details">
-          <Detail icon={LuUser} label="Name" value={name} />
-          <Detail icon={RiParentLine} label="Parents Mobile" value={parent_contact_no} />
-          <Detail icon={MdOutlineMail} label="Email" value={email} />
+          <Detail icon={LuUser} label="Name" value={fullName} />
+          <Detail icon={LuUser} label="Father Name" value={fatherName} />
+          <Detail icon={LuUser} label="Mother Name" value={motherName} />
+          <Detail icon={RiParentLine} label="Parents Mobile" value={fatherPhone} />
+          <Detail icon={MdOutlineMail} label="Email" value={email}/>
           <Detail icon={BsGenderAmbiguous} label="Gender" value={gender} />
-          <Detail icon={MdOutlineDateRange} label="Date of Birth" value={DOB} />
-          <Detail icon={IoLocationOutline} label="Address" value={address} />
+          <Detail icon={MdOutlineDateRange} label="Date of Birth" value={formatDate(dob)} />
+          <Detail icon={IoLocationOutline} label="Address" value={residentialAddress} />
         </Section>
 
         <div className="flex gap-5">
@@ -88,8 +104,14 @@ const StudentDetails = ({ openModule, setOpenModule, studentData }) => {
           >
             Delete
           </button>
+          <button
+            onClick={() => detailsDownload(fullName,imageUrls)}
+            className="bg-themeyellow hover:bg-white px-5 py-2 text-white border border-themeyellow hover:text-themeyellow rounded-md transition-all duration-300"
+          >
+            Download
+          </button>
         </div>
-        {showDel && <DeletePopup name={name} showDel={showDel} setShowDel={setShowDel} />}
+        {showDel && <DeletePopup name={fullName} showDel={showDel} setShowDel={setShowDel} />}
       </div>
     </motion.div>
   );
@@ -103,7 +125,7 @@ const Section = ({ title, children }) => (
 );
 
 const Detail = ({ icon: Icon, label, value }) => (
-  <div className="flex items-start gap-3">
+  <div className={`flex items-start gap-3 ${label === 'Email' ? "col-span-2" : ""}`}>
     <div className="text-buttonblue text-xl">
       <Icon />
     </div>

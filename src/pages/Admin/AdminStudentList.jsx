@@ -35,7 +35,7 @@ const AdminStudentsList = () => {
   const [searchQuery, setSearchQuery] = useState({
     id: "",
     name: "",
-    // batch: "",
+    batch: "",
   });
   let paidstatus=""
   // Filter students based on search query
@@ -43,8 +43,8 @@ const AdminStudentsList = () => {
    
     return (
       student._id.toString().includes(searchQuery.id.toLowerCase()) &&
-      student.fullName.toLowerCase().replaceAll(' ',"").includes(searchQuery.name.toLowerCase()) 
-      // student.batchID.toLowerCase().replaceAll(' ',"").includes(searchQuery.batch.toLowerCase())
+      student.fullName.toLowerCase().replaceAll(' ',"").includes(searchQuery.name.toLowerCase()) &&
+      student.batchID.toLowerCase().replaceAll(' ',"").includes(searchQuery.batch.toLowerCase())
     );
   });
 

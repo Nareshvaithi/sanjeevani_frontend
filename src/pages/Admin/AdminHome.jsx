@@ -50,7 +50,7 @@ const AdminHome = ()=>{
                     <QuickBox title={"Total Students"} icon={totalStudentImg} count={`${studentList.length}`}/>
                     <QuickBox title={"New Students"} icon={newStudentImg} count={`${studentList.length}`}/>
                     <QuickBox title={"Un Paid Students"} icon={nonPaidImg} count={`${unpaid.length}`}/>
-                    {/* <QuickBox title={"Fees Collections"} icon={feesCollectionImg} count={`${studentList[0].paymentTotal}`}/> */}
+                    <QuickBox title={"Fees Collections"} icon={feesCollectionImg} count={`${studentList[0].paymentTotal}`}/>
                 </div>
            </div>
            <div className="w-full grid grid-col-1 lg:grid-cols-2 gap-5 px-2 lg:px-5">
