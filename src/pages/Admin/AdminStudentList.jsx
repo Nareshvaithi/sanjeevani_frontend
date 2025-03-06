@@ -18,6 +18,7 @@ import StudentDetails from "../../features/admin/StudentsDetails";
 import { handleDownloadPDF } from "../../utils/studentsdownload";
 import EditStudentForm from "../../features/admin/EditStudentForm";
 import Breadcrumb from "../../components/Common/BreadCrumb";
+import { fetchSingleStudent } from "../../store/formSlices/StudentDetailsSlice";
 const AdminStudentsList = () => {
 
   const breadcrumbItems = useSelector(selectBreadCrumb).map((item) => ({
@@ -29,7 +30,7 @@ const AdminStudentsList = () => {
   const sortField = useSelector(selectSortField);
   const sortOrder = useSelector(selectSortOrder);
   const studentDataTitle = useSelector(selectStudentDataTitle);
-  const [openModule, setOpenModule] = useState({ type: null, data: null });
+  const [openModule, setOpenModule] = useState(null);
   console.log(studentList);
   // State for search query
   const [searchQuery, setSearchQuery] = useState({
@@ -37,7 +38,6 @@ const AdminStudentsList = () => {
     name: "",
     batch: "",
   });
-  let paidstatus=""
   // Filter students based on search query
   const filteredStudents = studentList.filter((student) => {
    
@@ -60,9 +60,7 @@ const AdminStudentsList = () => {
     currentPage * studentsPerPage
   );
 
-  const handleOpenModule = (type, data = null) => {
-    setOpenModule({ type, data });
-  };
+
 
   // Handle search input change
   const handleSearchChange = (e, field) => {
@@ -75,6 +73,10 @@ const AdminStudentsList = () => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
+  const paymentStatus = (payment)=>{
+    const getPayment = payment[0].month[0].payment_status;
+    return getPayment ? "Paid" : "UnPaid";
+  }
   return (
     <section className="pt-20 px-2 lg:px-5 w-full h-full font-mainFont1">
       <div className="flex items-center justify-between">
@@ -121,7 +123,7 @@ const AdminStudentsList = () => {
               <FaDownload /> <span className="hidden lg:block">Download</span>
             </button>
             <button
-              onClick={() => handleOpenModule("add")}
+              onClick={() => setOpenModule("add")}
               className="flex items-center gap-3 buttonStyle px-3 py-2 text-white text-[18px]"
             >
               <FaPlus />
@@ -163,7 +165,7 @@ const AdminStudentsList = () => {
             </thead>
             <tbody className="font-light">
               {currentStudents.map((student,index) => {
-                const {_id,fullName,gender,email,status,paymentRecords,BatchID,imageUrls} = student;
+                const {_id,fullName,gender,email,status,paymentRecords,batchID,imageUrls} = student;
                 console.log(fullName);
                 const studentStatus = status ? "Active" : "InActive";
                 return <tr key={_id} className="odd:bg-gray-100">
@@ -176,18 +178,18 @@ const AdminStudentsList = () => {
                   <td className="py-4 px-2 whitespace-nowrap">
                     <span className={`${gender.toLowerCase() === "male" ? "bg-themelightblue" : "bg-pink-600"} text-[12px] text-white px-2 py-1 rounded-md`}>{gender}</span>
                   </td>
-                  <td className="py-4 px-2 whitespace-nowrap">{'Batch 1'}</td>
+                  <td className="py-4 px-2 whitespace-nowrap">{batchID}</td>
                   <td className="py-4 px-2 whitespace-nowrap">
-                    <span className={`text-[12px] text-white px-2 py-1 rounded-md`}>{gender}</span>
+                    <span className={`text-[12px] text-white px-2 py-1 rounded-md ${paymentStatus(paymentRecords).toLowerCase() === "paid" ? "bg-green-500" : paymentStatus(paymentRecords).toLowerCase() === "unpaid" ? "bg-red-500" : "bg-themeyellow"}`}>{paymentStatus(paymentRecords)}</span>
                   </td>
-                  <td className={`py-4 px-2 whitespace-nowrap ${status ? '' : ''}`}>
-                  <span className={`${status ? "bg-themedarkblue" : "bg-themeyellow"} text-[12px] text-white px-2 py-1 rounded-md`}>{studentStatus}</span>
+                  <td className={`py-4 px-2 whitespace-nowrap`}>
+                    <span className={`${status ? "bg-themedarkblue" : "bg-themeyellow"} text-[12px] text-white px-2 py-1 rounded-md`}>{studentStatus}</span>
                   </td>
                   <td className="flex py-4 px-2 items-center gap-5 whitespace-nowrap">
                     <div
                       onClick={() => {
-                        handleOpenModule("view", student)
-                        // dispatch(fetchSingleStudent(student._id))
+                        setOpenModule("view")
+                        dispatch(fetchSingleStudent(_id));
                       }
                     }
                       className="bg-gray-200 hover:bg-buttonblue hover:text-white rounded-full p-2 transition-colors duration-300"
@@ -195,7 +197,7 @@ const AdminStudentsList = () => {
                       <MdOutlineRemoveRedEye />
                     </div>
                     <div
-                      onClick={() => handleOpenModule("edit", student)}
+                      onClick={() => setOpenModule("edit", student)}
                       className="bg-gray-200 hover:bg-buttonblue hover:text-white rounded-full p-2 transition-colors duration-300"
                     >
                       <FiEdit />
@@ -229,19 +231,17 @@ const AdminStudentsList = () => {
 
       {/* Modals */}
       <AnimatePresence>
-        {openModule?.type === "add" && (
+        {openModule === "add" && (
           <AddStudentForm setOpenModule={setOpenModule} />
         )}
-        {openModule?.type === "view" && (
+        {openModule === "view" && (
           <StudentDetails
-            studentData={openModule.data}
             openModule={openModule}
             setOpenModule={setOpenModule}
           />
         )}
-        {openModule?.type === "edit" && (
+        {openModule === "edit" && (
           <EditStudentForm
-            studentData={openModule.data}
             openModule={openModule}
             setOpenModule={setOpenModule}
           />

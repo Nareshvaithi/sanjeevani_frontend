@@ -8,11 +8,13 @@ import StudentHome from "./pages/Students/StudentHome";
 import Login from "./pages/auth/Login";
 import ProtectedRoute from "./features/ProtectedRoute/ProtectedRoute";
 import AttendanceCalendar from "./pages/Students/StudentAttendance";
+import Context from "./Context";
 
 
 function App() {
 
   return (
+    <Context >
     <Routes>
       {/* Admin Routes with Protected Access */}
       <Route path="/admin_dashboard" element={<ProtectedRoute> <AdminLayout /> </ProtectedRoute>}>
@@ -30,6 +32,7 @@ function App() {
       {/* Standalone Route */}
       <Route path="/student_registration" element={<StudentRegistrationProcess />} />
     </Routes>
+    </Context>
   );
 }
 

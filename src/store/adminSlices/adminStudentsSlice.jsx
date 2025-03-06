@@ -1,5 +1,3 @@
-
-import samplePic from "../../assets/images/admin/students/sample-pic.jpg";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 const API_URL ="https://api-sanjeevani.konceptsdandd.com/student/entroll"
