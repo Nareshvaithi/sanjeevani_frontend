@@ -6,12 +6,13 @@ import * as Yup from "yup";
 import { AccountCircle, Lock } from "@mui/icons-material"; 
 import { useNavigate } from "react-router-dom";
 import { loginAdmin, loginUser } from "../../store/authSlice/AuthSlice";
+import { selectAllStudents } from "../../store/adminSlices/adminStudentsSlice";
 
 const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const loginImg = useSelector(selectLoginImage);
-
+    const studentList = useSelector(selectAllStudents);
     const validationSchema = Yup.object({
         userName: Yup.string()
             .required("userName is required")
@@ -35,7 +36,9 @@ const Login = () => {
                 console.log("Login Submitted:", values);
             alert('Login successfully');
             dispatch(setLogin());
-            navigate('/student_registration');
+            const user = studentList.find(({userName}) => userName === values.userName);
+            const userId = user._id
+            navigate(`/student/${userId}`);
             }else{
                 const resultAction = await dispatch(loginAdmin(values));
                 if(loginAdmin.fulfilled.match(resultAction)){

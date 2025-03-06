@@ -17,7 +17,7 @@ const store = configureStore({
         studentRecord:studentRecordReducer,
         login:loginReducer,
         studentLogin:studentLoginReducer,
-        singleStudentRecord:singleStudentRecordReducer
+        singleStudent:singleStudentRecordReducer
     }
 })
 

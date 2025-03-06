@@ -8,7 +8,6 @@ import {
   selectSortField,
   selectSortOrder,
   sortStudents,
-  fetchStudentsRecord,
 } from "../../store/adminSlices/adminStudentsSlice";
 import AddStudentForm from "../../features/admin/AddStudentForm";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
@@ -19,46 +18,35 @@ import StudentDetails from "../../features/admin/StudentsDetails";
 import { handleDownloadPDF } from "../../utils/studentsdownload";
 import EditStudentForm from "../../features/admin/EditStudentForm";
 import Breadcrumb from "../../components/Common/BreadCrumb";
-import { useEffect,useContext } from "react";
-import { ContextProvide } from "../../Context";
-import { fetchSingleStudent, singleStudentRecord } from "../../store/formSlices/StudentDetailsSlice";
+import { fetchSingleStudent } from "../../store/formSlices/StudentDetailsSlice";
 const AdminStudentsList = () => {
-  const {month,setMonth}=useContext(ContextProvide);
+
   const breadcrumbItems = useSelector(selectBreadCrumb).map((item) => ({
     label: item,
     link: null, // You can set the link if needed
   }));
   const dispatch = useDispatch();
   const studentList = useSelector(selectAllStudents);
-
-
-  console.log(studentList);
-  useEffect(() => {
-    dispatch(fetchStudentsRecord());
-  }, [dispatch]);
   const sortField = useSelector(selectSortField);
   const sortOrder = useSelector(selectSortOrder);
-  // const studentList = useSelector(selectAllStudents);
   const studentDataTitle = useSelector(selectStudentDataTitle);
-  const [openModule, setOpenModule] = useState({ type: null, data: null });
-
+  const [openModule, setOpenModule] = useState(null);
+  console.log(studentList);
   // State for search query
   const [searchQuery, setSearchQuery] = useState({
     id: "",
     name: "",
     batch: "",
   });
-  const filteredStudents = [];
-  let paidstatus=""
   // Filter students based on search query
-  // const filteredStudents = studentList.filter((student) => {
-  //   console.log(student.fullName,student._id,student.batchID)
-  //   return (
-  //     student._id.toString().includes(searchQuery._id.toLowerCase()) &&
-  //     student.fullName.toLowerCase().replaceAll(' ',"").includes(searchQuery.fullName.toLowerCase()) &&
-  //     student.batchID.toLowerCase().replaceAll(' ',"").includes(searchQuery.batchID.toLowerCase())
-  //   );
-  // });
+  const filteredStudents = studentList.filter((student) => {
+   
+    return (
+      student._id.toString().includes(searchQuery.id.toLowerCase()) &&
+      student.fullName.toLowerCase().replaceAll(' ',"").includes(searchQuery.name.toLowerCase()) &&
+      student.batchID.toLowerCase().replaceAll(' ',"").includes(searchQuery.batch.toLowerCase())
+    );
+  });
 
   // Pagination logic
   const studentsPerPage = 20;
@@ -72,9 +60,7 @@ const AdminStudentsList = () => {
     currentPage * studentsPerPage
   );
 
-  const handleOpenModule = (type, data = null) => {
-    setOpenModule({ type, data });
-  };
+
 
   // Handle search input change
   const handleSearchChange = (e, field) => {
@@ -87,6 +73,10 @@ const AdminStudentsList = () => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
+  const paymentStatus = (payment)=>{
+    const getPayment = payment[0].month[0].payment_status;
+    return getPayment ? "Paid" : "UnPaid";
+  }
   return (
     <section className="pt-20 px-2 lg:px-5 w-full h-full font-mainFont1">
       <div className="flex items-center justify-between">
@@ -111,7 +101,7 @@ const AdminStudentsList = () => {
         </button>
         <button
           onClick={() => {
-            setSearchQuery({ _id: "", fullName: "", batchID: "" });
+            setSearchQuery({id: "", name: "",batch:""});
           }}
           className="px-5 bg-green-500 py-2 text-white text-lg rounded-md"
         >
@@ -133,7 +123,7 @@ const AdminStudentsList = () => {
               <FaDownload /> <span className="hidden lg:block">Download</span>
             </button>
             <button
-              onClick={() => handleOpenModule("add")}
+              onClick={() => setOpenModule("add")}
               className="flex items-center gap-3 buttonStyle px-3 py-2 text-white text-[18px]"
             >
               <FaPlus />
@@ -174,69 +164,32 @@ const AdminStudentsList = () => {
               </tr>
             </thead>
             <tbody className="font-light">
-              {studentList.map((student) => (
-                
-                <tr key={student._id} className="odd:bg-gray-100">
-                  <td className="py-4 px-2 whitespace-nowrap">
-                    {student._id}
-                  </td>
+              {currentStudents.map((student,index) => {
+                const {_id,fullName,gender,email,status,paymentRecords,batchID,imageUrls} = student;
+                console.log(fullName);
+                const studentStatus = status ? "Active" : "InActive";
+                return <tr key={_id} className="odd:bg-gray-100">
+                  <td className="py-4 px-2 whitespace-nowrap">{index+1}</td>
                   <td className="py-4 px-2 flex gap-3 items-center whitespace-nowrap">
-                    <img
-                      className="w-10 rounded-full"
-                      src={student.image}
-                      alt=""
-                    />
-                    <span>{student.fullName}</span>
+                    <img className="w-10 rounded-full" src={imageUrls} alt="" />
+                    <span>{fullName}</span>
                   </td>
-                  <td
-                    className="py-4 px-2 whitespace-nowrap"
-                    title={student.email}
-                  >{`${student.email.substring(0, 20)}...`}</td>
+                  <td className="py-4 px-2 whitespace-nowrap" title={email}>{`${email.substring(0, 20)}...`}</td>
                   <td className="py-4 px-2 whitespace-nowrap">
-                    <span
-                      className={`${
-                        student.gender.toLowerCase() === "male"
-                          ? "bg-themelightblue"
-                          : "bg-pink-600"
-                      } text-[12px] text-white px-2 py-1 rounded-md`}
-                    >
-                      {student.gender}
-                    </span>
+                    <span className={`${gender.toLowerCase() === "male" ? "bg-themelightblue" : "bg-pink-600"} text-[12px] text-white px-2 py-1 rounded-md`}>{gender}</span>
                   </td>
+                  <td className="py-4 px-2 whitespace-nowrap">{batchID}</td>
                   <td className="py-4 px-2 whitespace-nowrap">
-                    {`${student.batchID ? student.batchID : "-"}`}
+                    <span className={`text-[12px] text-white px-2 py-1 rounded-md ${paymentStatus(paymentRecords).toLowerCase() === "paid" ? "bg-green-500" : paymentStatus(paymentRecords).toLowerCase() === "unpaid" ? "bg-red-500" : "bg-themeyellow"}`}>{paymentStatus(paymentRecords)}</span>
                   </td>
-                  <td className="py-4 px-2 whitespace-nowrap">
-                    {
-                    
-                      student.paymentRecords.map((value)=>{
-                        console.log(typeof value.month)
-                             value.month.map((data)=>{
-                                if(month==data.monthName){
-                                
-                                 return paidstatus=data.payment_status
-                                }
-                             })
-                      })
-                    }
-                    <span
-                      className={`${
-                        paidstatus === true
-                          ? "bg-green-600"
-                          : "bg-red-700"
-                      } text-[12px] text-white px-2 py-1 rounded-md`}
-                    >
-                      {paidstatus == true ? "paid" : "unpaid"}
-                    </span>
-                  </td>
-                  <td className="py-4 px-2 whitespace-nowrap">
-                    {student.status ? "Active" : "InActive"}
+                  <td className={`py-4 px-2 whitespace-nowrap`}>
+                    <span className={`${status ? "bg-themedarkblue" : "bg-themeyellow"} text-[12px] text-white px-2 py-1 rounded-md`}>{studentStatus}</span>
                   </td>
                   <td className="flex py-4 px-2 items-center gap-5 whitespace-nowrap">
                     <div
                       onClick={() => {
-                        handleOpenModule("view", student)
-                        dispatch(fetchSingleStudent(student._id))
+                        setOpenModule("view")
+                        dispatch(fetchSingleStudent(_id));
                       }
                     }
                       className="bg-gray-200 hover:bg-buttonblue hover:text-white rounded-full p-2 transition-colors duration-300"
@@ -244,14 +197,14 @@ const AdminStudentsList = () => {
                       <MdOutlineRemoveRedEye />
                     </div>
                     <div
-                      onClick={() => handleOpenModule("edit", student)}
+                      onClick={() => setOpenModule("edit", student)}
                       className="bg-gray-200 hover:bg-buttonblue hover:text-white rounded-full p-2 transition-colors duration-300"
                     >
                       <FiEdit />
                     </div>
                   </td>
                 </tr>
-              ))}
+              })}
             </tbody>
           </table>
         </div>
@@ -278,19 +231,17 @@ const AdminStudentsList = () => {
 
       {/* Modals */}
       <AnimatePresence>
-        {openModule?.type === "add" && (
+        {openModule === "add" && (
           <AddStudentForm setOpenModule={setOpenModule} />
         )}
-        {openModule?.type === "view" && (
+        {openModule === "view" && (
           <StudentDetails
-            studentData={openModule.data}
             openModule={openModule}
             setOpenModule={setOpenModule}
           />
         )}
-        {openModule?.type === "edit" && (
+        {openModule === "edit" && (
           <EditStudentForm
-            studentData={openModule.data}
             openModule={openModule}
             setOpenModule={setOpenModule}
           />

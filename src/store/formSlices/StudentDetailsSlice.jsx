@@ -4,7 +4,7 @@ import axios from "axios";
 const API_URL = "https://api-sanjeevani.konceptsdandd.com/student/entroll";
 
 const initialValue = {
-    singleStudentDetails: [],
+    singleStudentDetails: {},
     status: "idle",
     error: null,
 };
@@ -24,7 +24,11 @@ export const fetchSingleStudent = createAsyncThunk(
 const studentDetailsSingle = createSlice({
     name: "singleStudent",
     initialState: initialValue,
-    reducers: {}, 
+    reducers: {
+        setSingleStudentRecord:(state)=>{
+            state.singleStudentDetails = null;
+        }
+    }, 
     extraReducers: (builder) => {
         builder
             .addCase(fetchSingleStudent.pending, (state) => {
@@ -34,6 +38,7 @@ const studentDetailsSingle = createSlice({
                
                 state.status = "succeeded";
                 state.singleStudentDetails = action.payload;
+                console.log(action.payload);
             })
             .addCase(fetchSingleStudent.rejected, (state, action) => {
                 state.status = "failed";
@@ -43,5 +48,6 @@ const studentDetailsSingle = createSlice({
 });
 
 export default studentDetailsSingle.reducer;
-
-export const singleStudentRecord=(state) => state.singleStudent.singleStudentDetails;
+export const {setSingleStudentRecord} = studentDetailsSingle.actions;
+export const selectSingleStudent = (state) => state.singleStudent.singleStudentDetails;
+export const selectSingleStudentStatus = (state) => state.singleStudent.status;
