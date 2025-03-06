@@ -63,10 +63,8 @@ const StudentDetails = ({ openModule, setOpenModule, studentData }) => {
     residentialAddress
   } = singleRecord;
 let paidstatus
-  if(singleRecord){
 
     singleRecord.paymentRecords.map((data)=>{
-   
       data.month.map((value)=>{
         if(month==value.monthName){
           paidstatus=value.payment_status
@@ -74,8 +72,7 @@ let paidstatus
         }
       })
     })
-  }
-  
+
     const date = new Date("2025-05-03T04:00:00.000Z");
     const formattedDate = date.toISOString().split("T")[0]; 
 
@@ -108,6 +105,7 @@ let paidstatus
           </div>
         
         </div>
+
 
         <Section title="Academic Details">
           <Detail icon={LuUser} label="Student Id" value={_id} />
