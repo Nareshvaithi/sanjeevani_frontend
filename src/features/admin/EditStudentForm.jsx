@@ -6,18 +6,25 @@ import { MdOutlineMail, MdOutlineDateRange } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
 import { BsGenderAmbiguous } from "react-icons/bs";
 import { FaRegBuilding } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { editStudentData, fetchStudentsRecord } from "../../store/adminSlices/adminStudentsSlice";
 
 const EditStudentForm = ({ setOpenModule, studentData, onUpdate }) => {
-  const [formData, setFormData] = useState({ ...studentData });
 
+  const dispatch=useDispatch()
+  const [formData, setFormData] = useState({ ...studentData });
+ console.log("formData",formData)
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onUpdate(formData);
-    setOpenModule(null);
+    
+    // onUpdate(formData);
+    dispatch(editStudentData(formData))
+    dispatch(fetchStudentsRecord())
+    // setOpenModule(null);
   };
 
   return (
@@ -40,34 +47,34 @@ const EditStudentForm = ({ setOpenModule, studentData, onUpdate }) => {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="bg-gray-100 p-5 rounded-xl flex flex-col lg:flex-row items-start lg:items-center gap-5">
                 <div className="rounded-xl w-full lg:w-fit">
-                  <img src={formData.profile_pic} alt="Profile" className="rounded-xl w-full" />
+                  <img src={formData.imageUrls} alt="Profile" className="rounded-xl w-full" />
                 </div>
                 <div className="">
-                  <h3 className="text-2xl">{formData.name}</h3>
-                  <p className="text-sm text-gray-600">{formData.department}</p>
+                  <h3 className="text-2xl">{formData.fullName}</h3>
+                  <p className="text-sm text-gray-600">{formData.batchID}</p>
                 </div>
               </div>
 
               <div>
                 <h3 className="font-bold">Academic Details :</h3>
                 <div className="py-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                  <InputField icon={<LuUser />} label="Student ID" name="id" value={formData.id} onChange={handleChange} disabled />
-                  <InputField icon={<LuUser />} label="Date of Join" name="date_of_join" value={formData.date_of_join} onChange={handleChange} />
-                  <InputField icon={<LuUser />} label="Payment Status" name="payment" value={formData.payment} onChange={handleChange} />
-                  <InputField icon={<LuUser />} label="Student Status" name="status" value={formData.status} onChange={handleChange} />
-                  <InputField icon={<FaRegBuilding />} label="Department" name="department" value={formData.department} onChange={handleChange} />
+                  <InputField icon={<LuUser />} label="Student ID" name="_id" value={formData._id} onChange={handleChange} disabled />
+                  <InputField icon={<LuUser />} label="Date of Join" name="join_date" value={formData.join_date} onChange={handleChange} />
+                  {/* <InputField icon={<LuUser />} label="Payment Status" name="payment" value={formData.payment} onChange={handleChange} /> */}
+                  <InputField icon={<LuUser />} label="Student Status" name="status" value={formData.status ? "active" : "inactive"} onChange={handleChange} />
+                  <InputField icon={<FaRegBuilding />} label="Batch" name="batchID" value={formData.batchID} onChange={handleChange} />
                 </div>
               </div>
 
               <div>
                 <h3 className="font-bold">Personal Details :</h3>
                 <div className="py-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                  <InputField icon={<LuUser />} label="Name" name="name" value={formData.name} onChange={handleChange} />
-                  <InputField icon={<RiParentLine />} label="Parents Mobile" name="parent_contact_no" value={formData.parent_contact_no} onChange={handleChange} />
+                  <InputField icon={<LuUser />} label="Name" name="fullName" value={formData.fullName} onChange={handleChange} />
+                  <InputField icon={<RiParentLine />} label="Parents Mobile" name="fatherPhone" value={formData.fatherPhone} onChange={handleChange} />
                   <InputField icon={<MdOutlineMail />} label="Email" name="email" value={formData.email} onChange={handleChange} />
                   <InputField icon={<BsGenderAmbiguous />} label="Gender" name="gender" value={formData.gender} onChange={handleChange} />
-                  <InputField icon={<MdOutlineDateRange />} label="Date of Birth" name="DOB" value={formData.DOB} onChange={handleChange} />
-                  <InputField icon={<IoLocationOutline />} label="Address" name="address" value={formData.address} onChange={handleChange} />
+                  <InputField icon={<MdOutlineDateRange />} label="Date of Birth" name="dob" value={formData.dob} onChange={handleChange} />
+                  <InputField icon={<IoLocationOutline />} label="Address" name="residentialAddress" value={formData.residentialAddress} onChange={handleChange} />
                 </div>
               </div>
 

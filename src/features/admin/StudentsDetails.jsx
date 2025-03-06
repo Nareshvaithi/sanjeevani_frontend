@@ -19,6 +19,7 @@ import {
   fetchStudentsRecord,
 } from "../../store/adminSlices/adminStudentsSlice";
 const StudentDetails = ({ openModule, setOpenModule, studentData }) => {
+  
   const {month,setMonth}=useContext(ContextProvide);
   const dispatch=useDispatch()
   const singleRecord=useSelector((state)=>state.singleStudentRecord.singleStudentDetails)
@@ -61,13 +62,23 @@ const StudentDetails = ({ openModule, setOpenModule, studentData }) => {
     imageUrls,
     residentialAddress
   } = singleRecord;
+let paidstatus
+  if(singleRecord){
 
-  // singleRecord.map((value)=>{
-  //   value.paymentRecords.map((data)=>{
+    singleRecord.paymentRecords.map((data)=>{
+   
+      data.month.map((value)=>{
+        if(month==value.monthName){
+          paidstatus=value.payment_status
+          console.log(paidstatus)
+        }
+      })
+    })
+  }
+  
+    const date = new Date("2025-05-03T04:00:00.000Z");
+    const formattedDate = date.toISOString().split("T")[0]; 
 
-
-  //   })
-  // })
   return (
     <motion.div
       initial={{ x: "100%" }}
@@ -95,16 +106,14 @@ const StudentDetails = ({ openModule, setOpenModule, studentData }) => {
             <h3 className="text-2xl">98.7%</h3>
             <p className="text-sm text-gray-600">Attendance Score</p>
           </div>
-          <div>
-            <h3 className="text-2xl">A</h3>
-            <p className="text-sm text-gray-600">Grade</p>
-          </div>
+        
         </div>
 
         <Section title="Academic Details">
           <Detail icon={LuUser} label="Student Id" value={_id} />
           <Detail icon={MdOutlineDateRange} label="Date of Join" value={join_date} />
-          <Detail icon={LuUser} label="Payment Status" value={paymentTotal} />
+          <Detail icon={LuUser} label="Payment Status" value={paidstatus ? "paid" : "unpaid"} />
+          <Detail icon={LuUser} label="Payment Total" value={paymentTotal} />
           <Detail icon={LuUser} label="Student Status" value={status ? "active" : "inactive"} />
           <Detail icon={FaRegBuilding} label="Batch" value={batchID} />
         </Section>
