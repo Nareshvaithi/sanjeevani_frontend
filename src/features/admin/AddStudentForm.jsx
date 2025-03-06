@@ -20,6 +20,7 @@ const AddStudentForm = ({ setOpenModule }) => {
       fatherPhone: "",
       residentialAddress: "",
       profilePic: null,
+      payment_status:""
     },
     // validationSchema:studentRegistrationSchema,
     onSubmit: (values) => {

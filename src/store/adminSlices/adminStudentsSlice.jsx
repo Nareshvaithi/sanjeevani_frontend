@@ -5,76 +5,7 @@ const API_URL ="https://api-sanjeevani.konceptsdandd.com/student/entroll"
 const initialState = {
     addsStudentsRecord: [],
     status: "idle",
-    // studentsList: [
-    //     {
-    //         id: 1,
-    //         name: "Rajesh",
-    //         profile_pic: samplePic,
-    //         email: "example@gmail.com",
-    //         gender: "Male",
-    //         age: "21",
-    //         payment: "Paid",
-    //         status: "Active",
-    //         contact_no: "1234567890",
-    //         batch:'Batch 1',
-    //         department: "Dance",
-    //         DOB: "14/02/2004",
-    //         address: "123, Mani street 6th cross puducherry puducherry - 605110",
-    //         parent_contact_no: "1234567890",
-    //         join_date: "01/01/2000",
-    //     },
-    //     {
-    //         id: 2,
-    //         name: "Sanavana Pandy",
-    //         profile_pic: samplePic,
-    //         email: "example@gmail.com",
-    //         gender: "Male",
-    //         age: "21",
-    //         payment: "Unpaid",
-    //         status: "Active",
-    //         contact_no: "1234567890",
-    //         batch:'Batch 2',
-    //         department: "Dance",
-    //         DOB: "14/02/2004",
-    //         address: "123, Mani street 6th cross puducherry puducherry - 605110",
-    //         parent_contact_no: "1234567890",
-    //         join_date: "01/01/2000",
-    //     },
-    //     {
-    //         id: 3,
-    //         name: "Arun Kummar",
-    //         profile_pic: samplePic,
-    //         email: "example@gmail.com",
-    //         gender: "Male",
-    //         age: "21",
-    //         payment: "Paid",
-    //         status: "Active",
-    //         contact_no: "1234567890",
-    //         batch:'Batch 3',
-    //         department: "Dance",
-    //         DOB: "14/02/2004",
-    //         address: "123, Mani street 6th cross puducherry puducherry - 605110",
-    //         parent_contact_no: "1234567890",
-    //         join_date: "01/01/2000",
-    //     },
-    //     {
-    //         id: 4,
-    //         name: "Samantha",
-    //         profile_pic: samplePic,
-    //         email: "example@gmail.com",
-    //         gender: "Female",
-    //         age: "18",
-    //         payment: "Paid",
-    //         status: "Active",
-    //         contact_no: "1234567890",
-    //         batch:'Batch 5',
-    //         department: "Dance",
-    //         DOB: "14/02/2004",
-    //         address: "123, Mani street 6th cross puducherry puducherry - 605110",
-    //         parent_contact_no: "1234567890",
-    //         join_date: "01/01/2000",
-    //     },
-    // ],
+    editstatus:"save changes",
     studentDataTitle: [
         { id: 1, title: "ID" },
         { id: 2, title: "Name" },
@@ -94,10 +25,27 @@ export const fetchStudentsRecord = createAsyncThunk(
     "records/fetchStudentsRecords",
     async () => {
       const response = await axios.get(API_URL);
-     console.log("Fetched Data:", response.data);
+      console.log("Fetched Data:", response.data);
       return response.data;
     }
   );
+
+  //edit student records
+
+  export const editStudentData = createAsyncThunk(
+    "data/editStudentData",
+    async ({ _id, ...updatedData }, { rejectWithValue }) => {
+     
+      try {
+          const response = await axios.put(`${API_URL}/${_id}`, updatedData);
+        console.log("Success: student record Edited", _id);
+        return response.data;
+      } catch (error) {
+        return rejectWithValue(error.response?.data || "Error Editing student record");
+      }
+    }
+  );
+  
 
 const studentSlice = createSlice({
     name: "students",
@@ -142,14 +90,30 @@ const studentSlice = createSlice({
           })
           .addCase(fetchStudentsRecord.pending, (state, action) => {
             state.status = "loading";
-          });
+          })
+//for editing student record........................
+      .addCase(editStudentData.pending, (state) => {
+        state.editstatus = "Proccessing";
+      })
+      .addCase(editStudentData.fulfilled, (state, action) => {
+        alert("suceess")
+        state.editstatus = "save changes";
+        state.addsStudentsRecord = state.addsStudentsRecord.map((data) =>
+          data._id === action.payload._id ? action.payload : data
+        )
+        
+    })      
+      .addCase(editStudentData.rejected, (state, action) => {
+        state.editstatus = "submit";
+        state.error = action.payload;
+        toast.error("Edit Failed");
+      });
         }
 })
 
 export default studentSlice.reducer;
 export const { sortStudents } = studentSlice.actions;
 export const selectAllStudents = (state) => state.students.addsStudentsRecord;
-
 export const selectStudentDataTitle = (state) => state.students.studentDataTitle;
 export const selectSortField = (state) => state.students.sortField;
 export const selectSortOrder = (state) => state.students.sortOrder;

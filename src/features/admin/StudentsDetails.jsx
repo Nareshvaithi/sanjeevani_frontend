@@ -42,6 +42,8 @@ const StudentDetails = ({ openModule, setOpenModule }) => {
     status, 
   } = studentDetails || {};
 
+    const date = new Date("2025-05-03T04:00:00.000Z");
+    const formattedDate = date.toISOString().split("T")[0]; 
 
   useEffect(() => {
     if (dob) setFormattedDob(format(new Date(dob), "dd/MM/yyyy"));
