@@ -31,7 +31,6 @@ const AdminStudentsList = () => {
   const sortOrder = useSelector(selectSortOrder);
   const studentDataTitle = useSelector(selectStudentDataTitle);
   const [openModule, setOpenModule] = useState(null);
-  console.log(studentList);
   // State for search query
   const [searchQuery, setSearchQuery] = useState({
     id: "",

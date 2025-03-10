@@ -15,9 +15,9 @@ const initialState = {
       id: 1,
       title: "Dashboard",
       sublinks: [
-        { id: 1, title: "Admin Dashboard", to: "/admin_dashboard", subBread: "Admin" },
-        { id: 2, title: "Teacher Dashboard", to: "/", subBread: "Teacher" },
-        { id: 3, title: "Student Dashboard", to: "/", subBread: "Student" },
+        { id: 1, title: 'Admin Dashboard', to: '/admin_dashboard', subBread: "Admin" },
+        { id: 2, title: 'Teacher Dashboard', to: '/', subBread: "Teacher" },
+        { id: 3, title: 'Student Dashboard', to: '/', subBread: "Student" },
       ],
       icon: <RxDashboard />,
       bread: "Home",
