@@ -25,7 +25,7 @@ export const fetchStudentsRecord = createAsyncThunk(
     "records/fetchStudentsRecords",
     async () => {
       const response = await axios.get(API_URL);
-     console.log("Fetched Data:", response.data);
+      console.log("Fetched Data:", response.data);
       return response.data;
     }
   );

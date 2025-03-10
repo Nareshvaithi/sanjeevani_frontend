@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { LuUser } from "react-icons/lu";
 import { RiParentLine } from "react-icons/ri";
@@ -6,108 +5,203 @@ import { MdOutlineMail, MdOutlineDateRange } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
 import { BsGenderAmbiguous } from "react-icons/bs";
 import { FaRegBuilding } from "react-icons/fa";
-import { useDispatch } from "react-redux";
-import { editStudentData, fetchStudentsRecord } from "../../store/adminSlices/adminStudentsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { editStudentData } from "../../store/adminSlices/adminStudentsSlice";
+import { selectSingleStudent, setSingleStudentRecord } from "../../store/formSlices/StudentDetailsSlice";
+import { useFormik } from "formik";
+import { useEffect, useState } from "react";
+import { Button, Avatar, Box } from "@mui/material";
+import InputField from "../../components/Common/InputMUI";
 
-const EditStudentForm = ({ setOpenModule, studentData, onUpdate }) => {
+const EditStudentForm = ({ openModule, setOpenModule }) => {
+  if (openModule !== 'edit') return null;
 
-  const dispatch=useDispatch()
-  const [formData, setFormData] = useState({ ...studentData });
- console.log("formData",formData)
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const studentDetails = useSelector(selectSingleStudent);
+  const dispatch = useDispatch();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    
-    // onUpdate(formData);
-    dispatch(editStudentData(formData))
-    dispatch(fetchStudentsRecord())
-    // setOpenModule(null);
+  const {
+    _id,
+    id,
+    fullName,
+    gender,
+    email,
+    fatherName,
+    batchID,
+    motherName,
+    residentialAddress,
+    fatherPhone,
+    dob,
+    join_date,
+    imageUrls,
+    paymentTotal,
+    paymentRecords,
+    status,
+  } = studentDetails || {};
+
+  // Image preview state
+  const [preview, setPreview] = useState(imageUrls || "");
+
+  const formik = useFormik({
+    initialValues: {
+      id: id || "",
+      fullName: fullName || "",
+      gender: gender || "",
+      email: email || "",
+      fatherName: fatherName || "",
+      batchID: batchID || "",
+      motherName: motherName || "",
+      residentialAddress: residentialAddress || "",
+      fatherPhone: fatherPhone || "",
+      dob: dob || "",
+      join_date: join_date || "",
+      imageUrls: imageUrls || "",
+      paymentTotal: paymentTotal || "",
+      paymentRecords: paymentRecords || "",
+      status: status || "",
+    },
+    onSubmit: (values) => {
+      console.log("Submitting Data:", values);
+      dispatch(editStudentData(values));
+      dispatch(editStudentData(_id));
+      setOpenModule(null);
+    },
+  });
+
+  // Update formik values when studentDetails changes
+  useEffect(() => {
+    if (studentDetails) {
+      formik.setValues({
+        id: studentDetails.id || "",
+        fullName: studentDetails.fullName || "",
+        gender: studentDetails.gender || "",
+        email: studentDetails.email || "",
+        fatherName: studentDetails.fatherName || "",
+        batchID: studentDetails.batchID || "",
+        motherName: studentDetails.motherName || "",
+        residentialAddress: studentDetails.residentialAddress || "",
+        fatherPhone: studentDetails.fatherPhone || "",
+        dob: studentDetails.dob || "",
+        join_date: studentDetails.join_date || "",
+        imageUrls: studentDetails.imageUrls || "",
+        paymentTotal: studentDetails.paymentTotal || "",
+        paymentRecords: studentDetails.paymentRecords || "",
+        status: studentDetails.status || "",
+      });
+      setPreview(studentDetails.imageUrls || "");
+    }
+  }, [studentDetails]);
+
+  // Handle file input separately
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      // Update Formik state
+      formik.setFieldValue("imageUrls", file);
+
+      // Show preview
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   return (
-  
-        <motion.div
-          initial={{ x: "100%" }}
-          animate={{ x: 0 }}
-          exit={{ x: "100%" }}
-          transition={{ duration: 0.4, ease: "easeInOut" }}
-          className="fixed top-0 right-0 w-screen lg:w-1/2 h-screen bg-white shadow-lg z-50 overflow-y-auto p-5 rounded-none lg:rounded-l-xl"
-        >
-          <button
-            onClick={() => setOpenModule(null)}
-            className="absolute top-5 right-5 text-3xl font-bold cursor-pointer z-10"
-          >
-            &times;
-          </button>
-          <div className="relative p-5 font-mainFont1">
-            <h3 className="text-2xl pb-5">Edit Student</h3>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="bg-gray-100 p-5 rounded-xl flex flex-col lg:flex-row items-start lg:items-center gap-5">
-                <div className="rounded-xl w-full lg:w-fit">
-                  <img src={formData.imageUrls} alt="Profile" className="rounded-xl w-full" />
-                </div>
-                <div className="">
-                  <h3 className="text-2xl">{formData.fullName}</h3>
-                  <p className="text-sm text-gray-600">{formData.batchID}</p>
-                </div>
-              </div>
-
-              <div>
-                <h3 className="font-bold">Academic Details :</h3>
-                <div className="py-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                  <InputField icon={<LuUser />} label="Student ID" name="_id" value={formData._id} onChange={handleChange} disabled />
-                  <InputField icon={<LuUser />} label="Date of Join" name="join_date" value={formData.join_date} onChange={handleChange} />
-                  {/* <InputField icon={<LuUser />} label="Payment Status" name="payment" value={formData.payment} onChange={handleChange} /> */}
-                  <InputField icon={<LuUser />} label="Student Status" name="status" value={formData.status ? "active" : "inactive"} onChange={handleChange} />
-                  <InputField icon={<FaRegBuilding />} label="Batch" name="batchID" value={formData.batchID} onChange={handleChange} />
-                </div>
-              </div>
-
-              <div>
-                <h3 className="font-bold">Personal Details :</h3>
-                <div className="py-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                  <InputField icon={<LuUser />} label="Name" name="fullName" value={formData.fullName} onChange={handleChange} />
-                  <InputField icon={<RiParentLine />} label="Parents Mobile" name="fatherPhone" value={formData.fatherPhone} onChange={handleChange} />
-                  <InputField icon={<MdOutlineMail />} label="Email" name="email" value={formData.email} onChange={handleChange} />
-                  <InputField icon={<BsGenderAmbiguous />} label="Gender" name="gender" value={formData.gender} onChange={handleChange} />
-                  <InputField icon={<MdOutlineDateRange />} label="Date of Birth" name="dob" value={formData.dob} onChange={handleChange} />
-                  <InputField icon={<IoLocationOutline />} label="Address" name="residentialAddress" value={formData.residentialAddress} onChange={handleChange} />
-                </div>
-              </div>
-
-              <div className="flex gap-5">
-                <button onClick={() => setOpenModule({type:null})} type="submit" className="bg-green-500 hover:bg-white px-5 py-2 text-white border border-green-500 hover:text-green-500 rounded-md transition-all duration-300">
-                  Save Changes
-                </button>
-                <button onClick={() => setOpenModule({type:null})} className="px-5 py-2 text-themeskyblue border border-themeskyblue rounded-md hover:bg-themeskyblue hover:text-white transition-all duration-300">
-                  Cancel
-                </button>
-              </div>
-            </form>
+    <motion.div
+      initial={{ x: "100%" }}
+      animate={{ x: 0 }}
+      exit={{ x: "100%" }}
+      transition={{ duration: 0.4, ease: "easeInOut" }}
+      className="fixed top-0 right-0 w-screen lg:w-1/2 h-screen bg-white shadow-lg z-50 overflow-y-auto p-5 rounded-none lg:rounded-l-xl"
+    >
+      <button
+        onClick={() => { setOpenModule(null); dispatch(setSingleStudentRecord()); }}
+        className="absolute top-5 right-5 text-3xl font-bold cursor-pointer z-10"
+      >
+        &times;
+      </button>
+      <div className="relative p-5 font-mainFont1">
+        <h3 className="text-2xl pb-5">Edit Student</h3>
+        <form onSubmit={formik.handleSubmit} className="space-y-6">
+          {/* Image Upload */}
+          <div className="bg-gray-100 p-5 rounded-xl flex flex-col lg:flex-row items-start lg:items-center gap-5">
+            <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
+              <Avatar src={preview} sx={{ width: 100, height: 100 }} />
+              <input
+                accept="image/*"
+                type="file"
+                id="image-upload"
+                style={{ display: "none" }}
+                onChange={handleImageChange}
+              />
+              <label htmlFor="image-upload">
+                <Button variant="contained" component="span">
+                  Upload Image
+                </Button>
+              </label>
+            </Box>
           </div>
-        </motion.div>
+
+          {/* Academic Details */}
+          <div>
+            <h3 className="font-bold">Academic Details :</h3>
+            <div className="py-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              <InputField icon={<LuUser />} label="Student ID" name="id" value={formik.values.id} onChange={formik.handleChange} disabled />
+              <InputField
+                icon={<MdOutlineDateRange />}
+                label="Date of Join"
+                name="join_date"
+                type="date" // Set input type to "date"
+                value={formik.values.join_date}
+                onChange={formik.handleChange}
+              />
+              <InputField icon={<LuUser />} label="Student Status" name="status" value={formik.values.status ? "active" : "inactive"} onChange={formik.handleChange} />
+              <InputField icon={<FaRegBuilding />} label="Batch" name="batchID" value={formik.values.batchID} onChange={formik.handleChange} />
+            </div>
+          </div>
+
+          {/* Personal Details */}
+          <div>
+            <h3 className="font-bold">Personal Details :</h3>
+            <div className="py-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              <InputField icon={<LuUser />} label="Name" name="fullName" value={formik.values.fullName} onChange={formik.handleChange} />
+              <InputField icon={<RiParentLine />} label="Parents Mobile" name="fatherPhone" value={formik.values.fatherPhone} onChange={formik.handleChange} />
+              <InputField icon={<MdOutlineMail />} label="Email" name="email" value={formik.values.email} onChange={formik.handleChange} />
+              <InputField icon={<BsGenderAmbiguous />} label="Gender" name="gender" value={formik.values.gender} onChange={formik.handleChange}
+                options={[
+                  { value: "Male", label: "Male" },
+                  { value: "Female", label: "Female" },
+                  { value: "Other", label: "Other" }
+                ]}
+              />
+              <InputField
+                icon={<MdOutlineDateRange />}
+                label="Date of Birth"
+                name="dob"
+                type="date" // Set input type to "date"
+                value={formik.values.dob}
+                onChange={formik.handleChange}
+              />
+              <InputField icon={<IoLocationOutline />} label="Address" name="residentialAddress" value={formik.values.residentialAddress} onChange={formik.handleChange} />
+            </div>
+          </div>
+
+          {/* Buttons */}
+          <div className="flex gap-5">
+            <button type="submit" className="bg-green-500 hover:bg-white px-5 py-2 text-white border border-green-500 hover:text-green-500 rounded-md transition-all duration-300">
+              Save Changes
+            </button>
+            <button onClick={() => {setOpenModule(null)}} className="px-5 py-2 text-themeskyblue border border-themeskyblue rounded-md hover:bg-themeskyblue hover:text-white transition-all duration-300">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </motion.div>
   );
 };
 
-// Reusable InputField Component
-const InputField = ({ icon, label, name, value, onChange, disabled }) => (
-  <div className="flex items-start gap-3">
-    <div className="text-buttonblue text-xl">{icon}</div>
-    <div className="w-full">
-      <h3 className="font-semibold -mb-1">{label}</h3>
-      <input
-        type="text"
-        name={name}
-        value={value}
-        onChange={onChange}
-        disabled={disabled}
-        className={`w-full p-2 border rounded ${disabled ? "cursor-not-allowed" : ""}`}
-      />
-    </div>
-  </div>
-);
 
-export default EditStudentForm;
+
+export default EditStudentForm; 

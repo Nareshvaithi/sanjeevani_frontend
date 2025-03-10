@@ -42,9 +42,9 @@ const AdminStudentsList = () => {
   const filteredStudents = studentList.filter((student) => {
    
     return (
-      student._id.toString().includes(searchQuery.id.toLowerCase()) &&
-      student.fullName.toLowerCase().replaceAll(' ',"").includes(searchQuery.name.toLowerCase()) &&
-      student.batchID.toLowerCase().replaceAll(' ',"").includes(searchQuery.batch.toLowerCase())
+      student.id.toLowerCase().includes(searchQuery.id.toLowerCase()) &&
+      student.fullName.toLowerCase().replaceAll(' ',"").includes(searchQuery.name.toLowerCase()) 
+      // student.batchID.toLowerCase().replaceAll(' ',"").includes(searchQuery.batch.toLowerCase())
     );
   });
 
@@ -101,7 +101,7 @@ const AdminStudentsList = () => {
         </button>
         <button
           onClick={() => {
-            setSearchQuery({id: "", name: "",batch:""});
+            setSearchQuery({id: "",name: "",batch:""});
           }}
           className="px-5 bg-green-500 py-2 text-white text-lg rounded-md"
         >
@@ -164,12 +164,12 @@ const AdminStudentsList = () => {
               </tr>
             </thead>
             <tbody className="font-light">
-              {currentStudents.map((student,index) => {
-                const {_id,fullName,gender,email,status,paymentRecords,batchID,imageUrls} = student;
+              {currentStudents.map((student) => {
+                const {_id,id,fullName,gender,email,status,paymentRecords,batchID,imageUrls} = student;
                 console.log(fullName);
                 const studentStatus = status ? "Active" : "InActive";
                 return <tr key={_id} className="odd:bg-gray-100">
-                  <td className="py-4 px-2 whitespace-nowrap">{index+1}</td>
+                  <td className="py-4 px-2 whitespace-nowrap">{id}</td>
                   <td className="py-4 px-2 flex gap-3 items-center whitespace-nowrap">
                     <img className="w-10 rounded-full" src={imageUrls} alt="" />
                     <span>{fullName}</span>
@@ -188,7 +188,7 @@ const AdminStudentsList = () => {
                   <td className="flex py-4 px-2 items-center gap-5 whitespace-nowrap">
                     <div
                       onClick={() => {
-                        setOpenModule("view")
+                        setOpenModule("view");
                         dispatch(fetchSingleStudent(_id));
                       }
                     }
@@ -197,7 +197,11 @@ const AdminStudentsList = () => {
                       <MdOutlineRemoveRedEye />
                     </div>
                     <div
-                      onClick={() => setOpenModule("edit", student)}
+                      onClick={() => {
+                        setOpenModule("edit");
+                        dispatch(fetchSingleStudent(_id));
+                      }
+                    }
                       className="bg-gray-200 hover:bg-buttonblue hover:text-white rounded-full p-2 transition-colors duration-300"
                     >
                       <FiEdit />

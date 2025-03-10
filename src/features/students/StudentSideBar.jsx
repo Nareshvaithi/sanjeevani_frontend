@@ -4,14 +4,12 @@ import { selectLogo } from "../../store/adminSlices/adminSidebarSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { FaHome } from "react-icons/fa";
-import { SiGoogleclassroom } from "react-icons/si";
-import { CgCalendarDates } from "react-icons/cg";
 import { BsFillExclamationSquareFill } from "react-icons/bs";
 import { FaHandHoldingDollar } from "react-icons/fa6";
+import { MdAccountCircle } from "react-icons/md";
 
-
-const StudentSideBar = ({data}) => {
-    const userId = data._id;
+const StudentSideBar = ({studentDetails}) => {
+    const userId = studentDetails._id;
     const logo = useSelector(selectLogo);
     const openSidebar = useSelector(selectStudentSidebar);
     const studentSidebarData = useSelector(selectStudentSidebarData);
@@ -27,8 +25,7 @@ const StudentSideBar = ({data}) => {
     };
     const iconList = {
         home:<FaHome/>,
-        class:<SiGoogleclassroom/>,
-        attendance:<CgCalendarDates/>,
+        my_profile:<MdAccountCircle/>,
         apply_leave:<BsFillExclamationSquareFill/>,
         pay_fees:<FaHandHoldingDollar/>
     };

@@ -7,8 +7,8 @@ import StudentLayout from "./layouts/StudentLayout";
 import StudentHome from "./pages/Students/StudentHome";
 import Login from "./pages/auth/Login";
 import ProtectedRoute from "./features/ProtectedRoute/ProtectedRoute";
-import AttendanceCalendar from "./pages/Students/StudentAttendance";
 import Context from "./Context";
+import ApplyLeave from "./features/students/ApplyLeave";
 
 
 function App() {
@@ -25,7 +25,7 @@ function App() {
       {/* Student Routes */}
       <Route path="/student/:userId" element={<ProtectedRoute> <StudentLayout/> </ProtectedRoute>}>
         <Route index element={<StudentHome />} />
-        <Route path="attendance" element={<AttendanceCalendar/>}/>
+        <Route path="apply_leave" element={<ApplyLeave/>}/>
       </Route>
       {/* Login */}
       <Route path="/" element={<Login />} />

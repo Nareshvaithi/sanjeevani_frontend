@@ -7,6 +7,7 @@ import { AccountCircle, Lock } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { loginAdmin, loginUser } from "../../store/authSlice/AuthSlice";
 import { selectAllStudents } from "../../store/adminSlices/adminStudentsSlice";
+import { fetchSingleStudent, selectSingleStudent } from "../../store/formSlices/StudentDetailsSlice";
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -21,7 +22,7 @@ const Login = () => {
             .required("Password is required")
             .min(6, "Password must be at least 6 characters"),
     });
-
+    console.log(studentList);
     const formik = useFormik({
         initialValues: {
             userName: "",
@@ -37,8 +38,9 @@ const Login = () => {
             alert('Login successfully');
             dispatch(setLogin());
             const user = studentList.find(({userName}) => userName === values.userName);
-            const userId = user._id
+            const userId = user._id;
             navigate(`/student/${userId}`);
+            dispatch(fetchSingleStudent(userId));
             }else{
                 const resultAction = await dispatch(loginAdmin(values));
                 if(loginAdmin.fulfilled.match(resultAction)){
