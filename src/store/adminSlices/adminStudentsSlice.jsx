@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-const API_URL ="https://api-sanjeevani.konceptsdandd.com/student/entroll"
+const API_URL ="https://api-sanjeevani.konceptsdandd.com/existingstudents"
 
 const initialState = {
     addsStudentsRecord: [],
@@ -29,6 +29,19 @@ export const fetchStudentsRecord = createAsyncThunk(
       const response = await axios.get(API_URL);
       console.log("Fetched Data:", response.data);
       return response.data;
+    }
+  );
+  // add student ........
+  export const addStudent = createAsyncThunk(
+    "existingstudents/addStudent",
+    async (studentData, { rejectWithValue }) => {
+      try {
+        const response = await axios.post(API_URL, studentData);
+        console.log("succes");
+        return response.data;
+      } catch (error) {
+        return rejectWithValue(error.response?.data || "Error adding banner");
+      }
     }
   );
 

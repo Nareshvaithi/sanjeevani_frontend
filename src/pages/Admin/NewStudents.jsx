@@ -1,15 +1,22 @@
-import { useSelector } from "react-redux";
-import { selectAllStudents, selectStudentDataTitle } from "../../store/adminSlices/adminStudentsSlice";
-import { format } from "date-fns";
+import { useDispatch, useSelector } from "react-redux";
+import { selectStudentDataTitle } from "../../store/adminSlices/adminStudentsSlice";
+import { MdAdd } from "react-icons/md";
 import { FiEdit } from "react-icons/fi";
+import { selectNewStudents } from "../../store/adminSlices/newStudentSlice";
 
-const NewStudents = ()=>{
+const NewStudents = () => {
+    const dispatch = useDispatch()
     const studentDataTitle = useSelector(selectStudentDataTitle);
-    const newStudentList = useSelector(selectAllStudents);
-    const currentMonth = format(new Date(), 'MMMM');
-    console.log(currentMonth);
+    const newStudentList = useSelector(selectNewStudents);
     
-    return(
+    console.log(newStudentList, "newStudent");
+
+    const addToExistingStudent = (studentData) => {
+        dispatch()
+        console.log(studentData);
+    };
+
+    return (
         <section className="bg-gray-100 p-5 pt-20 font-mainFont1">
             <div className="bg-white px-3 py-5 rounded-lg">
                 <div className="flex justify-between pb-5">
@@ -24,43 +31,58 @@ const NewStudents = ()=>{
                                         key={id}
                                         className={`${title === 'Batch' || title === 'Status' ? "hidden" : ""} border-b border-gray-300 py-4 px-2 whitespace-nowrap`}
                                     >
-                                    {title}
+                                        {title}
                                     </th>
                                 ))}
                             </tr>
                         </thead>
                         <tbody>
-                            {
-                                newStudentList.map((student,index)=>{
-                                    const {_id,id,fullName,dob,join_date,status,gender,email,phone,paymentRecords,paymentTotal} = student;
-                                    const studentStatus = status ? "Active" : "InActive";
-                                    const findPayStatus = paymentRecords[0].month[0].payment_status;
-                                    return <tr key={_id} className="odd:bg-gray-200">
+                            {newStudentList.map((student) => {
+                                const { _id, id, fullName, dob, join_date, status, gender, email, phone, paymentRecords, paymentTotal } = student;
+                                const studentStatus = status ? "Active" : "Inactive";
+                                const findPayStatus = paymentRecords?.[0]?.month?.[0]?.payment_status ?? false;
+
+                                return (
+                                    <tr key={_id} className="odd:bg-gray-200">
                                         <td className="py-4 px-2 whitespace-nowrap">{id}</td>
                                         <td className="py-4 px-2 whitespace-nowrap">{fullName}</td>
-                                        <td className="py-4 px-2 whitespace-nowrap" title={email}>{`${email.substring(0, 20)}...`}</td>
+                                        <td className="py-4 px-2 whitespace-nowrap" title={email}>
+                                            {email.length > 20 ? `${email.substring(0, 20)}...` : email}
+                                        </td>
                                         <td className="py-4 px-2 whitespace-nowrap">
-                                        <span className={`${gender.toLowerCase() === "male" ? "bg-themelightblue" : "bg-pink-600"} text-[12px] text-white px-2 py-1 rounded-md`}>{gender}</span>
+                                            <span className={`${gender.toLowerCase() === "male" ? "bg-themelightblue" : "bg-pink-600"} text-[12px] text-white px-2 py-1 rounded-md`}>
+                                                {gender}
+                                            </span>
                                         </td>
                                         <td className="py-4 px-2 whitespace-nowrap">{phone}</td>
-                                        <td className={`py-4 px-2 whitespace-nowrap`}>
-                                            <span className={`${findPayStatus ? "bg-green-500" : "bg-red-500"} text-[12px] text-white px-2 py-1 rounded-md`}>{findPayStatus ? "Paid" : "Unpaid"}</span>
+                                        <td className="py-4 px-2 whitespace-nowrap">
+                                            <span className={`${findPayStatus ? "bg-green-500" : "bg-red-500"} text-[12px] text-white px-2 py-1 rounded-md`}>
+                                                {findPayStatus ? "Paid" : "Unpaid"}
+                                            </span>
                                         </td>
                                         <td className="py-4 px-2 whitespace-nowrap">{paymentTotal}</td>
-                                        <td className={`py-4 px-2 whitespace-nowrap`}>
-                                            <div className="w-fit bg-gray-200 hover:bg-buttonblue hover:text-white rounded-full p-2 transition-colors duration-300">
-                                                <FiEdit />
+                                        <td className="py-4 px-2 whitespace-nowrap">
+                                            <div className="flex items-center gap-3">
+                                                <button className="w-fit bg-gray-200 hover:bg-buttonblue hover:text-white rounded-full p-2 transition-colors duration-300">
+                                                    <FiEdit />
+                                                </button>
+                                                <button 
+                                                    onClick={() => addToExistingStudent(student)}
+                                                    className="w-fit bg-gray-200 hover:bg-buttonblue hover:text-white rounded-full p-2 transition-colors duration-300"
+                                                >
+                                                    <MdAdd />
+                                                </button>
                                             </div>
                                         </td>
                                     </tr>
-                                })
-                            }
+                                );
+                            })}
                         </tbody>
                     </table>
                 </div>
             </div>
         </section>
-    )
-}
+    );
+};
 
 export default NewStudents;
