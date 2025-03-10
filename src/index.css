@@ -14,18 +14,18 @@
     @apply text-xl text-gray-700 font-medium
 }
 
+.custom-calendar .react-calendar__tile--active {
+  background-color: #f0f0f0;
+}
 
-/* Custom styles for FullCalendar */
-.fc-daygrid-day-frame {
-    position: relative;
-  }
-  
-  .fc-daygrid-day-number {
-    text-align: left;
-    padding: 4px;
-  }
-  
-  .fc-event {
-    border-radius: 4px;
-    padding: 2px 4px;
-  }
+.custom-calendar .present {
+  background-color: #e6ffec;
+}
+
+.custom-calendar .absent {
+  background-color: #ffe6e6;
+}
+
+.custom-calendar .custom-event {
+  background-color: #e6f3ff;
+}

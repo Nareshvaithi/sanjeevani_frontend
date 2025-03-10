@@ -11,6 +11,7 @@ import { selectSingleStudent, setSingleStudentRecord } from "../../store/formSli
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { Button, Avatar, Box } from "@mui/material";
+import InputField from "../../components/Common/InputMUI";
 
 const EditStudentForm = ({ openModule, setOpenModule }) => {
   if (openModule !== 'edit') return null;
@@ -19,6 +20,7 @@ const EditStudentForm = ({ openModule, setOpenModule }) => {
   const dispatch = useDispatch();
 
   const {
+    _id,
     id,
     fullName,
     gender,
@@ -60,6 +62,7 @@ const EditStudentForm = ({ openModule, setOpenModule }) => {
     onSubmit: (values) => {
       console.log("Submitting Data:", values);
       dispatch(editStudentData(values));
+      dispatch(editStudentData(_id));
       setOpenModule(null);
     },
   });
@@ -189,7 +192,7 @@ const EditStudentForm = ({ openModule, setOpenModule }) => {
             <button type="submit" className="bg-green-500 hover:bg-white px-5 py-2 text-white border border-green-500 hover:text-green-500 rounded-md transition-all duration-300">
               Save Changes
             </button>
-            <button onClick={() => setOpenModule(null)} className="px-5 py-2 text-themeskyblue border border-themeskyblue rounded-md hover:bg-themeskyblue hover:text-white transition-all duration-300">
+            <button onClick={() => {setOpenModule(null)}} className="px-5 py-2 text-themeskyblue border border-themeskyblue rounded-md hover:bg-themeskyblue hover:text-white transition-all duration-300">
               Cancel
             </button>
           </div>
@@ -199,40 +202,6 @@ const EditStudentForm = ({ openModule, setOpenModule }) => {
   );
 };
 
-// Reusable InputField Component
-const InputField = ({ icon, label, name, value, onChange, disabled, options, type = "text" }) => (
-  <div className="flex items-start gap-3">
-    <div className="text-buttonblue text-xl">{icon}</div>
-    <div className="w-full">
-      <h3 className="font-semibold -mb-1">{label}</h3>
 
-      {options ? (
-        <select
-          name={name}
-          value={value}
-          onChange={onChange}
-          disabled={disabled}
-          className={`w-full p-2 border rounded ${disabled ? "cursor-not-allowed bg-gray-100" : ""}`}
-        >
-          <option value="">Select {label}</option> {/* Default Placeholder */}
-          {options.map((option, index) => (
-            <option key={index} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
-      ) : (
-        <input
-          type={type} // Use the type passed as a prop
-          name={name}
-          value={value}
-          onChange={onChange}
-          disabled={disabled}
-          className={`w-full p-2 border rounded ${disabled ? "cursor-not-allowed bg-gray-100" : ""}`}
-        />
-      )}
-    </div>
-  </div>
-);
 
-export default EditStudentForm;
+export default EditStudentForm; 

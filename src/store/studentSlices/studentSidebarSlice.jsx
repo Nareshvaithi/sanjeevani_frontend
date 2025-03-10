@@ -9,13 +9,8 @@ const initialState = {
     },
     {
       id: 2,
-      title: "Class",
-      to: "/student/:userId/class",
-    },
-    {
-      id: 3,
-      title: "Attendance",
-      to: "/student/:userId/attendance",
+      title: "My Profile",
+      to: "/student/:userId/my_profile",
     },
     {
       id: 4,
