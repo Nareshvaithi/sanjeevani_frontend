@@ -61,8 +61,13 @@ const EditStudentForm = ({ openModule, setOpenModule }) => {
     },
     onSubmit: (values) => {
       console.log("Submitting Data:", values);
-      dispatch(editStudentData(values));
-      dispatch(editStudentData(_id));
+      values.status=values.status=="Active" ? true : false
+      const updatedValues = {
+        ...values,
+        _id: String(studentDetails._id), 
+      };
+
+      dispatch(editStudentData(updatedValues)).unwrap();;
       setOpenModule(null);
     },
   });
@@ -72,6 +77,7 @@ const EditStudentForm = ({ openModule, setOpenModule }) => {
     if (studentDetails) {
       formik.setValues({
         id: studentDetails.id || "",
+        _id: studentDetails._id || "",
         fullName: studentDetails.fullName || "",
         gender: studentDetails.gender || "",
         email: studentDetails.email || "",
@@ -85,7 +91,7 @@ const EditStudentForm = ({ openModule, setOpenModule }) => {
         imageUrls: studentDetails.imageUrls || "",
         paymentTotal: studentDetails.paymentTotal || "",
         paymentRecords: studentDetails.paymentRecords || "",
-        status: studentDetails.status || "",
+        status: studentDetails.status ? "Active" : "InActive" || "",
       });
       setPreview(studentDetails.imageUrls || "");
     }
@@ -156,7 +162,19 @@ const EditStudentForm = ({ openModule, setOpenModule }) => {
                 value={formik.values.join_date}
                 onChange={formik.handleChange}
               />
-              <InputField icon={<LuUser />} label="Student Status" name="status" value={formik.values.status ? "active" : "inactive"} onChange={formik.handleChange} />
+              {/* <InputField icon={<LuUser />} label="Student Status" name="status" value={formik.values.status ? "active" : "inactive"} onChange={formik.handleChange} /> */}
+              <InputField
+                icon={<LuUser />}
+                label="Student Status"
+                name="status"
+                value={formik.values.status }
+                onChange={formik.handleChange}
+                options={[
+                  { value: "Active", label: "Active" },
+                  { value: "InActive", label: "InActive" },
+                ]}
+              />
+
               <InputField icon={<FaRegBuilding />} label="Batch" name="batchID" value={formik.values.batchID} onChange={formik.handleChange} />
             </div>
           </div>

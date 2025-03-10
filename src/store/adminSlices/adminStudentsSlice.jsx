@@ -31,7 +31,6 @@ export const fetchStudentsRecord = createAsyncThunk(
   );
 
   //edit student records.................................
-
   export const editStudentData = createAsyncThunk(
     "data/editStudentData",
     async ({ _id, ...updatedData }, { rejectWithValue }) => {
@@ -96,7 +95,7 @@ const studentSlice = createSlice({
         state.editstatus = "Proccessing";
       })
       .addCase(editStudentData.fulfilled, (state, action) => {
-        alert("suceess")
+        alert("succes")
         state.editstatus = "save changes";
         state.addsStudentsRecord = state.addsStudentsRecord.map((data) =>
           data._id === action.payload._id ? action.payload : data
@@ -106,7 +105,7 @@ const studentSlice = createSlice({
       .addCase(editStudentData.rejected, (state, action) => {
         state.editstatus = "submit";
         state.error = action.payload;
-        toast.error("Edit Failed");
+        
       });
         }
 })

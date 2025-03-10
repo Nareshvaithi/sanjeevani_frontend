@@ -110,7 +110,7 @@ const AdminSideBar = () => {
               </div>
             ))}
           </div>
-        </div>
+        </div> 
       </div>
       <div className={`block lg:hidden z-50 fixed overflow-hidden top-[63px] w-screen h-screen ${openSidebar ? "translate-x-0" : "-translate-x-[100%]"} transition-transform duration-700`}>
         <div className={`w-3/4 h-full bg-themedarkblue transition-all duration-700 ease-in-out`}>

@@ -21,7 +21,7 @@ const StudentHome = ()=>{
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-5 pt-5">
                     <QuickBox title={"Total Class Attend"} icon={totalClass} count={"20/60"}/>
-                    <QuickBox title={"Grade"} icon={grade} count={'A'}/>
+                    {/* <QuickBox title={"Grade"} icon={grade} count={'A'}/> */}
                     <QuickBox title={"Attendance %"} icon={attendance} count={98.7}/>
                     <QuickBox title={"Competition"} icon={competition} count={5}/>
                 </div>  

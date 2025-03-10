@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import { format, parse, startOfDay, getDay } from "date-fns";
-import { enUS } from "date-fns/locale"; // Import the locale directly
+import { enUS } from "date-fns/locale"; 
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Tooltip } from "@mui/material";
 
 const localizer = dateFnsLocalizer({
   format,
   parse,
-  startOfWeek: () => 0, // Start the week on Sunday
+  startOfWeek: () => 0, 
   getDay,
-  locales: { "en-US": enUS }, // Use the imported locale
+  locales: { "en-US": enUS }, 
 });
 
 const attendance = ["2025-03-01", "2025-03-02", "2025-03-03", "2025-03-04"];

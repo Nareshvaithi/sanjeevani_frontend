@@ -7,50 +7,62 @@ import { FaChalkboardTeacher } from "react-icons/fa";
 import { FaBuilding } from "react-icons/fa";
 import { LuNotepadText } from "react-icons/lu";
 import { CiCalendarDate } from "react-icons/ci";
-
+import { BsFileEarmarkCheck } from "react-icons/bs";
 
 const initialState = {
   data: [
     {
       id: 1,
-      title: 'Dashboard',
+      title: "Dashboard",
       sublinks: [
-        { id: 1, title: 'Admin Dashboard', to: '/', subBread: "Admin" },
-        { id: 2, title: 'Teacher Dashboard', to: '/', subBread: "Teacher" },
-        { id: 3, title: 'Student Dashboard', to: '/', subBread: "Student" },
+        { id: 1, title: "Admin Dashboard", to: "/admin_dashboard", subBread: "Admin" },
+        { id: 2, title: "Teacher Dashboard", to: "/", subBread: "Teacher" },
+        { id: 3, title: "Student Dashboard", to: "/", subBread: "Student" },
       ],
       icon: <RxDashboard />,
       bread: "Home",
     },
     {
       id: 2,
-      title: 'Students',
+      title: "Students",
       sublinks: [
-        { id: 1, title: 'Student List', to: '/admin_dashboard/students', subBread: "Students List" },
+        {
+          id: 1,
+          title: "Student List",
+          to: "/admin_dashboard/students",
+          subBread: "Students List",
+        },
       ],
       icon: <FaGraduationCap />,
       bread: "Students",
     },
-   
-    
+
     {
       id: 4,
-      title: 'Batch',
+      title: "Batch",
       icon: <FaBuilding />,
       bread: "Batch",
     },
     {
       id: 5,
-      title: 'Fees',
+      title: "Fees",
       icon: <LuNotepadText />,
       bread: "Fees",
     },
-    // {
-    //   id: 6,
-    //   title: 'New Students',
-    //   icon: <MdOutlineWc />,
-    //   bread: "Fees",
-    // }
+    {
+      id: 6,
+      title: "Attendance",
+      sublinks: [
+        {
+          id: 1,
+          title: "Student Attendance",
+          to: "/admin_dashboard/attendance",
+          subBread: "Students Attendance",
+        },
+      ],
+      icon: <BsFileEarmarkCheck />,
+      bread: "attendance",
+    },
   ],
   logo: logo,
   smallLogo: smallLogo,
@@ -59,11 +71,10 @@ const initialState = {
   students: [], // Student data array
   sortField: null,
   sortOrder: "asc", // "asc" or "desc"
-}
-
+};
 
 export const adminSideBar = createSlice({
-  name: 'adminSideBar',
+  name: "adminSideBar",
   initialState,
   reducers: {
     setOpenSidebar(state, action) {
@@ -76,11 +87,12 @@ export const adminSideBar = createSlice({
     setStudents(state, action) {
       state.students = action.payload;
     },
-
-}})
+  },
+});
 
 export default adminSideBar.reducer;
-export const { setOpenSidebar, setBreadCrumb, sortStudents} = adminSideBar.actions;
+export const { setOpenSidebar, setBreadCrumb, sortStudents } =
+  adminSideBar.actions;
 export const selectLogo = (state) => state.adminSideBar.logo;
 export const selectSmallLogo = (state) => state.adminSideBar.smallLogo;
 export const selectAdminSidebarData = (state) => state.adminSideBar.data;
