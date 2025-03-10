@@ -9,6 +9,7 @@ const initialValue = {
     error: null,
 };
 
+
 export const fetchSingleStudent = createAsyncThunk(
     "single/fetchSingleStudent",
     async (id, { rejectWithValue }) => {
