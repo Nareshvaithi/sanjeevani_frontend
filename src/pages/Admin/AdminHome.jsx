@@ -48,7 +48,7 @@ const AdminHome = ()=>{
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-5 pt-5">
                     <QuickBox title={"Total Students"} icon={totalStudentImg} count={`${studentList.length}`}/>
-                    <QuickBox title={"New Students"} icon={newStudentImg} count={`${studentList.length}`}/>
+                    <QuickBox title={"New Students"} icon={newStudentImg} count={`${studentList.length}`} link={'new-students'}/>
                     <QuickBox title={"Un Paid Students"} icon={nonPaidImg} count={`${unpaid.length}`}/>
                     <QuickBox title={"Fees Collections"} icon={feesCollectionImg} count={`${studentList[0].paymentTotal}`}/>
                 </div>
