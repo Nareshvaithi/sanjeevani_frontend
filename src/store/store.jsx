@@ -4,10 +4,10 @@ import studentsReducer from "./adminSlices/adminStudentsSlice";
 import studentSidebarReducer from "./studentSlices/studentSidebarSlice";
 import studentEnrollmentReducer from "./studentSlices/studentsEnrollmentSlice";
 import loginReducer from "./authSlice/loginSlice";
-import studentLoginReducer from "./authSlice/AuthSlice";
-import studentRecordReducer from  "./formSlices/RegisterFormSlice";
-import singleStudentRecordReducer from "./formSlices/StudentDetailsSlice";
-import newStudentsReducer from "./adminSlices/newStudentSlice";
+import studentLoginReducer from "./authSlice/AuthSlice"
+import studentRecordReducer from  "./formSlices/RegisterFormSlice"
+import singleStudentRecordReducer from "./formSlices/StudentDetailsSlice"
+import studentsEventsReducer from "../store/adminSlices/AdminStudentsEvents"
 
 const store = configureStore({
     reducer:{
@@ -19,7 +19,7 @@ const store = configureStore({
         login:loginReducer,
         studentLogin:studentLoginReducer,
         singleStudent:singleStudentRecordReducer,
-        newStudents:newStudentsReducer,
+        studentsEvents:studentsEventsReducer
     }
 })
 

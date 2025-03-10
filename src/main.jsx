@@ -5,9 +5,9 @@ import store from './store/store.jsx';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { fetchStudentsRecord } from './store/adminSlices/adminStudentsSlice.jsx';
-import { fetchNewStudent } from './store/adminSlices/newStudentSlice.jsx';
+import { fetchStudentsEvents } from './store/adminSlices/EventsSlices.jsx';
 store.dispatch(fetchStudentsRecord());
-store.dispatch(fetchNewStudent());
+store.dispatch(fetchStudentsEvents());
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <BrowserRouter>

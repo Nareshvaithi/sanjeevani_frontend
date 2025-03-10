@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_URL = 'https://api-sanjeevani.konceptsdandd.com/student/entroll';
+const API_URL = import.meta.env.VITE_API_URL_LOCAL;
 
 const initialState = {
     newStudentsList:[],
@@ -13,6 +13,8 @@ export const fetchNewStudent = createAsyncThunk('enroll/fetchNewStudent', async 
     const response = await axios.get(API_URL);
     return response.data;
 });
+
+
 
 const newStudentSlice = createSlice({
     name:'newStudent',

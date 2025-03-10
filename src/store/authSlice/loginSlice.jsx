@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import loginImage from "../../assets/images/login.png";
+import loginImage from "../../assets/images/login.jpg";
 
 // Get initial login state from sessionStorage
 const storedLogin = sessionStorage.getItem("isLoggedIn");

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-const API_URL ="https://api-sanjeevani.konceptsdandd.com/existingstudents"
+const API_URL = import.meta.env.VITE_API_URL_LOCAL;
 
 const initialState = {
     addsStudentsRecord: [],
@@ -26,7 +26,7 @@ const initialState = {
 export const fetchStudentsRecord = createAsyncThunk(
     "records/fetchStudentsRecords",
     async () => {
-      const response = await axios.get(API_URL);
+      const response = await axios.get(`${API_URL}/student/entroll`);
       console.log("Fetched Data:", response.data);
       return response.data;
     }
@@ -36,7 +36,7 @@ export const fetchStudentsRecord = createAsyncThunk(
     "existingstudents/addStudent",
     async (studentData, { rejectWithValue }) => {
       try {
-        const response = await axios.post(API_URL, studentData);
+        const response = await axios.post(`${API_URL}/student/entroll`, studentData);
         console.log("succes");
         return response.data;
       } catch (error) {
@@ -45,14 +45,13 @@ export const fetchStudentsRecord = createAsyncThunk(
     }
   );
 
-  //edit student records
-
+  //edit student records.................................
   export const editStudentData = createAsyncThunk(
     "data/editStudentData",
     async ({ _id, ...updatedData }, { rejectWithValue }) => {
      
       try {
-          const response = await axios.put(`${API_URL}/${_id}`, updatedData);
+          const response = await axios.put(`${API_URL}/student/entroll/${_id}`, updatedData);
         console.log("Success: student record Edited", _id);
         return response.data;
       } catch (error) {
@@ -111,7 +110,7 @@ const studentSlice = createSlice({
         state.editstatus = "Proccessing";
       })
       .addCase(editStudentData.fulfilled, (state, action) => {
-        alert("suceess")
+        alert("succes")
         state.editstatus = "save changes";
         state.addsStudentsRecord = state.addsStudentsRecord.map((data) =>
           data._id === action.payload._id ? action.payload : data
@@ -121,7 +120,7 @@ const studentSlice = createSlice({
       .addCase(editStudentData.rejected, (state, action) => {
         state.editstatus = "submit";
         state.error = action.payload;
-        toast.error("Edit Failed");
+        
       });
         }
 })
