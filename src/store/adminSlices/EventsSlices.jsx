@@ -16,7 +16,7 @@ console.log("API_URL",API_URL)
 export const fetchStudentsEvents = createAsyncThunk(
   "events/fetchStudentsEvents",
   async () => {
-    const response = await axios.get(`${API_URL}`/"events");
+    const response = await axios.get(`${API_URL}/events`);
     console.log("response.data",response.data)
     return response.data;
   }
@@ -39,7 +39,7 @@ export const addStudentsEvents = createAsyncThunk(
 
 //delete.....................
 export const deleteStudentsEvents = createAsyncThunk(
-  "rate/deleteRate",
+  "events/deleteStudentsEvents",
   async (StudentsEventsId, { rejectWithValue }) => {
     try {
       const response = await axios.delete(`${API_URL}/${StudentsEventsId}`);
@@ -101,7 +101,7 @@ const studentsEventsSlice = createSlice({
       .addCase(deleteStudentsEvents.pending, (state) => {
         state.deletestatus = "Proccessing";
       })
-      .addCase(deleteRate.fulfilled, (state, action) => {
+      .addCase(deleteStudentsEvents.fulfilled, (state, action) => {
         state.deletestatus = "succeeded";
         state.studentsEventsList = state.studentsEventsList.filter(
           (event) =>event._id !== action.payload
@@ -115,7 +115,7 @@ const studentsEventsSlice = createSlice({
       //     draggable: true,
       // });
       })
-      .addCase(deleteRate.rejected, (state, action) => {
+      .addCase(deleteStudentsEvents.rejected, (state, action) => {
         state.deletestatus = "Submit";
         state.error = action.payload;
         toast.error("Delete Failed");
@@ -149,5 +149,5 @@ const studentsEventsSlice = createSlice({
 });
 
 export default studentsEventsSlice.reducer;
-export const SelectEventList = (state) => state.studentsEvents.studentsEventsList;
+export const selectEventList = (state) => state.studentsEvents.studentsEventsList;
 // export const addstatus = (state) => state.todayRate.addstatus;
