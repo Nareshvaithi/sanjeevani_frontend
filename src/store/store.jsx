@@ -7,7 +7,8 @@ import loginReducer from "./authSlice/loginSlice";
 import studentLoginReducer from "./authSlice/AuthSlice"
 import studentRecordReducer from  "./formSlices/RegisterFormSlice"
 import singleStudentRecordReducer from "./formSlices/StudentDetailsSlice"
-import studentsEventsReducer from "../store/adminSlices/AdminStudentsEvents"
+import newStudentReducer from "./adminSlices/newStudentSlice";
+// import studentsEventsReducer from "../store/adminSlices/AdminStudentsEvents"
 
 const store = configureStore({
     reducer:{
@@ -19,7 +20,8 @@ const store = configureStore({
         login:loginReducer,
         studentLogin:studentLoginReducer,
         singleStudent:singleStudentRecordReducer,
-        studentsEvents:studentsEventsReducer
+        newStudent:newStudentReducer
+        // studentsEvents:studentsEventsReducer
     }
 })
 

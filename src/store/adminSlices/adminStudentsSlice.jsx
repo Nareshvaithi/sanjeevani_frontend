@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-const API_URL = import.meta.env.VITE_API_URL_LOCAL;
+const API_URL = import.meta.env.VITE_API_URL;
 
 const initialState = {
     addsStudentsRecord: [],
@@ -26,7 +26,7 @@ const initialState = {
 export const fetchStudentsRecord = createAsyncThunk(
     "records/fetchStudentsRecords",
     async () => {
-      const response = await axios.get(`${API_URL}/student/entroll`);
+      const response = await axios.get(`${API_URL}/existingstudents`);
       console.log("Fetched Data:", response.data);
       return response.data;
     }
@@ -36,7 +36,7 @@ export const fetchStudentsRecord = createAsyncThunk(
     "existingstudents/addStudent",
     async (studentData, { rejectWithValue }) => {
       try {
-        const response = await axios.post(`${API_URL}/student/entroll`, studentData);
+        const response = await axios.post(`${API_URL}/existingstudents`, studentData);
         console.log("succes");
         return response.data;
       } catch (error) {
@@ -51,7 +51,7 @@ export const fetchStudentsRecord = createAsyncThunk(
     async ({ _id, ...updatedData }, { rejectWithValue }) => {
      
       try {
-          const response = await axios.put(`${API_URL}/student/entroll/${_id}`, updatedData);
+          const response = await axios.put(`${API_URL}/existingstudents/${_id}`, updatedData);
         console.log("Success: student record Edited", _id);
         return response.data;
       } catch (error) {
@@ -100,7 +100,7 @@ const studentSlice = createSlice({
         builder
           .addCase(fetchStudentsRecord.fulfilled, (state, action) => {
             state.status = "succeeded";
-            state.addsStudentsRecord = action.payload;
+            state.addsStudentsRecord = [...state.addsStudentsRecord, action.payload];
           })
           .addCase(fetchStudentsRecord.pending, (state, action) => {
             state.status = "loading";

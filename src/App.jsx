@@ -11,7 +11,7 @@ import Context from "./Context";
 import ApplyLeave from "./features/students/ApplyLeave";
 import NewStudents from "./pages/Admin/NewStudents";
 import AdminAttendance from "./store/adminSlices/AdminAttendance";
-import AdminStudentsEvents from "./store/adminSlices/AdminStudentsEvents";
+// import AdminStudentsEvents from "./store/adminSlices/AdminStudentsEvents";
 
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
         <Route index element={<AdminHome />} />
         <Route path="students" element={<AdminStudentsList />} />
         <Route path="attendance" element={<AdminAttendance />} />
-        <Route path="events" element={<AdminStudentsEvents />} />
+        {/* <Route path="events" element={<AdminStudentsEvents />} /> */}
         <Route path="new-students" element={<NewStudents/>}/>
       </Route>
 
@@ -33,8 +33,10 @@ function App() {
         <Route index element={<StudentHome />} />
         <Route path="apply_leave" element={<ApplyLeave/>}/>
       </Route>
+
       {/* Login */}
       <Route path="/" element={<Login />} />
+
       {/* Standalone Route */}
       <Route path="/student_registration" element={<StudentRegistrationProcess />} />
     </Routes>

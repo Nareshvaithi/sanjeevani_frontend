@@ -1,19 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
-import { selectStudentDataTitle } from "../../store/adminSlices/adminStudentsSlice";
+import { addStudent, selectStudentDataTitle } from "../../store/adminSlices/adminStudentsSlice";
 import { MdAdd } from "react-icons/md";
 import { FiEdit } from "react-icons/fi";
 import { selectNewStudents } from "../../store/adminSlices/newStudentSlice";
 
 const NewStudents = () => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const studentDataTitle = useSelector(selectStudentDataTitle);
     const newStudentList = useSelector(selectNewStudents);
-    
-    console.log(newStudentList, "newStudent");
 
     const addToExistingStudent = (studentData) => {
-        dispatch()
-        console.log(studentData);
+       dispatch(addStudent(studentData));
+        console.log("Adding student:", studentData);
     };
 
     return (
@@ -37,46 +35,53 @@ const NewStudents = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {newStudentList.map((student) => {
-                                const { _id, id, fullName, dob, join_date, status, gender, email, phone, paymentRecords, paymentTotal } = student;
-                                const studentStatus = status ? "Active" : "Inactive";
-                                const findPayStatus = paymentRecords?.[0]?.month?.[0]?.payment_status ?? false;
+                            {newStudentList.length === 0 ? (
+                                <tr>
+                                    <td colSpan={studentDataTitle.length} className="text-center py-4">
+                                        No new students available
+                                    </td>
+                                </tr>
+                            ) : (
+                                newStudentList.map((student) => {
+                                    const { _id, id, fullName, email, gender, phone, paymentRecords, paymentTotal } = student;
+                                    const findPayStatus = paymentRecords?.[0]?.month?.[0]?.payment_status ?? false;
 
-                                return (
-                                    <tr key={_id} className="odd:bg-gray-200">
-                                        <td className="py-4 px-2 whitespace-nowrap">{id}</td>
-                                        <td className="py-4 px-2 whitespace-nowrap">{fullName}</td>
-                                        <td className="py-4 px-2 whitespace-nowrap" title={email}>
-                                            {email.length > 20 ? `${email.substring(0, 20)}...` : email}
-                                        </td>
-                                        <td className="py-4 px-2 whitespace-nowrap">
-                                            <span className={`${gender.toLowerCase() === "male" ? "bg-themelightblue" : "bg-pink-600"} text-[12px] text-white px-2 py-1 rounded-md`}>
-                                                {gender}
-                                            </span>
-                                        </td>
-                                        <td className="py-4 px-2 whitespace-nowrap">{phone}</td>
-                                        <td className="py-4 px-2 whitespace-nowrap">
-                                            <span className={`${findPayStatus ? "bg-green-500" : "bg-red-500"} text-[12px] text-white px-2 py-1 rounded-md`}>
-                                                {findPayStatus ? "Paid" : "Unpaid"}
-                                            </span>
-                                        </td>
-                                        <td className="py-4 px-2 whitespace-nowrap">{paymentTotal}</td>
-                                        <td className="py-4 px-2 whitespace-nowrap">
-                                            <div className="flex items-center gap-3">
-                                                <button className="w-fit bg-gray-200 hover:bg-buttonblue hover:text-white rounded-full p-2 transition-colors duration-300">
-                                                    <FiEdit />
-                                                </button>
-                                                <button 
-                                                    onClick={() => addToExistingStudent(student)}
-                                                    className="w-fit bg-gray-200 hover:bg-buttonblue hover:text-white rounded-full p-2 transition-colors duration-300"
-                                                >
-                                                    <MdAdd />
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                );
-                            })}
+                                    return (
+                                        <tr key={_id} className="odd:bg-gray-200">
+                                            <td className="py-4 px-2 whitespace-nowrap">{id}</td>
+                                            <td className="py-4 px-2 whitespace-nowrap">{fullName}</td>
+                                            <td className="py-4 px-2 whitespace-nowrap" title={email}>
+                                                {email.length > 20 ? `${email.substring(0, 20)}...` : email}
+                                            </td>
+                                            <td className="py-4 px-2 whitespace-nowrap">
+                                                <span className={`${gender.toLowerCase() === "male" ? "bg-themelightblue" : "bg-pink-600"} text-[12px] text-white px-2 py-1 rounded-md`}>
+                                                    {gender}
+                                                </span>
+                                            </td>
+                                            <td className="py-4 px-2 whitespace-nowrap">{phone}</td>
+                                            <td className="py-4 px-2 whitespace-nowrap">
+                                                <span className={`${findPayStatus ? "bg-green-500" : "bg-red-500"} text-[12px] text-white px-2 py-1 rounded-md`}>
+                                                    {findPayStatus ? "Paid" : "Unpaid"}
+                                                </span>
+                                            </td>
+                                            <td className="py-4 px-2 whitespace-nowrap">{paymentTotal}</td>
+                                            <td className="py-4 px-2 whitespace-nowrap">
+                                                <div className="flex items-center gap-3">
+                                                    <button className="w-fit bg-gray-200 hover:bg-buttonblue hover:text-white rounded-full p-2 transition-colors duration-300">
+                                                        <FiEdit />
+                                                    </button>
+                                                    <button 
+                                                        onClick={() => addToExistingStudent(student)}
+                                                        className="w-fit bg-gray-200 hover:bg-buttonblue hover:text-white rounded-full p-2 transition-colors duration-300"
+                                                    >
+                                                        <MdAdd />
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    );
+                                })
+                            )}
                         </tbody>
                     </table>
                 </div>
