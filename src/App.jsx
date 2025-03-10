@@ -10,6 +10,8 @@ import ProtectedRoute from "./features/ProtectedRoute/ProtectedRoute";
 import Context from "./Context";
 import ApplyLeave from "./features/students/ApplyLeave";
 import NewStudents from "./pages/Admin/NewStudents";
+import AdminAttendance from "./store/adminSlices/AdminAttendance";
+import AdminStudentsEvents from "./store/adminSlices/AdminStudentsEvents";
 
 
 function App() {
@@ -22,6 +24,7 @@ function App() {
         <Route index element={<AdminHome />} />
         <Route path="students" element={<AdminStudentsList />} />
         <Route path="attendance" element={<AdminAttendance />} />
+        <Route path="events" element={<AdminStudentsEvents />} />
         <Route path="new-students" element={<NewStudents/>}/>
       </Route>
 

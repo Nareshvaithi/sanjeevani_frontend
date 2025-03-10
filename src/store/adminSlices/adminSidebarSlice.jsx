@@ -8,6 +8,7 @@ import { FaBuilding } from "react-icons/fa";
 import { LuNotepadText } from "react-icons/lu";
 import { CiCalendarDate } from "react-icons/ci";
 import { BsFileEarmarkCheck } from "react-icons/bs";
+import { MdEventAvailable } from "react-icons/md";
 
 const initialState = {
   data: [
@@ -62,6 +63,20 @@ const initialState = {
       ],
       icon: <BsFileEarmarkCheck />,
       bread: "attendance",
+    },
+    {
+      id: 7,
+      title: "Events",
+      sublinks: [
+        {
+          id: 1,
+          title: "Student Events",
+          to: "/admin_dashboard/events",
+          subBread: "Students Events",
+        },
+      ],
+      icon: <MdEventAvailable />,
+      bread: "Events",
     },
   ],
   logo: logo,
