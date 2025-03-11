@@ -11,13 +11,14 @@ import { selectBreadCrumb } from "../../store/adminSlices/adminSidebarSlice";
 import Breadcrumb from "../../components/Common/BreadCrumb";
 import { fetchStudentsRecord, selectAllStudents } from "../../store/adminSlices/adminStudentsSlice";
 import { useEffect } from "react";
+import { selectNewStudents } from "../../store/adminSlices/newStudentSlice";
 const AdminHome = ()=>{
-   
+   const newStudentList = useSelector(selectNewStudents);
     const studentList = useSelector((state) => state.students.addsStudentsRecord);
     const month=useSelector((state)=>state.month)
 
     const dispatch = useDispatch();
-      console.log("studentList",studentList)
+    
       useEffect(() => {
         console.log("Fetching students...")
         dispatch(fetchStudentsRecord()); 
@@ -48,7 +49,7 @@ const AdminHome = ()=>{
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-5 pt-5">
                     <QuickBox title={"Total Students"} icon={totalStudentImg} count={`${studentList.length}`}/>
-                    <QuickBox title={"New Students"} icon={newStudentImg} count={`${studentList.length}`} link={'new-students'}/>
+                    <QuickBox title={"New Students"} icon={newStudentImg} count={`${newStudentList.length}`} link={'new-students'}/>
                     <QuickBox title={"Un Paid Students"} icon={nonPaidImg} count={`${unpaid.length}`}/>
                     {/* <QuickBox title={"Fees Collections"} icon={feesCollectionImg} count={`${studentList[0].paymentTotal}`}/> */}
                 </div>

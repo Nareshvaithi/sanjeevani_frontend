@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 const API_URL = import.meta.env.VITE_API_URL_LOCAL;
-
+import { ToastContainer, toast } from 'react-toastify';
 const initialState = {
     addsStudentsRecord: [],
     status: "idle",
+    addstatus:"Submit",
     editstatus:"save changes",
     studentDataTitle: [
         { id: 1, title: "ID" },
@@ -100,11 +101,34 @@ const studentSlice = createSlice({
         builder
           .addCase(fetchStudentsRecord.fulfilled, (state, action) => {
             state.status = "succeeded";
-            state.addsStudentsRecord = [...state.addsStudentsRecord, action.payload];
+            state.addsStudentsRecord = action.payload;
           })
           .addCase(fetchStudentsRecord.pending, (state, action) => {
             state.status = "loading";
           })
+          // for adding
+
+          .addCase(addStudent.pending, (state) => {
+            state.addstatus = "Proccessing";
+          })
+          .addCase(addStudent.fulfilled, (state, action) => {
+            state.addstatus = "Submit";
+            state.addsStudentsRecord= [...state.addsStudentsRecord, action.payload];
+            toast.success("Add Successful!", {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+          });
+          })
+          .addCase(addStudent.rejected, (state, action) => {
+            state.addstatus = "Submit";
+            state.error = action.payload;
+            toast.error("Add Failed");
+          })
+    
 //for editing student record........................
       .addCase(editStudentData.pending, (state) => {
         state.editstatus = "Proccessing";

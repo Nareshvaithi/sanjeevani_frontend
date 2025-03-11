@@ -2,18 +2,32 @@ import { useDispatch, useSelector } from "react-redux";
 import { addStudent, selectStudentDataTitle } from "../../store/adminSlices/adminStudentsSlice";
 import { MdAdd } from "react-icons/md";
 import { FiEdit } from "react-icons/fi";
-import { selectNewStudents } from "../../store/adminSlices/newStudentSlice";
+import { deleteNewStudent, selectNewStudents } from "../../store/adminSlices/newStudentSlice";
 
 const NewStudents = () => {
     const dispatch = useDispatch();
     const studentDataTitle = useSelector(selectStudentDataTitle);
     const newStudentList = useSelector(selectNewStudents);
-    console.log(newStudentList)
-    const addToExistingStudent = (studentData) => {
-        
-       dispatch(addStudent(studentData));
+    
+
+    const addToExistingStudent = async(studentData) => {
+        try{
         console.log("Adding student:", studentData);
+        const { _id, ...newObj } = studentData;
+        await  dispatch(addStudent(newObj)).unwrap();
+        dispatch(deleteNewStudent(_id))
+
+    }catch(error){
+        console.log(error.message)
+    }
     };
+      
+ 
+
+    
+
+
+
 
     return (
         <section className="bg-gray-100 p-5 pt-20 font-mainFont1">
@@ -44,8 +58,8 @@ const NewStudents = () => {
                                 </tr>
                             ) : (
                                 newStudentList.map((student) => {
-                                    const { _id, studentID, fullName, email, gender, phone, paymentRecords, paymentTotal } = student;
-                                    const findPayStatus = paymentRecords?.[0]?.month?.[0]?.payment_status ?? false;
+                                    const { _id, id, fullName, email, gender, phone,  paymentTotal,payment_status } = student;
+                                    const findPayStatus = payment_status ?? false;
 
                                     return (
                                         <tr key={_id} className="odd:bg-gray-100">
