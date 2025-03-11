@@ -10,6 +10,7 @@ const NewStudents = () => {
     const newStudentList = useSelector(selectNewStudents);
 
     const addToExistingStudent = (studentData) => {
+        
        dispatch(addStudent(studentData));
         console.log("Adding student:", studentData);
     };

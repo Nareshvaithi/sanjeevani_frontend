@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL_LOCAL;
 
 const initialState = {
     addsStudentsRecord: [],
@@ -37,7 +37,7 @@ export const fetchStudentsRecord = createAsyncThunk(
     async (studentData, { rejectWithValue }) => {
       try {
         const response = await axios.post(`${API_URL}/existingstudents`, studentData);
-        console.log("succes");
+        alert("succes");
         return response.data;
       } catch (error) {
         return rejectWithValue(error.response?.data || "Error adding banner");

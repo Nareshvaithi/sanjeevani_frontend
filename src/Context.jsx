@@ -6,7 +6,7 @@ import { createContext } from "react";
 export const ContextProvide = createContext();
 const initialValue = {
       month:false,
-      setMonth:()=>{}
+      setMonth:()=>{},
 
 }
     function Context(props) {

@@ -29,14 +29,14 @@ const AdminHome = ()=>{
       const unpaid=[]
       const unpaidStudents=studentList.map((value)=>{
    
-        value.paymentRecords.map((months)=>{
-                  months.month.map((data)=>{
-                    if(data.monthName==month && data.payment_status==false){
-                        unpaid.push(value.fullName)
+        // value.paymentRecords.map((months)=>{
+        //           months.month.map((data)=>{
+        //             if(data.monthName==month && data.payment_status==false){
+        //                 unpaid.push(value.fullName)
 
-                    }
-                  })
-        })
+        //             }
+        //           })
+        // })
       })
       console.log(unpaid)
     return (

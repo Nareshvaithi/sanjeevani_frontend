@@ -1,11 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { ContextProvide } from "../../Context";
+
+import { format } from "date-fns";
+
 
 function AdminAttendance() {
-  const { month } = useContext(ContextProvide);
+  const currentMonth=format(new Date(), "MMMM");
   const [days, setDays] = useState(30);
-  const [selectedMonth, setSelectedMonth] = useState(month || "January");
+  const [selectedMonth, setSelectedMonth] = useState(currentMonth || "January");
 
   const months = [
     {status:true, id: 1, month: "January", count: 31 },

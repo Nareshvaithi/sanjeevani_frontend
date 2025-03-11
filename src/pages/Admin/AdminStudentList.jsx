@@ -40,11 +40,11 @@ const AdminStudentsList = () => {
   // Filter students based on search query
   const filteredStudents = studentList.filter((student) => {
    
-    return (
-      student.id.toLowerCase().includes(searchQuery.id.toLowerCase()) &&
-      student.fullName.toLowerCase().replaceAll(' ',"").includes(searchQuery.name.toLowerCase()) 
-      // student.batchID.toLowerCase().replaceAll(' ',"").includes(searchQuery.batch.toLowerCase())
-    );
+    // return (
+    //   student?.id.toLowerCase().includes(searchQuery.id.toLowerCase()) &&
+    //   student?.fullName.toLowerCase().replaceAll(' ',"").includes(searchQuery.name.toLowerCase()) 
+    //   // student.batchID.toLowerCase().replaceAll(' ',"").includes(searchQuery.batch.toLowerCase())
+    // );
   });
 
   // Pagination logic
