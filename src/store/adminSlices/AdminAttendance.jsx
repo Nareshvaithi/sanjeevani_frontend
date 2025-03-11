@@ -75,15 +75,15 @@ function AdminAttendance() {
             </thead>
             <tbody>
               <tr className="h-10">
-                <td className="border   ">SSD001</td>
-                <td className="border   ">Santhosh</td>
+                <td className="border">SSD001</td>
+                <td className="border">Santhosh</td>
        
                 
                  
                   {[...Array(days).keys()].map((day) => (
-                        <td className="border   ">
+                        <td className="border">
                     <label key={day} className="">
-                      <input type="checkbox"   className="w-4 h-4 text-center"/>
+                      <input type="checkbox" className="w-4 h-4 text-center"/>
                     </label>
                     </td>
                   ))}
