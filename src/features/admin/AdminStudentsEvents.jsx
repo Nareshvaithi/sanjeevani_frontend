@@ -1,13 +1,13 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { selectEventList } from "../../store/adminSlices/EventsSlices";
 import { format } from "date-fns";
 import { MdEmojiEvents } from "react-icons/md";
+import { SelectEventList } from "../../store/adminSlices/EventsSlices";
 
 const AdminStudentsEvents = () => {
   const currentMonth = format(new Date(), "MMMM");
 
-  const events = useSelector(selectEventList);
+  const events = useSelector(SelectEventList);
 
   return (
     <div className="pt-20 font-mainFont1">

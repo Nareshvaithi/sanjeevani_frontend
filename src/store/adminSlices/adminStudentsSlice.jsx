@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-const API_URL ="https://api-sanjeevani.konceptsdandd.com/student/entroll"
+const API_URL = import.meta.env.VITE_API_URL_LOCAL;
 
 const initialState = {
     addsStudentsRecord: [],
@@ -26,9 +26,22 @@ const initialState = {
 export const fetchStudentsRecord = createAsyncThunk(
     "records/fetchStudentsRecords",
     async () => {
-      const response = await axios.get(API_URL);
+      const response = await axios.get(`${API_URL}/existingstudents`);
       console.log("Fetched Data:", response.data);
       return response.data;
+    }
+  );
+  // add student ........
+  export const addStudent = createAsyncThunk(
+    "existingstudents/addStudent",
+    async (studentData, { rejectWithValue }) => {
+      try {
+        const response = await axios.post(`${API_URL}/existingstudents`, studentData);
+        alert("succes");
+        return response.data;
+      } catch (error) {
+        return rejectWithValue(error.response?.data || "Error adding banner");
+      }
     }
   );
 
@@ -38,7 +51,7 @@ export const fetchStudentsRecord = createAsyncThunk(
     async ({ _id, ...updatedData }, { rejectWithValue }) => {
      
       try {
-          const response = await axios.put(`${API_URL}/${_id}`, updatedData);
+          const response = await axios.put(`${API_URL}/existingstudents/${_id}`, updatedData);
         console.log("Success: student record Edited", _id);
         return response.data;
       } catch (error) {
@@ -87,7 +100,7 @@ const studentSlice = createSlice({
         builder
           .addCase(fetchStudentsRecord.fulfilled, (state, action) => {
             state.status = "succeeded";
-            state.addsStudentsRecord = action.payload;
+            state.addsStudentsRecord = [...state.addsStudentsRecord, action.payload];
           })
           .addCase(fetchStudentsRecord.pending, (state, action) => {
             state.status = "loading";

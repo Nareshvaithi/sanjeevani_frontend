@@ -12,49 +12,33 @@ import NewStudents from "./pages/Admin/NewStudents";
 import AdminAttendance from "./store/adminSlices/AdminAttendance";
 import AdminStudentsEvents from "./features/admin/AdminStudentsEvents";
 
+
 function App() {
   
   return (
-    
-      <Routes>
-        {/* Admin Routes with Protected Access */}
-        <Route
-          path="/admin_dashboard"
-          element={
-            <ProtectedRoute>
-              {" "}
-              <AdminLayout />{" "}
-            </ProtectedRoute>
-          }
-        >
-          <Route index element={<AdminHome />} />
-          <Route path="students" element={<AdminStudentsList />} />
-          <Route path="attendance" element={<AdminAttendance />} />
-          <Route path="events" element={<AdminStudentsEvents />} />
-          <Route path="new-students" element={<NewStudents />} />
-        </Route>
 
-        {/* Student Routes */}
-        <Route
-          path="/student/:userId"
-          element={
-            <ProtectedRoute>
-              {" "}
-              <StudentLayout />{" "}
-            </ProtectedRoute>
-          }
-        >
-          <Route index element={<StudentHome />} />
-          <Route path="apply_leave" element={<ApplyLeave />} />
-        </Route>
-        {/* Login */}
-        <Route path="/" element={<Login />} />
-        {/* Standalone Route */}
-        <Route
-          path="/student_registration"
-          element={<StudentRegistrationProcess />}
-        />
-      </Routes>
+    <Routes>
+      {/* Admin Routes with Protected Access */}
+      <Route path="/admin_dashboard" element={<ProtectedRoute> <AdminLayout /> </ProtectedRoute>}>
+        <Route index element={<AdminHome />} />
+        <Route path="students" element={<AdminStudentsList />} />
+        <Route path="attendance" element={<AdminAttendance />} />
+        <Route path="events" element={<AdminStudentsEvents />} />
+        <Route path="new-students" element={<NewStudents/>}/>
+      </Route>
+
+      {/* Student Routes */}
+      <Route path="/student/:userId" element={<ProtectedRoute> <StudentLayout/> </ProtectedRoute>}>
+        <Route index element={<StudentHome />} />
+        <Route path="apply_leave" element={<ApplyLeave/>}/>
+      </Route>
+
+      {/* Login */}
+      <Route path="/" element={<Login />} />
+
+      {/* Standalone Route */}
+      <Route path="/student_registration" element={<StudentRegistrationProcess />} />
+    </Routes>
 
   );
 }

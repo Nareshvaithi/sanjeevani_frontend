@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
 const initialState = {
   studentsEventsList: [],
   status: "idle",
@@ -10,7 +11,7 @@ const initialState = {
 };
 
 
-const API_URL = import.meta.env.VITE_API_URL_LOCAL;
+const API_URL = import.meta.env.VITE_API_URL;
 console.log("API_URL",API_URL)
 
 export const fetchStudentsEvents = createAsyncThunk(
@@ -21,9 +22,17 @@ export const fetchStudentsEvents = createAsyncThunk(
     return response.data;
   }
 );
+// export const fetchStudentsEvents = createAsyncThunk(
+//   "events/fetchStudentsEvents",
+//   async () => {
+//     const response = await axios.get(`${API_URL}/events`);
+//     console.log("response.data",response.data)
+//     return response.data;
+//   }
+// );
 
 
-//add today rate...........................
+// //add today rate...........................
 export const addStudentsEvents = createAsyncThunk(
   "events/StudentsEvents",
   async (studentsEventsData, { rejectWithValue }) => {
@@ -37,13 +46,13 @@ export const addStudentsEvents = createAsyncThunk(
   }
 );
 
-//delete.....................
+// //delete.....................
 export const deleteStudentsEvents = createAsyncThunk(
   "events/deleteStudentsEvents",
   async (StudentsEventsId, { rejectWithValue }) => {
     try {
       const response = await axios.delete(`${API_URL}/${StudentsEventsId}`);
-      console.log("Success: Rate deleted", StudentsEventsId);
+      console.log("Success: deleted", StudentsEventsId);
       return StudentsEventsId;
     } catch (error) {
       return rejectWithValue(error.response?.data || "Error deleting Rate");
@@ -51,7 +60,7 @@ export const deleteStudentsEvents = createAsyncThunk(
   }
 );
 
-//edit.........................
+// //edit.........................
 export const editStudentsEvents = createAsyncThunk(
   "events/editStudentsEvents",
   async ({ _id, ...updatedData }, { rejectWithValue }) => {
@@ -61,7 +70,7 @@ export const editStudentsEvents = createAsyncThunk(
       console.log("Success:  Edited", _id);
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response?.data || "Error Editing Rate");
+      return rejectWithValue(error.response?.data || "Error Editing ");
     }
   }
 );
@@ -83,7 +92,7 @@ const studentsEventsSlice = createSlice({
         state.studentsEventsList = action.payload;
       })
 
-      //for adding rates...................................
+//       //for adding rates...................................
       .addCase(addStudentsEvents.pending, (state) => {
         state.addstatus = "Proccessing";
       })
@@ -106,14 +115,14 @@ const studentsEventsSlice = createSlice({
         state.studentsEventsList = state.studentsEventsList.filter(
           (event) =>event._id !== action.payload
         )
-      //   toast.success("Delete Successful!", {
-      //     position: "top-right",
-      //     autoClose: 3000,
-      //     hideProgressBar: false,
-      //     closeOnClick: true,
-      //     pauseOnHover: true,
-      //     draggable: true,
-      // });
+        toast.success("Delete Successful!", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+      });
       })
       .addCase(deleteStudentsEvents.rejected, (state, action) => {
         state.deletestatus = "Submit";
@@ -121,24 +130,23 @@ const studentsEventsSlice = createSlice({
         toast.error("Delete Failed");
       })
 
-
-      //for editing rate........................
+//       //for editing rate........................
       .addCase(editStudentsEvents.pending, (state) => {
         state.editstatus = "Proccessing";
       })
       .addCase(editStudentsEvents.fulfilled, (state, action) => {
         state.editstatus = "Submit";
-        state.studentsEventsList = state.studentsEventsList.map((rate) =>
-            rate._id === action.payload._id ? action.payload : rate
+        state.studentsEventsList = state.studentsEventsList.map((data) =>
+            data._id === action.payload._id ? action.payload : data
         )
-      //   toast.success("Edit Successful!", {
-      //     position: "top-right",
-      //     autoClose: 3000,
-      //     hideProgressBar: false,
-      //     closeOnClick: true,
-      //     pauseOnHover: true,
-      //     draggable: true,
-      // });
+        toast.success("Edit Successful!", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+      });
     })      
       .addCase(editStudentsEvents.rejected, (state, action) => {
         state.editstatus = "submit";
@@ -149,5 +157,5 @@ const studentsEventsSlice = createSlice({
 });
 
 export default studentsEventsSlice.reducer;
-export const selectEventList = (state) => state.studentsEvents.studentsEventsList;
-// export const addstatus = (state) => state.todayRate.addstatus;
+export const SelectEventList = (state) => state.studentsEvents.studentsEventsList;
+
