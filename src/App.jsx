@@ -11,6 +11,7 @@ import ApplyLeave from "./features/students/ApplyLeave";
 import NewStudents from "./pages/Admin/NewStudents";
 import AdminAttendance from "./features/admin/AdminAttendance";
 import AdminStudentsEvents from "./features/admin/AdminStudentsEvents";
+import AdminRegistrationProcess from "./pages/Admin/AdminRegistrationProcess";
 
 
 function App() {
@@ -36,8 +37,9 @@ function App() {
       {/* Login */}
       <Route path="/" element={<Login />} />
 
-      {/* Standalone Route */}
+      {/* Standalone student registration Route */}
       <Route path="/student_registration" element={<StudentRegistrationProcess />} />
+      <Route path="/admin_registration" element={<AdminRegistrationProcess/>}/>
     </Routes>
 
   );

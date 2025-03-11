@@ -39,6 +39,7 @@ const Login = () => {
             dispatch(setLogin());
             const user = studentList.find(({userName}) => userName === values.userName);
             const userId = user._id;
+            console.log(userId);
             navigate(`/student/${userId}`);
             dispatch(fetchSingleStudent(userId));
             }else{

@@ -6,13 +6,16 @@ import { BiFullscreen } from "react-icons/bi";
 import { FaRegUserCircle } from "react-icons/fa";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { useState } from "react";
+import { AnimatePresence } from "framer-motion";
+import AdminProfile from "./AdminProfile";
 
 
 const AdminTopBar = ()=>{
-       const [showProfile,setShowProfile] = useState(false);
+    const [showProfile,setShowProfile] = useState(false);
     const dispatch = useDispatch();
     const openSidebar = useSelector(selectOpenSidebar);
     const smallLogo = useSelector(selectSmallLogo);
+    const [openProfile,setOpenProfile] = useState(null);
 
     return (
         <section>
@@ -32,11 +35,8 @@ const AdminTopBar = ()=>{
                         <div className="bg-white p-2 rounded-full">
                             <CiBellOn/>
                         </div>
-                        <div className="bg-white p-2 rounded-full">
-                            <BiFullscreen/>
-                        </div>
                         <div className="relative">
-                            <div className="flex items-center gap-2">
+                            <div onClick={()=>{setShowProfile(!showProfile)}} className="cursor-pointer flex items-center gap-2">
                                 <div className="bg-white p-2 rounded-2xl">
                                     <FaRegUserCircle/>
                                 </div>
@@ -48,25 +48,25 @@ const AdminTopBar = ()=>{
                                     <MdKeyboardArrowDown/>
                                 </div>
                             </div>
-                            <div className={`absolute top-12 h-auto w-full bg-white transition-all duration-500 ${showProfile ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"}`}>
-                                    <div className="border-b border-gray-300">
-                                        <div className="flex items-center gap-2 py-2">
-                                            <div className="w-10 rounded-full">
-                                                <img src={""} alt="" className="w-full h-full object-contain rounded-full"/>
-                                            </div>
-                                            <div className="font-mainFont1">
-                                                <h3 className="font-bold text-lg">{""}</h3>
-                                                <p className="p-0 text-sm text-buttonblue">Administrator</p>
-                                            </div>
+                            <div className={`absolute shadow-md shadow-black/10 p-2 top-12 h-auto w-full bg-white transition-all duration-500 ${showProfile ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"}`}>
+                                <div className="border-b border-gray-300">
+                                    <div className="flex items-center gap-2 py-2">
+                                        <div className="w-10 rounded-full">
+                                            <img src={""} alt="" className="w-full h-full object-contain rounded-full"/>
+                                        </div>
+                                        <div className="font-mainFont1">
+                                            <h3 className="font-bold text-lg">{""}</h3>
+                                            <p className="p-0 text-sm text-buttonblue">Administrator</p>
                                         </div>
                                     </div>
-                                    <div className="border-b border-gray-300 py-2">
-                                        <p>Profile</p>
-                                    </div>
-                                    <div className="border-b border-gray-300 py-2">
-                                        <p>Logout</p>
-                                    </div>
                                 </div>
+                                <div onClick={()=>{setOpenProfile('profile')}} className="cursor-pointer border-b border-gray-300 py-2">
+                                    <p>Profile</p>
+                                </div>
+                                <div className="cursor-pointer py-2">
+                                    <p>Logout</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -88,6 +88,9 @@ const AdminTopBar = ()=>{
                 </div>
             </div>
         </div>
+        <AnimatePresence>
+            {openProfile === "profile" && <AdminProfile openProfile={openProfile} setOpenProfile={setOpenProfile}/>}
+        </AnimatePresence>
         </section>
     )
 }

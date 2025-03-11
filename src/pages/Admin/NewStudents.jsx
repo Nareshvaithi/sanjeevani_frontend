@@ -8,7 +8,7 @@ const NewStudents = () => {
     const dispatch = useDispatch();
     const studentDataTitle = useSelector(selectStudentDataTitle);
     const newStudentList = useSelector(selectNewStudents);
-
+    console.log(newStudentList)
     const addToExistingStudent = (studentData) => {
         
        dispatch(addStudent(studentData));
@@ -44,12 +44,12 @@ const NewStudents = () => {
                                 </tr>
                             ) : (
                                 newStudentList.map((student) => {
-                                    const { _id, id, fullName, email, gender, phone, paymentRecords, paymentTotal } = student;
+                                    const { _id, studentID, fullName, email, gender, phone, paymentRecords, paymentTotal } = student;
                                     const findPayStatus = paymentRecords?.[0]?.month?.[0]?.payment_status ?? false;
 
                                     return (
-                                        <tr key={_id} className="odd:bg-gray-200">
-                                            <td className="py-4 px-2 whitespace-nowrap">{id}</td>
+                                        <tr key={_id} className="odd:bg-gray-100">
+                                            <td className="py-4 px-2 whitespace-nowrap">{studentID}</td>
                                             <td className="py-4 px-2 whitespace-nowrap">{fullName}</td>
                                             <td className="py-4 px-2 whitespace-nowrap" title={email}>
                                                 {email.length > 20 ? `${email.substring(0, 20)}...` : email}
