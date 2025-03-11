@@ -9,7 +9,7 @@ import Login from "./pages/auth/Login";
 import ProtectedRoute from "./features/ProtectedRoute/ProtectedRoute";
 import ApplyLeave from "./features/students/ApplyLeave";
 import NewStudents from "./pages/Admin/NewStudents";
-import AdminAttendance from "./store/adminSlices/AdminAttendance";
+import AdminAttendance from "./features/admin/AdminAttendance";
 import AdminStudentsEvents from "./features/admin/AdminStudentsEvents";
 
 
