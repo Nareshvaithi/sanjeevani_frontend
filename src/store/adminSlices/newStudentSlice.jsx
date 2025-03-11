@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from "react-toastify";
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 const initialState = {
@@ -14,7 +15,7 @@ export const fetchNewStudent = createAsyncThunk(
     "entroll/fetchNewStudent",
     async (_, { rejectWithValue }) => {
         try {
-            const response = await axios.get(`${API_URL}/student/entroll`); // Fixed typo
+            const response = await axios.get(`${API_URL}/student/entroll`); 
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response?.data || "Failed to fetch new students");
@@ -34,6 +35,20 @@ export const addExistingStudent = createAsyncThunk(
         }
     }
 );
+
+//delete.....................
+export const deleteNewStudent = createAsyncThunk(
+    "entroll/deleteNewStudent",
+    async (studentId, { rejectWithValue }) => {
+      try {
+        const response = await axios.delete(`${API_URL}/${studentId}`);
+        console.log("Success:  deleted", studentId);
+        return studentId;
+      } catch (error) {
+        return rejectWithValue(error.response?.data || "Error deleting ");
+      }
+    }
+  );
 
 const newStudentSlice = createSlice({
     name: "newStudent",
@@ -74,6 +89,30 @@ const newStudentSlice = createSlice({
                 state.addstatus = "Submit";
                 state.error = action.payload;
                 toast.error("Add Failed");
+              })
+
+              //deleteing new student.................................
+              .addCase(deleteNewStudent.pending, (state) => {
+                state.deletestatus = "Proccessing";
+              })
+              .addCase(deleteNewStudent.fulfilled, (state, action) => {
+                state.deletestatus = "succeeded";
+                state.newStudentsList = state.newStudentsList.filter(
+                  (student) => student._id !== action.payload
+                )
+                toast.success("Delete Successful!", {
+                  position: "top-right",
+                  autoClose: 3000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+              });
+              })
+              .addCase(deleteNewStudent.rejected, (state, action) => {
+                state.deletestatus = "Submit";
+                state.error = action.payload;
+                toast.error("Delete Failed");
               })
     },
 });

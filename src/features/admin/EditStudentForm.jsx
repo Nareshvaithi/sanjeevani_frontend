@@ -6,7 +6,7 @@ import { IoLocationOutline } from "react-icons/io5";
 import { BsGenderAmbiguous } from "react-icons/bs";
 import { FaRegBuilding } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { editStudentData } from "../../store/adminSlices/adminStudentsSlice";
+import { editStudentData, fetchStudentsRecord } from "../../store/adminSlices/adminStudentsSlice";
 import { selectSingleStudent, setSingleStudentRecord } from "../../store/formSlices/StudentDetailsSlice";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
@@ -17,11 +17,12 @@ const EditStudentForm = ({ openModule, setOpenModule }) => {
   if (openModule !== 'edit') return null;
 
   const studentDetails = useSelector(selectSingleStudent);
+  console.log("studentDetails",studentDetails)
   const dispatch = useDispatch();
 
   const {
     _id,
-    id,
+    studentID,
     fullName,
     gender,
     email,
@@ -43,7 +44,7 @@ const EditStudentForm = ({ openModule, setOpenModule }) => {
 
   const formik = useFormik({
     initialValues: {
-      id: id || "",
+      studentID: studentID || "",
       fullName: fullName || "",
       gender: gender || "",
       email: email || "",
@@ -59,16 +60,23 @@ const EditStudentForm = ({ openModule, setOpenModule }) => {
       paymentRecords: paymentRecords || "",
       status: status || "",
     },
-    onSubmit: (values) => {
+    onSubmit: async(values) => {
       console.log("Submitting Data:", values);
       values.status=values.status=="Active" ? true : false
       const updatedValues = {
         ...values,
         _id: String(studentDetails._id), 
       };
+try{
+ await dispatch(editStudentData(updatedValues)).unwrap();
+ dispatch(fetchStudentsRecord())
+ setOpenModule(null);
+}catch(error){
+  console.log(error.message)
+}
+      
+      
 
-      dispatch(editStudentData(updatedValues)).unwrap();;
-      setOpenModule(null);
     },
   });
 
@@ -76,7 +84,7 @@ const EditStudentForm = ({ openModule, setOpenModule }) => {
   useEffect(() => {
     if (studentDetails) {
       formik.setValues({
-        id: studentDetails.id || "",
+        studentID: studentDetails.studentID || "",
         _id: studentDetails._id || "",
         fullName: studentDetails.fullName || "",
         gender: studentDetails.gender || "",
@@ -86,6 +94,7 @@ const EditStudentForm = ({ openModule, setOpenModule }) => {
         motherName: studentDetails.motherName || "",
         residentialAddress: studentDetails.residentialAddress || "",
         fatherPhone: studentDetails.fatherPhone || "",
+        phone: studentDetails.phone || "",
         dob: studentDetails.dob || "",
         join_date: studentDetails.join_date || "",
         imageUrls: studentDetails.imageUrls || "",
@@ -112,7 +121,7 @@ const EditStudentForm = ({ openModule, setOpenModule }) => {
       reader.readAsDataURL(file);
     }
   };
-
+console.log(formik.values)
   return (
     <motion.div
       initial={{ x: "100%" }}
@@ -153,12 +162,13 @@ const EditStudentForm = ({ openModule, setOpenModule }) => {
           <div>
             <h3 className="font-bold">Academic Details :</h3>
             <div className="py-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              <InputField icon={<LuUser />} label="Student ID" name="id" value={formik.values.id} onChange={formik.handleChange} disabled />
+              <InputField icon={<LuUser />} label="Student ID" name="id" value={formik.values.studentID
+} onChange={formik.handleChange} disabled />
               <InputField
                 icon={<MdOutlineDateRange />}
                 label="Date of Join"
                 name="join_date"
-                type="date" // Set input type to "date"
+                type="date" 
                 value={formik.values.join_date}
                 onChange={formik.handleChange}
               />
@@ -176,6 +186,8 @@ const EditStudentForm = ({ openModule, setOpenModule }) => {
               />
 
               <InputField icon={<FaRegBuilding />} label="Batch" name="batchID" value={formik.values.batchID} onChange={formik.handleChange} />
+              <InputField icon={<RiParentLine />} label="Mobile" name="phone" value={formik.values.phone} onChange={formik.handleChange} />
+
             </div>
           </div>
 

@@ -8,11 +8,13 @@ import { FaRegBuilding } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DeletePopup from "../../components/Common/DeletePopup";
-import { format } from "date-fns";
+
 import detailsDownload from "../../utils/studentDetailDownload";
 import { selectSingleStudent, setSingleStudentRecord } from "../../store/formSlices/StudentDetailsSlice";
+import { format } from "date-fns";
 
 const StudentDetails = ({ openModule, setOpenModule }) => {
+  const currentMonth=format(new Date(), "MMMM");
   const [showDel, setShowDel] = useState(false);
   const [formattedJoinDate, setFormattedJoinDate] = useState("");
   const [formattedDob, setFormattedDob] = useState("");
@@ -23,9 +25,9 @@ const StudentDetails = ({ openModule, setOpenModule }) => {
   if (openModule !== "view") return null;
 
   const studentDetails = useSelector(selectSingleStudent);
-
+console.log("studentDetails",studentDetails)
   const {
-    _id,
+    studentID,
     fullName,
     gender,
     email,
@@ -44,16 +46,21 @@ const StudentDetails = ({ openModule, setOpenModule }) => {
 
     const date = new Date("2025-05-03T04:00:00.000Z");
     const formattedDate = date.toISOString().split("T")[0]; 
+    const paymentstatus = (payment)=>{
+       console.log("payment",payment)
+      const getPayment = payment.filter((month)=>month.monthName===currentMonth)
+      const getStatus=payment.filter((status)=>status.payment_status===true)
+      
+      return getPayment && getStatus.length!=0 ? "Paid" : "UnPaid";
+    }
 
   useEffect(() => {
     if (dob) setFormattedDob(format(new Date(dob), "dd/MM/yyyy"));
     if (join_date) setFormattedJoinDate(format(new Date(join_date), "dd/MM/yyyy"));
-
-    if (paymentRecords && paymentRecords.length > 0) {
-      setPaymentStatus(paymentRecords[0]?.month[0]?.payment_status ? "Paid" : "UnPaid");
-    }
+    
   }, [dob, join_date, paymentRecords]);
 
+ 
   return (
     <motion.div
       initial={{ x: "100%" }}
@@ -78,12 +85,12 @@ const StudentDetails = ({ openModule, setOpenModule }) => {
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5 bg-gray-100 p-5 rounded-xl text-center">
           <img src={imageUrls} alt={fullName} className="rounded-xl w-full lg:w-fit" />
           <div>
-            <h3 className="text-2xl">{"0001"}</h3>
+            <h3 className="text-2xl">{studentID}</h3>
             <p className="text-sm text-gray-600">ID</p>
           </div>
           <div>
             <h3 className="text-2xl">{fullName}</h3>
-            <p className="text-sm text-gray-600">Dance</p>
+            <p className="text-sm text-gray-600">{batchID}</p>
           </div>
           <div>
             <h3 className="text-2xl">98.7%</h3>
@@ -93,10 +100,10 @@ const StudentDetails = ({ openModule, setOpenModule }) => {
 
         {/* Academic Details */}
         <Section title="Academic Details">
-          <Detail icon={LuUser} label="Student Id" value={_id} />
+          <Detail icon={LuUser} label="Student Id" value={studentID} />
           <Detail icon={MdOutlineDateRange} label="Date of Join" value={formattedJoinDate} />
-          <Detail icon={LuUser} label="Payment Status" value={paymentStatus} />
-          <Detail icon={LuUser} label="Student Status" value={status} />
+          <Detail icon={LuUser} label="Payment Status" value={paymentstatus(paymentRecords)} />
+          <Detail icon={LuUser} label="Student Status" value={status ? "Active" : "InActive"} />
           <Detail icon={FaRegBuilding} label="Batch" value={batchID} />
           <Detail icon={FaRegBuilding} label="Total Payment" value={paymentTotal} />
         </Section>

@@ -52,7 +52,7 @@ const AdminTopBar = ()=>{
                                     <div className="border-b border-gray-300">
                                         <div className="flex items-center gap-2 py-2">
                                             <div className="w-10 rounded-full">
-                                                <img src={""} alt="" className="w-full h-full object-contain rounded-full"/>
+                                                {/* <img src={""} alt="" className="w-full h-full object-contain rounded-full"/> */}
                                             </div>
                                             <div className="font-mainFont1">
                                                 <h3 className="font-bold text-lg">{""}</h3>

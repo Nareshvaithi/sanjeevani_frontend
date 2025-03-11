@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_URL = "https://api-sanjeevani.konceptsdandd.com/student/entroll";
+const API_URL = `${import.meta.env.VITE_API_URL}/existingstudents`;
 
 const initialValue = {
     singleStudentDetails: {},
@@ -14,6 +14,7 @@ export const fetchSingleStudent = createAsyncThunk(
     async (id, { rejectWithValue }) => {
         try {
             const response = await axios.get(`${API_URL}/${id}`);
+            console.log("edit",response.data)
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response?.data || "Failed to fetch student details");

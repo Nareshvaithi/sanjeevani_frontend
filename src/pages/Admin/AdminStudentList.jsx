@@ -19,14 +19,17 @@ import { handleDownloadPDF } from "../../utils/studentsdownload";
 import EditStudentForm from "../../features/admin/EditStudentForm";
 import Breadcrumb from "../../components/Common/BreadCrumb";
 import { fetchSingleStudent } from "../../store/formSlices/StudentDetailsSlice";
+import { addStudentRecord } from "../../store/formSlices/RegisterFormSlice";
+import { format } from "date-fns";
 const AdminStudentsList = () => {
-
+ const currentMonth=format(new Date(), "MMMM");
   const breadcrumbItems = useSelector(selectBreadCrumb).map((item) => ({
     label: item,
     link: null, // You can set the link if needed
   }));
   const dispatch = useDispatch();
   const studentList = useSelector(selectAllStudents);
+  console.log("studentList",studentList)
   const sortField = useSelector(selectSortField);
   const sortOrder = useSelector(selectSortOrder);
   const studentDataTitle = useSelector(selectStudentDataTitle);
@@ -37,15 +40,18 @@ const AdminStudentsList = () => {
     name: "",
     batch: "",
   });
+  let filteredStudents=[]
   // Filter students based on search query
-  const filteredStudents = studentList.filter((student) => {
-   
-    // return (
-    //   student?.id.toLowerCase().includes(searchQuery.id.toLowerCase()) &&
-    //   student?.fullName.toLowerCase().replaceAll(' ',"").includes(searchQuery.name.toLowerCase()) 
-    //   // student.batchID.toLowerCase().replaceAll(' ',"").includes(searchQuery.batch.toLowerCase())
-    // );
-  });
+  if(studentList && studentList.length > 0){
+    filteredStudents= studentList.filter((student) => {
+      return (
+        student?.studentID.toLowerCase().includes(searchQuery.id.toLowerCase()) &&
+        student?.fullName.toLowerCase().replaceAll(' ',"").includes(searchQuery.name.toLowerCase()) 
+        // student.batchID.toLowerCase().replaceAll(' ',"").includes(searchQuery.batch.toLowerCase())
+      );
+    });
+  }
+ 
 
   // Pagination logic
   const studentsPerPage = 20;
@@ -73,8 +79,11 @@ const AdminStudentsList = () => {
     setCurrentPage(page);
   };
   const paymentStatus = (payment)=>{
-    const getPayment = payment[0].month[0].payment_status;
-    return getPayment ? "Paid" : "UnPaid";
+
+    const getPayment = payment.filter((month)=>month.monthName===currentMonth)
+    const getStatus=payment.filter((status)=>status.payment_status===true)
+    
+    return getPayment && getStatus.length!=0 ? "Paid" : "UnPaid";
   }
   return (
     <section className="pt-20 px-2 lg:px-5 w-full h-full font-mainFont1">
@@ -164,11 +173,11 @@ const AdminStudentsList = () => {
             </thead>
             <tbody className="font-light">
               {currentStudents.map((student) => {
-                const {_id,id,fullName,gender,email,status,paymentRecords,batchID,imageUrls} = student;
-                console.log(fullName);
+                const {_id,studentID,fullName,gender,email,status,paymentRecords,batchID,imageUrls,phone} = student;
+    
                 const studentStatus = status ? "Active" : "InActive";
                 return <tr key={_id} className="odd:bg-gray-100">
-                  <td className="py-4 px-2 whitespace-nowrap">{id}</td>
+                  <td className="py-4 px-2 whitespace-nowrap">{studentID}</td>
                   <td className="py-4 px-2 flex gap-3 items-center whitespace-nowrap">
                     <img className="w-10 rounded-full" src={imageUrls} alt="" />
                     <span>{fullName}</span>
@@ -178,9 +187,11 @@ const AdminStudentsList = () => {
                     <span className={`${gender.toLowerCase() === "male" ? "bg-themelightblue" : "bg-pink-600"} text-[12px] text-white px-2 py-1 rounded-md`}>{gender}</span>
                   </td>
                   <td className="py-4 px-2 whitespace-nowrap">{batchID}</td>
+                  <td className="py-4 px-2 whitespace-nowrap">{phone}</td>
                   <td className="py-4 px-2 whitespace-nowrap">
                     <span className={`text-[12px] text-white px-2 py-1 rounded-md ${paymentStatus(paymentRecords).toLowerCase() === "paid" ? "bg-green-500" : paymentStatus(paymentRecords).toLowerCase() === "unpaid" ? "bg-red-500" : "bg-themeyellow"}`}>{paymentStatus(paymentRecords)}</span>
                   </td>
+                  <td className="py-4 px-2 whitespace-nowrap">{phone}</td>
                   <td className={`py-4 px-2 whitespace-nowrap`}>
                     <span className={`${status ? "bg-themedarkblue" : "bg-themeyellow"} text-[12px] text-white px-2 py-1 rounded-md`}>{studentStatus}</span>
                   </td>
