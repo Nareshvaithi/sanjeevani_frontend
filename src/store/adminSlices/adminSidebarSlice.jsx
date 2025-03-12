@@ -106,8 +106,7 @@ export const adminSideBar = createSlice({
 });
 
 export default adminSideBar.reducer;
-export const { setOpenSidebar, setBreadCrumb, sortStudents } =
-  adminSideBar.actions;
+export const { setOpenSidebar, setBreadCrumb, sortStudents } = adminSideBar.actions;
 export const selectLogo = (state) => state.adminSideBar.logo;
 export const selectSmallLogo = (state) => state.adminSideBar.smallLogo;
 export const selectAdminSidebarData = (state) => state.adminSideBar.data;
