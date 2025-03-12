@@ -8,7 +8,7 @@ import { selectAllStudents } from "../../store/adminSlices/adminStudentsSlice";
 function AdminAttendance() {
   const currentMonth=format(new Date(), "MMMM");
   const [days, setDays] = useState(30);
-  const [attendanceData, setAttendanceData] = useState({});
+  const [attendanceData, setAttendanceData] = useState([]);
   const studentList=useSelector(selectAllStudents)
   const [selectedMonth, setSelectedMonth] = useState(currentMonth || "January");
 
@@ -42,6 +42,19 @@ function AdminAttendance() {
     // console.log()
   }
 
+  const handleCheckboxChange = (studentId, day, checked) => {
+    console.log(studentId)
+    setAttendanceData((prevState) => {
+     
+      const newAttendance = { ...prevState };
+      if (!newAttendance[studentId]) {
+        newAttendance[studentId] = Array(days).fill(false);
+      }
+      newAttendance[studentId][day] = checked;
+      return newAttendance;
+    });
+  };
+
   return (
     <div className="pt-20 w-full">
       <div>
@@ -74,7 +87,7 @@ function AdminAttendance() {
                 <th className="border px-16">Name</th>
                
                 {[...Array(days).keys()].map((day) => (
-                  <th className="border   ">
+                  <th className="border">
                     <label key={day} className="">
                      {day + 1}
                     </label>
@@ -85,7 +98,7 @@ function AdminAttendance() {
             </thead>
             <tbody>
              {studentList.map((value)=>{
-              
+         
                return <>
                <tr className="h-10">
                 <td className="border">{value.studentID}</td>
@@ -93,7 +106,9 @@ function AdminAttendance() {
                   {[...Array(days).keys()].map((day) => (
                         <td className="border   ">
                     <label key={day} className="">
-                      <input type="checkbox" checked={attendanceData[student.studentID]?.[day] || false}  className="w-4 h-4 text-center"/>
+                      <input type="checkbox" checked={attendanceData[value.studentID]?.[day] || false}  className="w-4 h-4 text-center" onChange={(e) =>
+                            handleCheckboxChange(value.studentID,value.fullName, value._id, day, e.target.checked)
+                          }/>
                     </label>
                     </td>
                   ))}
