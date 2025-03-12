@@ -104,7 +104,7 @@ function AdminAttendance() {
                 <td className="border">{value.studentID}</td>
                 <td className="border">{value.fullName}</td>          
                   {[...Array(days).keys()].map((day) => (
-                        <td className="border   ">
+                        <td key={day} className="border">
                     <label key={day} className="">
                       <input type="checkbox" checked={attendanceData[value.studentID]?.[day] || false}  className="w-4 h-4 text-center" onChange={(e) =>
                             handleCheckboxChange(value.studentID,value.fullName, value._id, day, e.target.checked)

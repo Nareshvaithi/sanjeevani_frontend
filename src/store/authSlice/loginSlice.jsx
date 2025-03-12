@@ -15,11 +15,12 @@ const LoginSlice = createSlice({
     reducers: {
         setLogin(state) {
             state.login = true;
-            sessionStorage.setItem("isLoggedIn", JSON.stringify(true)); // Store in sessionStorage
+            sessionStorage.setItem("isLoggedIn", JSON.stringify(true));
         },
         setLogout(state) {
             state.login = false;
-            sessionStorage.setItem("isLoggedIn", JSON.stringify(false)); // Update sessionStorage
+            sessionStorage.removeItem("isLoggedIn");
+            window.location.reload();
         }
     },
 });

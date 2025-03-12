@@ -6,6 +6,7 @@ import { BiFullscreen } from "react-icons/bi";
 import { FaRegUserCircle } from "react-icons/fa";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { useState } from "react";
+import { setLogout } from "../../store/authSlice/loginSlice";
 const StudentTopBar = ({studentDetails})=>{
     
     const [showProfile,setShowProfile] = useState(false);
@@ -61,7 +62,7 @@ const StudentTopBar = ({studentDetails})=>{
                                     <div className="border-b border-gray-200 py-2">
                                         <p>My Profile</p>
                                     </div>
-                                    <div className="py-2">
+                                    <div onClick={()=>{dispatch(setLogout())}} className="py-2">
                                         <p>Logout</p>
                                     </div>
                                 </div>

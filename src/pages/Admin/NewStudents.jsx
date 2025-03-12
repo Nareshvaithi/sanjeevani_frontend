@@ -62,8 +62,8 @@ const NewStudents = () => {
                                     const findPayStatus = payment_status ?? false;
 
                                     return (
-                                        <tr key={_id} className="odd:bg-gray-200">
-                                            <td className="py-4 px-2 whitespace-nowrap">{id}</td>
+                                        <tr key={_id} className="odd:bg-gray-100">
+                                            <td className="py-4 px-2 whitespace-nowrap">{studentID}</td>
                                             <td className="py-4 px-2 whitespace-nowrap">{fullName}</td>
                                             <td className="py-4 px-2 whitespace-nowrap" title={email}>
                                                 {email.length > 20 ? `${email.substring(0, 20)}...` : email}

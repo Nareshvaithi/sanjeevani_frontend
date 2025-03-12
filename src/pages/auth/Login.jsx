@@ -7,11 +7,14 @@ import { AccountCircle, Lock } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { loginAdmin, loginUser } from "../../store/authSlice/AuthSlice";
 import { selectAllStudents } from "../../store/adminSlices/adminStudentsSlice";
-import { fetchSingleStudent, selectSingleStudent } from "../../store/formSlices/StudentDetailsSlice";
+import { fetchSingleStudent } from "../../store/formSlices/StudentDetailsSlice";
+import { useState } from "react";
+import ForgotPasswordPopup from "../../components/Common/ForgotPassword";
 
 const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [ForgotPass,setForgotPass] = useState(false);
     const loginImg = useSelector(selectLoginImage);
     const studentList = useSelector(selectAllStudents);
     const validationSchema = Yup.object({
@@ -37,8 +40,11 @@ const Login = () => {
                 console.log("Login Submitted:", values);
             
             dispatch(setLogin());
+            console.log(studentList)
             const user = studentList.find(({userName}) => userName === values.userName);
+            console.log(user);
             const userId = user._id;
+            console.log(userId);
             navigate(`/student/${userId}`);
             dispatch(fetchSingleStudent(userId));
             alert('Login successfully');
@@ -51,11 +57,8 @@ const Login = () => {
                 }else{
                     alert("user not found")
                 }
-               
             }
-            
         },
-        
     });
 
     return (
@@ -126,7 +129,7 @@ const Login = () => {
 
                         {/* Remember Me & Forget Password */}
                         <div className="flex justify-between items-center pt-3">
-                            {/* ✅ Correct Checkbox Usage */}
+                            
                             <FormControlLabel
                                 control={
                                     <Checkbox
@@ -138,7 +141,7 @@ const Login = () => {
                                 }
                                 label="Remember me"
                             />
-                            <p className="text-sm text-blue-500 cursor-pointer">Forgot Password?</p>
+                            <p onClick={()=>{setForgotPass(true)}} className="text-sm text-blue-500 cursor-pointer">Forgot Password?</p>
                         </div>
                     </div>
 
@@ -151,6 +154,7 @@ const Login = () => {
                     </button>
                 </form>
             </div>
+            {ForgotPass && <ForgotPasswordPopup ForgotPass={ForgotPass} setForgotPass={setForgotPass}/>}
         </section>
     );
 };
