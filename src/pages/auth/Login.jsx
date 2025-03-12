@@ -38,7 +38,7 @@ const Login = () => {
             
             if (loginUser.fulfilled.match(resultAction)) {
                 console.log("Login Submitted:", values);
-            alert('Login successfully');
+            
             dispatch(setLogin());
             console.log(studentList)
             const user = studentList.find(({userName}) => userName === values.userName);
@@ -47,6 +47,7 @@ const Login = () => {
             console.log(userId);
             navigate(`/student/${userId}`);
             dispatch(fetchSingleStudent(userId));
+            alert('Login successfully');
             }else{
                 const resultAction = await dispatch(loginAdmin(values));
                 if(loginAdmin.fulfilled.match(resultAction)){

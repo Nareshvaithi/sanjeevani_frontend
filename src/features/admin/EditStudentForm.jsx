@@ -143,18 +143,18 @@ console.log(formik.values)
           <div className="bg-gray-100 p-5 rounded-xl flex flex-col lg:flex-row items-start lg:items-center gap-5">
             <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
               <Avatar src={preview} sx={{ width: 100, height: 100 }} />
-              <input
+              {/* <input
                 accept="image/*"
                 type="file"
                 id="image-upload"
                 style={{ display: "none" }}
                 onChange={handleImageChange}
-              />
-              <label htmlFor="image-upload">
+              /> */}
+              {/* <label htmlFor="image-upload">
                 <Button variant="contained" component="span">
                   Upload Image
                 </Button>
-              </label>
+              </label> */}
             </Box>
           </div>
 

@@ -37,21 +37,22 @@ const initialState = {
       icon: <FaGraduationCap />,
       bread: "Students",
     },
-
     {
-      id: 4,
-      title: "Batch",
-      icon: <FaBuilding />,
-      bread: "Batch",
-    },
-    {
-      id: 5,
+      id: 3,
       title: "Fees",
       icon: <LuNotepadText />,
       bread: "Fees",
+      sublinks: [
+        {
+          id: 1,
+          title: "Fees Collection",
+          to: "",
+          subBread: "Fees Collection",
+        },
+      ],
     },
     {
-      id: 6,
+      id: 4,
       title: "Attendance",
       sublinks: [
         {
@@ -65,7 +66,7 @@ const initialState = {
       bread: "attendance",
     },
     {
-      id: 7,
+      id: 5,
       title: "Events",
       sublinks: [
         {

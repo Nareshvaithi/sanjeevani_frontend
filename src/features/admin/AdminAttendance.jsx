@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 import { format } from "date-fns";
+import { selectAllStudents } from "../../store/adminSlices/adminStudentsSlice";
 
 
 function AdminAttendance() {
   const currentMonth=format(new Date(), "MMMM");
   const [days, setDays] = useState(30);
+  const [attendanceData, setAttendanceData] = useState({});
+  const studentList=useSelector(selectAllStudents)
   const [selectedMonth, setSelectedMonth] = useState(currentMonth || "January");
 
   const months = [
@@ -35,11 +38,15 @@ function AdminAttendance() {
     setSelectedMonth(event.target.value);
   };
 
+  const handleClick=()=>{
+    // console.log()
+  }
+
   return (
     <div className="pt-20 w-full">
       <div>
-        <div className="flex justify-center text-2xl gap-20">
-          <p>Students Attendance Record</p>
+        <div className="flex justify-evenly items-center gap-20">
+          <p className="text-2xl">Students Attendance Record</p>
           <div className="">
             <select onChange={handleMonthChange} value={selectedMonth}>
               {months.map((value) => {
@@ -53,6 +60,7 @@ function AdminAttendance() {
               })}
             </select>
           </div>
+          
         </div>
         <div className="mt-10 p-4 bg-white ">
           <table
@@ -66,8 +74,8 @@ function AdminAttendance() {
                 <th className="border px-16">Name</th>
                
                 {[...Array(days).keys()].map((day) => (
-                  <th className="border   ">
-                    <label key={day} className="">
+                  <th key={day} className="border   ">
+                    <label  className="">
                      {day + 1}
                     </label>
                     </th>
@@ -76,23 +84,29 @@ function AdminAttendance() {
               </tr>
             </thead>
             <tbody>
-              <tr className="h-10">
-                <td className="border">SSD001</td>
-                <td className="border">Santhosh</td>
-       
-                
-                 
+             {studentList.map((value)=>{
+              
+               return <>
+               <tr className="h-10">
+                <td className="border">{value.studentID}</td>
+                <td className="border">{value.fullName}</td>          
                   {[...Array(days).keys()].map((day) => (
-                        <td className="border">
+                        <td key={day} className="border">
                     <label key={day} className="">
-                      <input type="checkbox" className="w-4 h-4 text-center"/>
+                      <input type="checkbox" checked={attendanceData[student.studentID]?.[day] || false}  className="w-4 h-4 text-center"/>
                     </label>
                     </td>
                   ))}
              <td className="border"></td>
-              </tr>
+              </tr></>
+             })}
+
+              
             </tbody>
           </table>
+          <div className="flex justify-center mt-4">
+            <div className="border px-4 bg-blue-600 text-white py-1 text-xl rounded-md" onClick={()=>handleClick()}><button type="submit">Save</button></div>
+          </div>
         </div>
       </div>
     </div>
