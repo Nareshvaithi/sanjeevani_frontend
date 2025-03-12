@@ -174,13 +174,13 @@ const AdminStudentsList = () => {
             <tbody className="font-light">
               {currentStudents.map((student) => {
                 const {_id,studentID,fullName,gender,email,status,paymentRecords,batchID,imageUrls,phone} = student;
-    
+
                 const studentStatus = status ? "Active" : "InActive";
                 return <tr key={_id} className="odd:bg-gray-100">
                   <td className="py-4 px-2 whitespace-nowrap">{studentID}</td>
-                  <td className="py-4 px-2 flex gap-3 items-center whitespace-nowrap">
-                    <img className="w-10 rounded-full" src={imageUrls} alt="" />
-                    <span>{fullName}</span>
+                  <td className="py-4 px-2  gap-3 items-center whitespace-nowrap ">
+                    {/* <img className="w-10 rounded-full border" src={imageUrls} alt="image" /> */}
+                    <p>{fullName}</p>
                   </td>
                   <td className="py-4 px-2 whitespace-nowrap" title={email}>{`${email.substring(0, 20)}...`}</td>
                   <td className="py-4 px-2 whitespace-nowrap">

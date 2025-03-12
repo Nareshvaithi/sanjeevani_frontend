@@ -41,7 +41,7 @@ export const deleteNewStudent = createAsyncThunk(
     "entroll/deleteNewStudent",
     async (studentId, { rejectWithValue }) => {
       try {
-        const response = await axios.delete(`${API_URL}/${studentId}`);
+        const response = await axios.delete(`${API_URL}/student/entroll/${studentId}`);
         console.log("Success:  deleted", studentId);
         return studentId;
       } catch (error) {
