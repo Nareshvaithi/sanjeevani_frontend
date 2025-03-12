@@ -61,7 +61,7 @@ const AdminTopBar = ()=>{
                                             </div>
                                         </div>
                                     </div>
-                                    <div onClick={()=>{setShowProfile(true)}} className="cursor-pointer border-b border-gray-300 py-2">
+                                    <div onClick={()=>{setOpenProfile('profile')}} className="cursor-pointer border-b border-gray-300 py-2">
                                         <p>Profile</p>
                                     </div>
                                     <div onClick={()=>{dispatch(setLogout())}} className="cursor-pointer py-2">
@@ -90,7 +90,7 @@ const AdminTopBar = ()=>{
             </div>
         </div>
         <AnimatePresence>
-            {showProfile && <AdminProfile openProfile={openProfile} setOpenProfile={setOpenProfile}/>}
+            {openProfile === 'profile' && <AdminProfile openProfile={openProfile} setOpenProfile={setOpenProfile}/>}
         </AnimatePresence>
         </section>
     )
