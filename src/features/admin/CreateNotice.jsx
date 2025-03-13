@@ -13,7 +13,7 @@ const CreateNotice = () => {
             notice: '',
             remark: ''
         },
-        validationSchema, // <-- Fix: Use validationSchema instead of validation
+        validationSchema, 
         onSubmit: (values) => {
             console.log("Notice", values);
         }

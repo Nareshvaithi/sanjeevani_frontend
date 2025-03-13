@@ -1,7 +1,7 @@
 import CreateEvent from "../../features/admin/CreateEvent";
 import CreateNotice from "../../features/admin/CreateNotice";
 
-const AddEventAndNotice = () => {
+const EventAndNotice = () => {
 
   return (
     <section className="pt-20 p-2 lg:p-5 font-mainFont1">
@@ -13,4 +13,4 @@ const AddEventAndNotice = () => {
   );
 };
 
-export default AddEventAndNotice;
+export default EventAndNotice;

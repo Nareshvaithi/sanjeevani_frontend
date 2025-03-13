@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { selectAllStudents } from "../../store/adminSlices/adminStudentsSlice";
 import { addEvent, selectEvents } from "../../store/adminSlices/EventsSlices";
+import { useState } from "react";
 
 
 
@@ -32,6 +33,7 @@ const CreateEvent = ()=>{
     const eventsFields = useSelector(selectEventFields);
     const studentList = useSelector(selectAllStudents);
     const eventlist = useSelector(selectEvents);
+    const [openEditEvent,setOpenEditEvent] = useState(false);
     const dispatch = useDispatch()
     const uniqueBatches = studentList?.length 
         ? ["Everyone", ...new Set(studentList.map(({ batchID }) => batchID))] 
@@ -51,7 +53,6 @@ const CreateEvent = ()=>{
         // formik.handleReset();
       },
     });
-    console.log(eventlist);
     return(
         <section className="pt-10">
             <div className="bg-white lg:px-3 py-3 rounded-lg w-full">
