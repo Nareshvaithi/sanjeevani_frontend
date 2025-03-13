@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectEventFields } from "../../store/adminSlices/addEventsSlice";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -11,6 +11,9 @@ import {
   FormHelperText,
 } from "@mui/material";
 import { selectAllStudents } from "../../store/adminSlices/adminStudentsSlice";
+import { addEvent, selectEvents } from "../../store/adminSlices/EventsSlices";
+
+
 
 const validationSchema = Yup.object({
   title: Yup.string().required("Title is required"),
@@ -28,9 +31,11 @@ const validationSchema = Yup.object({
 const CreateEvent = ()=>{
     const eventsFields = useSelector(selectEventFields);
     const studentList = useSelector(selectAllStudents);
-  
-    const uniqueBatches = ["Everyone", ...new Set(studentList.map(({ batchID }) => batchID))];
-  
+    const eventlist = useSelector(selectEvents);
+    const dispatch = useDispatch()
+    const uniqueBatches = studentList?.length 
+        ? ["Everyone", ...new Set(studentList.map(({ batchID }) => batchID))] 
+        : ["Everyone"];
     const formik = useFormik({
       initialValues: {
         title: "",
@@ -42,11 +47,14 @@ const CreateEvent = ()=>{
       validationSchema,
       onSubmit: (values) => {
         console.log("Form Submitted:", values);
+        dispatch(addEvent(values));
+        // formik.handleReset();
       },
     });
+    console.log(eventlist);
     return(
-        <section>
-            <div className="bg-white px-3 py-3 rounded-lg w-full">
+        <section className="pt-10">
+            <div className="bg-white lg:px-3 py-3 rounded-lg w-full">
           <h1 className="titleText">Create Event</h1>
           <form className="flex flex-col gap-5 py-5" onSubmit={formik.handleSubmit}>
             {eventsFields.map((field) => (
@@ -92,7 +100,7 @@ const CreateEvent = ()=>{
               </div>
             ))}
             <div className="w-full">
-                <button className="bg-buttonblue w-full py-2">Post Event</button>
+                <button type="submit" className="bg-buttonblue hover:bg-white text-white hover:text-buttonblue border border-buttonblue transition-all duration-500 w-full py-2">Post Event</button>
             </div>
           </form>
         </div>

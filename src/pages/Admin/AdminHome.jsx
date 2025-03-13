@@ -61,9 +61,9 @@ const AdminHome = ()=>{
                 <div className="bg-white p-5 rounded-xl">
                     <BoysAndGirlsChart/>
                 </div>
-                <div className="bg-white p-5 rounded-xl">
+                {/* <div className="bg-white p-5 rounded-xl">
                     <AttendanceChart/>
-                </div>
+                </div> */}
            </div>
         </section>
     )
