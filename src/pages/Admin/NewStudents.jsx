@@ -58,7 +58,7 @@ const NewStudents = () => {
                                 </tr>
                             ) : (
                                 newStudentList.map((student) => {
-                                    const { _id, id, fullName, email, gender, phone,  paymentTotal,payment_status } = student;
+                                    const { _id, studentID, fullName, email, gender, phone,  paymentTotal,payment_status } = student;
                                     const findPayStatus = payment_status ?? false;
 
                                     return (

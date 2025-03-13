@@ -10,6 +10,9 @@ import singleStudentRecordReducer from "./formSlices/StudentDetailsSlice"
 import newStudentReducer from "./adminSlices/newStudentSlice";
 import studentsEventsReducer from "./adminSlices/EventsSlices"
 import AdminAuthReducer from "./authSlice/adminAuthSlice";
+import addEventsReducer from "./adminSlices/addEventsSlice";
+
+
 const store = configureStore({
     reducer:{
         adminSideBar:adminSidebarReducer,
@@ -17,6 +20,7 @@ const store = configureStore({
         studentSidebar:studentSidebarReducer,
         studentsEnrollment:studentEnrollmentReducer,
         studentRecord:studentRecordReducer,
+        addEvents:addEventsReducer,
         login:loginReducer,
         adminAuth:AdminAuthReducer,
         studentLogin:studentLoginReducer,

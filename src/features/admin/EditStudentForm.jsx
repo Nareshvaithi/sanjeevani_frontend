@@ -12,6 +12,7 @@ import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { Button, Avatar, Box } from "@mui/material";
 import InputField from "../../components/Common/InputMUI";
+import { format } from "date-fns";
 
 const EditStudentForm = ({ openModule, setOpenModule }) => {
   if (openModule !== 'edit') return null;
@@ -79,7 +80,6 @@ try{
 
     },
   });
-
   // Update formik values when studentDetails changes
   useEffect(() => {
     if (studentDetails) {
@@ -121,7 +121,12 @@ try{
       reader.readAsDataURL(file);
     }
   };
-console.log(formik.values)
+console.log(formik.values);
+
+  const formatDate = (date)=>{
+  return date && format(new Date(date), "yyyy-MM-dd");
+}
+
   return (
     <motion.div
       initial={{ x: "100%" }}
@@ -169,7 +174,7 @@ console.log(formik.values)
                 label="Date of Join"
                 name="join_date"
                 type="date" 
-                value={formik.values.join_date}
+                value={formatDate(formik.values.join_date)}
                 onChange={formik.handleChange}
               />
               {/* <InputField icon={<LuUser />} label="Student Status" name="status" value={formik.values.status ? "active" : "inactive"} onChange={formik.handleChange} /> */}
@@ -210,7 +215,7 @@ console.log(formik.values)
                 label="Date of Birth"
                 name="dob"
                 type="date" // Set input type to "date"
-                value={formik.values.dob}
+                value={formatDate(formik.values.dob)}
                 onChange={formik.handleChange}
               />
               <InputField icon={<IoLocationOutline />} label="Address" name="residentialAddress" value={formik.values.residentialAddress} onChange={formik.handleChange} />

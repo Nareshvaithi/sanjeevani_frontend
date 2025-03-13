@@ -40,19 +40,26 @@ const AdminStudentsList = () => {
     name: "",
     batch: "",
   });
-  let filteredStudents=[]
+
+  let filteredStudents=[];
   // Filter students based on search query
-  if(studentList && studentList.length > 0){
-    filteredStudents= studentList.filter((student) => {
+  if (studentList && studentList.length > 0) {
+    filteredStudents = studentList.filter((student) => {
       return (
-        student?.studentID.toLowerCase().includes(searchQuery.id.toLowerCase()) &&
-        student?.fullName.toLowerCase().replaceAll(' ',"").includes(searchQuery.name.toLowerCase()) 
-        // student.batchID.toLowerCase().replaceAll(' ',"").includes(searchQuery.batch.toLowerCase())
+        (searchQuery.id
+          ? student?.studentID?.toLowerCase().includes(searchQuery.id.toLowerCase())
+          : true) &&
+        (searchQuery.name
+          ? student?.fullName?.toLowerCase().includes(searchQuery.name.toLowerCase())
+          : true) &&
+        (searchQuery.batch
+          ? student?.batchID && student?.batchID.toLowerCase().includes(searchQuery.batch.toLowerCase())
+          : true)
       );
     });
   }
+  
  
-
   // Pagination logic
   const studentsPerPage = 20;
   const [currentPage, setCurrentPage] = useState(1);
@@ -64,8 +71,6 @@ const AdminStudentsList = () => {
     (currentPage - 1) * studentsPerPage,
     currentPage * studentsPerPage
   );
-
-
 
   // Handle search input change
   const handleSearchChange = (e, field) => {
@@ -80,7 +85,7 @@ const AdminStudentsList = () => {
   };
   const paymentStatus = (payment)=>{
 
-    const getPayment = payment.filter((month)=>month.monthName===currentMonth)
+    const getPayment = payment.filter((month)=>month.monthName === currentMonth)
     const getStatus=payment.filter((status)=>status.payment_status===true)
     
     return getPayment && getStatus.length!=0 ? "Paid" : "UnPaid";
@@ -109,7 +114,7 @@ const AdminStudentsList = () => {
         </button>
         <button
           onClick={() => {
-            setSearchQuery({id: "",name: "",batch:""});
+            setSearchQuery({id: "", name: "", batch:""});
           }}
           className="px-5 bg-green-500 py-2 text-white text-lg rounded-md"
         >

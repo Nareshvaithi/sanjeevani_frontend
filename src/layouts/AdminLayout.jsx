@@ -10,7 +10,7 @@ const AdminLayout = ()=>{
         <main className="flex w-full">
             <TopBar/>
             <AdminSideBar/>
-            <div className={`${openSidebar ? "pl-0 lg:pl-60" : "pl-0"} bg-gray-100 w-full transition-all duration-500 ease-in-out`}>
+            <div className={`${openSidebar ? "pl-0 lg:pl-60" : "pl-0"} w-full transition-all duration-500 ease-in-out`}>
                 <Outlet />
             </div>
         </main>
