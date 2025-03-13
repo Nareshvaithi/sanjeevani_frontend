@@ -47,7 +47,7 @@ const StudentTopBar = ({studentDetails})=>{
                                         <MdKeyboardArrowDown/>
                                     </div>
                                 </div>
-                                <div className={`p-2 absolute top-12 h-auto w-full bg-white transition-all duration-500 ${showProfile ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"}`}>
+                                <div className={`p-2 absolute top-12 h-auto w-full bg-white transition-all duration-500 ${showProfile ? "block translate-y-0" : "hidden translate-y-3"}`}>
                                     <div className="border-b border-gray-200">
                                         <div className="flex items-center gap-2 py-2">
                                             <div className="w-10 rounded-full">

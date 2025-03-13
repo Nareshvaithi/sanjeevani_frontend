@@ -13,6 +13,8 @@ import AdminAttendance from "./features/admin/AdminAttendance";
 import AdminStudentsEvents from "./pages/Admin/AdminStudentsEvents&Notice";
 import AdminRegistrationProcess from "./pages/Admin/AdminRegistrationProcess";
 import EventAndNotice from "./pages/Admin/EventAndNotice";
+import StudentEvents from "./pages/Students/StudentEvents";
+import StudentsPayFees from "./pages/Students/StudentsPayFees";
 
 
 function App() {
@@ -34,6 +36,8 @@ function App() {
       <Route path="/student/:userId" element={<ProtectedRoute> <StudentLayout/> </ProtectedRoute>}>
         <Route index element={<StudentHome />} />
         <Route path="apply_leave" element={<ApplyLeave/>}/>
+        <Route path="studentsEvents" element={<StudentEvents />}/>
+        <Route path="pay_fees" element={<StudentsPayFees />}/>
       </Route>
 
       {/* Login */}
