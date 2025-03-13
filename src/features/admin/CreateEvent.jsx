@@ -11,8 +11,7 @@ import {
   FormHelperText,
 } from "@mui/material";
 import { selectAllStudents } from "../../store/adminSlices/adminStudentsSlice";
-import { addEvent, selectEvents } from "../../store/adminSlices/EventsSlices";
-
+import { addEvent, addStudentsEvents, SelectEventList, selectEvents } from "../../store/adminSlices/EventsSlices";
 
 
 const validationSchema = Yup.object({
@@ -31,7 +30,7 @@ const validationSchema = Yup.object({
 const CreateEvent = ()=>{
     const eventsFields = useSelector(selectEventFields);
     const studentList = useSelector(selectAllStudents);
-    const eventlist = useSelector(selectEvents);
+    const eventlist = useSelector(SelectEventList);
     const dispatch = useDispatch()
     const uniqueBatches = studentList?.length 
         ? ["Everyone", ...new Set(studentList.map(({ batchID }) => batchID))] 
@@ -47,7 +46,8 @@ const CreateEvent = ()=>{
       validationSchema,
       onSubmit: (values) => {
         console.log("Form Submitted:", values);
-        dispatch(addEvent(values));
+        dispatch(addStudentsEvents(values));
+        alert("sucess")
         // formik.handleReset();
       },
     });
