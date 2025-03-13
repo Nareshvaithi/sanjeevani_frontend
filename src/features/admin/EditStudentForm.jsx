@@ -62,6 +62,8 @@ const EditStudentForm = ({ openModule, setOpenModule }) => {
       status: status || "",
     },
     onSubmit: async(values) => {
+
+      
       const formData = new FormData();
       console.log("values.image",values.image)
       values.status=values.status=="Active" ? true : false
