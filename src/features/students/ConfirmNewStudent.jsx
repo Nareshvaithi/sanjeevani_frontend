@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setEnrollProcess } from "../../store/studentSlices/studentsEnrollmentSlice";
 import axios from "axios";
 const ConfirmNewStudent = () => {
+  const API_URL = import.meta.env.VITE_API_URL;
   const [showConfetti, setShowConfetti] = useState(false);
   const studentRecords=useSelector((state)=>state.studentRecord)
   const dispatch=useDispatch()
@@ -15,7 +16,7 @@ console.log("studentRecords",studentRecords)
 const hanldelSubmit= async ()=>{
 
 try{
-  const updateRecords=await axios.post("https://api-sanjeevani.tejusdigi.com/student/entroll",studentRecords,{
+  const updateRecords=await axios.post(`${API_URL}/student/entroll`,studentRecords,{
     headers: {
       "Content-Type": "multipart/form-data",
     },

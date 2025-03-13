@@ -1,15 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-const API_URL = "https://api-sanjeevani.tejusdigi.com/existingstudents";
-const adminAPI="https://api-sanjeevani.tejusdigi.com/adminLogin"
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (userData, { rejectWithValue }) => {
-    
     try {
       console.log(userData)
-      const response = await axios.get(API_URL, userData);
+      const response = await axios.get({`${API_URL}/existingstudents`}, userData);
       localStorage.setItem("token", response.data.token); 
       return response.data;
     } catch (error) {
@@ -23,7 +21,7 @@ export const loginAdmin = createAsyncThunk(
       async (adminData, { rejectWithValue }) => {
         
         try {
-          const response = await axios.post(adminAPI, adminData);
+          const response = await axios.post({`${API_URL}/adminLogin`}, adminData);
           console.log("admin")
           localStorage.setItem("token", response.data.token); 
           return response.data;
