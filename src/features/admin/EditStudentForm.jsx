@@ -61,14 +61,30 @@ const EditStudentForm = ({ openModule, setOpenModule }) => {
       status: status || "",
     },
     onSubmit: async(values) => {
-      console.log("Submitting Data:", values);
+      const formData = new FormData();
+      console.log("values.image",values.image)
       values.status=values.status=="Active" ? true : false
-      const updatedValues = {
-        ...values,
-        _id: String(studentDetails._id), 
-      };
+      Object.keys(values).forEach((key) => {
+        if (key !== "image" && key !== "imageUrls" && key !== "paymentRecords") {
+          formData.append(key, values[key]);
+        }
+      });
+      if (values.paymentRecords && Array.isArray(values.paymentRecords)) {
+      
+        formData.append("paymentRecords", JSON.stringify(values.paymentRecords));
+      }
+      formData.append("image", values.image); 
+     
+
+      const id = Array.isArray(values._id) ? values._id[0] : values._id;
+ 
+      formData.append('paymentRecords', JSON.stringify(paymentRecords));
+      formData.forEach((value, key) => {
+        console.log("Submitting Data:",key, value);
+      });
+      console.log("Submitting Data:", formData);
 try{
- await dispatch(editStudentData(updatedValues)).unwrap();
+ await dispatch(editStudentData(formData)).unwrap();
  dispatch(fetchStudentsRecord())
  setOpenModule(null);
 }catch(error){
@@ -111,7 +127,7 @@ try{
     const file = event.target.files[0];
     if (file) {
       // Update Formik state
-      formik.setFieldValue("imageUrls", file);
+      formik.setFieldValue("image", file);
 
       // Show preview
       const reader = new FileReader();
@@ -121,7 +137,7 @@ try{
       reader.readAsDataURL(file);
     }
   };
-console.log(formik.values)
+
   return (
     <motion.div
       initial={{ x: "100%" }}
@@ -143,18 +159,19 @@ console.log(formik.values)
           <div className="bg-gray-100 p-5 rounded-xl flex flex-col lg:flex-row items-start lg:items-center gap-5">
             <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
               <Avatar src={preview} sx={{ width: 100, height: 100 }} />
-              {/* <input
+              <input
                 accept="image/*"
                 type="file"
+                name="image"
                 id="image-upload"
                 style={{ display: "none" }}
                 onChange={handleImageChange}
-              /> */}
-              {/* <label htmlFor="image-upload">
+              />
+              <label htmlFor="image-upload">
                 <Button variant="contained" component="span">
                   Upload Image
                 </Button>
-              </label> */}
+              </label>
             </Box>
           </div>
 

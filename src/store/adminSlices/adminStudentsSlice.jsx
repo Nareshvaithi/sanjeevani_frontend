@@ -48,11 +48,13 @@ export const fetchStudentsRecord = createAsyncThunk(
 
   //edit student records.................................
   export const editStudentData = createAsyncThunk(
-    "data/editStudentData",
-    async ({ _id, ...updatedData }, { rejectWithValue }) => {
+    "existingstudents/editStudentData",
+    async (formData, { rejectWithValue }) => {
      
       try {
-          const response = await axios.put(`${API_URL}/existingstudents/${_id}`, updatedData);
+        alert("sucess")
+        
+          const response = await axios.put(`${API_URL}/existingstudents/${formData.get("_id")}`, formData);
         console.log("Success: student record Edited", _id);
         return response.data;
       } catch (error) {
@@ -106,6 +108,7 @@ const studentSlice = createSlice({
           .addCase(fetchStudentsRecord.pending, (state, action) => {
             state.status = "loading";
           })
+
           // for adding
 
           .addCase(addStudent.pending, (state) => {

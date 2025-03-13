@@ -15,7 +15,7 @@ const NewStudents = () => {
         console.log("Adding student:", studentData);
         const { _id, ...newObj } = studentData;
         await  dispatch(addStudent(newObj)).unwrap();
-        dispatch(deleteNewStudent(_id))
+        // dispatch(deleteNewStudent(_id))
 
     }catch(error){
         console.log(error.message)
@@ -58,7 +58,7 @@ const NewStudents = () => {
                                 </tr>
                             ) : (
                                 newStudentList.map((student) => {
-                                    const { _id, id, fullName, email, gender, phone,  paymentTotal,payment_status } = student;
+                                    const { _id, id, fullName, email, gender, phone,studentID,  paymentTotal,payment_status } = student;
                                     const findPayStatus = payment_status ?? false;
 
                                     return (
