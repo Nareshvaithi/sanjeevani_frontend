@@ -12,7 +12,7 @@ import { selectEnrollProcess, setEnrollProcess } from "../../store/studentSlices
 const StudentEnrollmentForm = () => {
   const [order,setOrder]=useState({})
 const studentRecords=useSelector((state)=>state.studentRecord)
-
+const API_URL = import.meta.env.VITE_API_URL;
   const dispatch=useDispatch()
   console.log("studentRecords",studentRecords)
   const currentDate = format(new Date(), "yyyy-MM-dd"); 
@@ -20,7 +20,7 @@ const studentRecords=useSelector((state)=>state.studentRecord)
 const { error, isLoading, Razorpay } = useRazorpay();
 useEffect( ()=>{
   const fetdata=async ()=>{
-    const response=await axios.get("https://api-sanjeevani.tejusdigi.com/payments/paymentsall")
+    const response=await axios.get(`${API_URL}/payments/paymentsall`)
     setData(response.data)   
   }
   fetdata()
@@ -66,7 +66,7 @@ let id
 
         }
       if (!id) throw new Error("Payment plan not found");
-        const response=await axios.get(`https://api-sanjeevani.tejusdigi.com/payments?_id=${id}`,)
+        const response=await axios.get(`${API_URL}/payments?_id=${id}`,)
         const orderDetails={received_payment:response.data.amount,paymentOderID:response.data.id}
        
     
