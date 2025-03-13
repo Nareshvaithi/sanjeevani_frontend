@@ -43,23 +43,20 @@ const AdminStudentsList = () => {
 
   let filteredStudents=[];
   // Filter students based on search query
-  if (studentList && studentList.length > 0) {
+ 
     filteredStudents = studentList.filter((student) => {
       return (
-        (searchQuery.id
-          ? student?.studentID?.toLowerCase().includes(searchQuery.id.toLowerCase())
+        (searchQuery.id && student?.studentID
+          ? student.studentID.toLowerCase().includes(searchQuery.id.toLowerCase())
           : true) &&
-        (searchQuery.name
-          ? student?.fullName?.toLowerCase().includes(searchQuery.name.toLowerCase())
+        (searchQuery.name && student?.fullName
+          ? student.fullName.toLowerCase().includes(searchQuery.name.toLowerCase())
           : true) &&
-        (searchQuery.batch
-          ? student?.batchID && student?.batchID.toLowerCase().includes(searchQuery.batch.toLowerCase())
+        (searchQuery.batch && student?.batchID
+          ? student.batchID.toLowerCase().includes(searchQuery.batch.toLowerCase())
           : true)
       );
     });
-  }
-  
- 
   // Pagination logic
   const studentsPerPage = 20;
   const [currentPage, setCurrentPage] = useState(1);

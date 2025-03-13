@@ -155,22 +155,14 @@ const EditStudentForm = ({ openModule, setOpenModule }) => {
 console.log(formik.values);
 
   const formatDate = (date)=>{
-  return date && parseAndFormatDate(date);
+  return date && format(new Date(date),'yyyy-MM-dd');
 }
 
-
-
-
 const parseAndFormatDate = (dateString) => {
-
-  const parsedDate = parse(dateString, "dd/MM/yyyy", new Date());
-  
-
-  if (!isNaN(parsedDate)) {
-    return format(parsedDate, "dd/MM/yyyy");
-  }
-  
-
+    const parsedDate = parse(dateString, "dd/MM/yyyy", new Date());
+    if (!isNaN(parsedDate)) {
+      return  format(parsedDate, "dd/MM/yyyy");
+    }
   return "";
 };
 

@@ -10,7 +10,8 @@ const initialState = {
     {
       id: 2,
       title: "My Profile",
-      to: "/student/:userId/my_profile",
+      to:"",
+      // to: "/student/:userId/my_profile",
     },
     {
       id: 4,
@@ -20,7 +21,8 @@ const initialState = {
     {
       id: 5,
       title: "Pay Fees",
-      to: "/student/:userId/pay_fees",
+      to:"",
+      // to: "/student/:userId/pay_fees",
     },
   ],
   openStudentSidebar: true,
