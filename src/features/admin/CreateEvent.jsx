@@ -32,6 +32,7 @@ const validationSchema = Yup.object({
 const CreateEvent = ()=>{
     const eventsFields = useSelector(selectEventFields);
     const studentList = useSelector(selectAllStudents);
+    const eventlist = useSelector(SelectEventList);
     const eventlist = useSelector(selectEvents);
     const [openEditEvent,setOpenEditEvent] = useState(false);
     const dispatch = useDispatch()
@@ -49,7 +50,8 @@ const CreateEvent = ()=>{
       validationSchema,
       onSubmit: (values) => {
         console.log("Form Submitted:", values);
-        dispatch(addEvent(values));
+        dispatch(addStudentsEvents(values));
+        alert("sucess")
         // formik.handleReset();
       },
     });

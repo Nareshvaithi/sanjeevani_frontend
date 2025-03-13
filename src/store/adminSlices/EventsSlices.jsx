@@ -15,7 +15,7 @@ const initialState = {
 const API_URL = import.meta.env.VITE_API_URL;
 console.log("API_URL", API_URL);
 
-// Fetch all student events
+// Fetch all student events 
 export const fetchStudentsEvents = createAsyncThunk(
   "events/fetchStudentsEvents",
   async (_, { rejectWithValue }) => {

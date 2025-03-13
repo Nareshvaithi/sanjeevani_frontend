@@ -15,7 +15,7 @@ const NewStudents = () => {
         console.log("Adding student:", studentData);
         const { _id, ...newObj } = studentData;
         await  dispatch(addStudent(newObj)).unwrap();
-        dispatch(deleteNewStudent(_id))
+        // dispatch(deleteNewStudent(_id))
 
     }catch(error){
         console.log(error.message)
