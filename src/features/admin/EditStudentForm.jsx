@@ -154,17 +154,25 @@ const EditStudentForm = ({ openModule, setOpenModule }) => {
   };
 console.log(formik.values);
 
-  const formatDate = (date)=>{
-  return date && format(new Date(date),'yyyy-MM-dd');
-}
-
 const parseAndFormatDate = (dateString) => {
-    const parsedDate = parse(dateString, "dd/MM/yyyy", new Date());
-    if (!isNaN(parsedDate)) {
-      return  format(parsedDate, "dd/MM/yyyy");
-    }
+
+  const parsedDate = parse(dateString, "dd/MM/yyyy", new Date());
+  
+
+  if (!isNaN(parsedDate)) {
+    return format(parsedDate, "dd/MM/yyyy");
+  }
+  
+
   return "";
 };
+  const formatDate = (date)=>{
+    console.log(date);
+  return date && parseAndFormatDate(date);
+}
+console.log("check date",formatDate("2025-03-01"));
+
+
 
   return (
     <motion.div
@@ -214,7 +222,7 @@ const parseAndFormatDate = (dateString) => {
                 label="Date of Join"
                 name="join_date"
                 type="date" 
-                value={formatDate(formik.values.join_date)}
+                value={formik.values.join_date}
                 onChange={formik.handleChange}
               />
               {/* <InputField icon={<LuUser />} label="Student Status" name="status" value={formik.values.status ? "active" : "inactive"} onChange={formik.handleChange} /> */}
@@ -255,7 +263,7 @@ const parseAndFormatDate = (dateString) => {
                 label="Date of Birth"
                 name="dob"
                 type="date" // Set input type to "date"
-                value={formatDate(formik.values.dob)}
+                value={formik.values.dob}
                 onChange={formik.handleChange}
               />
               <InputField icon={<IoLocationOutline />} label="Address" name="residentialAddress" value={formik.values.residentialAddress} onChange={formik.handleChange} />
