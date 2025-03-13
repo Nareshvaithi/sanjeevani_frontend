@@ -1,6 +1,8 @@
 import { FormControl, TextField } from "@mui/material";
 import { useFormik } from "formik";
+import { useDispatch } from "react-redux";
 import * as yup from "yup";
+import { addStudentsNotice, fetchStudentsNotice } from "../../store/adminSlices/NoticeSlice";
 
 const validationSchema = yup.object().shape({
     notice: yup.string().min(5, 'Minimum 5 characters required').required("Notice title is required"),
@@ -8,14 +10,19 @@ const validationSchema = yup.object().shape({
 });
 
 const CreateNotice = () => {
+
+    const dispatch=useDispatch()
     const formik = useFormik({
         initialValues: {
             notice: '',
             remark: ''
         },
         validationSchema, 
-        onSubmit: (values) => {
+        onSubmit: async(values) => {
             console.log("Notice", values);
+            await dispatch(addStudentsNotice(values))
+            alert("success")
+            dispatch(fetchStudentsNotice())
         }
     });
 
