@@ -25,6 +25,7 @@ const LoginSlice = createSlice({
     },
 });
 
+
 export default LoginSlice.reducer;
 export const selectLoginImage = (state) => state.login.loginImg;
 export const selectLoginStatus = (state) => state.login.login;

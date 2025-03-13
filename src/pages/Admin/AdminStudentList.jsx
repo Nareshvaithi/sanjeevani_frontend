@@ -25,7 +25,7 @@ const AdminStudentsList = () => {
  const currentMonth=format(new Date(), "MMMM");
   const breadcrumbItems = useSelector(selectBreadCrumb).map((item) => ({
     label: item,
-    link: null, // You can set the link if needed
+    link: null, 
   }));
   const dispatch = useDispatch();
   const studentList = useSelector(selectAllStudents);
@@ -187,7 +187,8 @@ const AdminStudentsList = () => {
                     {/* <img className="w-10 rounded-full border" src={imageUrls} alt="image" /> */}
                     <p>{fullName}</p>
                   </td>
-                  <td className="py-4 px-2 whitespace-nowrap" title={email}>{`${email.substring(0, 20)}...`}</td>
+                  {email ? <td className="py-4 px-2 whitespace-nowrap" title={email}>{`${email.substring(0, 20)}...`}</td> : <td className="py-4 px-2 whitespace-nowrap" title={email}>email not provided</td>}
+                  
                   <td className="py-4 px-2 whitespace-nowrap">
                     <span className={`${gender.toLowerCase() === "male" ? "bg-themelightblue" : "bg-pink-600"} text-[12px] text-white px-2 py-1 rounded-md`}>{gender}</span>
                   </td>

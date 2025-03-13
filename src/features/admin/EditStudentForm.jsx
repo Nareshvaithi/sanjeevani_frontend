@@ -12,7 +12,7 @@ import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { Button, Avatar, Box } from "@mui/material";
 import InputField from "../../components/Common/InputMUI";
-import { format } from "date-fns";
+import { parse,format } from "date-fns";
 
 const EditStudentForm = ({ openModule, setOpenModule }) => {
   if (openModule !== 'edit') return null;
@@ -40,7 +40,7 @@ const EditStudentForm = ({ openModule, setOpenModule }) => {
     status,
   } = studentDetails || {};
 
-  // Image preview state
+ 
   const [preview, setPreview] = useState(imageUrls || "");
 
   const formik = useFormik({
@@ -61,44 +61,57 @@ const EditStudentForm = ({ openModule, setOpenModule }) => {
       paymentRecords: paymentRecords || "",
       status: status || "",
     },
-    onSubmit: async(values) => {
-
-      
+    onSubmit: async (values) => {
+      if (values.image) {}
+    
       const formData = new FormData();
-      console.log("values.image",values.image)
-      values.status=values.status=="Active" ? true : false
+      console.log("values.image", values.image);
+  
+      values.status = values.status === "Active" ? true : false;
+    
+    
       Object.keys(values).forEach((key) => {
         if (key !== "image" && key !== "imageUrls" && key !== "paymentRecords") {
           formData.append(key, values[key]);
         }
       });
+    
+      
       if (values.paymentRecords && Array.isArray(values.paymentRecords)) {
-      
-        formData.append("paymentRecords", JSON.stringify(values.paymentRecords));
-      }
-      formData.append("image", values.image); 
+   
+        values.paymentRecords = values.paymentRecords.map((record) => {
+          try {
      
-
-      const id = Array.isArray(values._id) ? values._id[0] : values._id;
- 
-      formData.append('paymentRecords', JSON.stringify(paymentRecords));
-      formData.forEach((value, key) => {
-        console.log("Submitting Data:",key, value);
-      });
-      console.log("Submitting Data:", formData);
-try{
- await dispatch(editStudentData(formData)).unwrap();
- dispatch(fetchStudentsRecord())
- setOpenModule(null);
-}catch(error){
-  console.log(error.message)
-}
+            return typeof record === "string" ? JSON.parse(record) : record;
+          } catch (error) {
+            console.log("Error parsing paymentRecord:", error);
+            return record;
+          }
+        });
+      }
+    
       
-      
+      // formData.append("paymentRecords", JSON.stringify(values.paymentRecords));
+    
 
-    },
+      formData.append("image", values.image);
+    
+
+   
+     
+    
+      try {
+        await dispatch(editStudentData(formData)).unwrap();
+
+        dispatch(fetchStudentsRecord());
+        setOpenModule(null);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+        
   });
-  // Update formik values when studentDetails changes
+ 
   useEffect(() => {
     if (studentDetails) {
       formik.setValues({
@@ -142,8 +155,24 @@ try{
 console.log(formik.values);
 
   const formatDate = (date)=>{
-  return date && format(new Date(date), "yyyy-MM-dd");
+  return date && parseAndFormatDate(date);
 }
+
+
+
+
+const parseAndFormatDate = (dateString) => {
+
+  const parsedDate = parse(dateString, "dd/MM/yyyy", new Date());
+  
+
+  if (!isNaN(parsedDate)) {
+    return format(parsedDate, "dd/MM/yyyy");
+  }
+  
+
+  return "";
+};
 
   return (
     <motion.div

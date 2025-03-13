@@ -20,7 +20,7 @@ const studentRecords=useSelector((state)=>state.studentRecord)
 const { error, isLoading, Razorpay } = useRazorpay();
 useEffect( ()=>{
   const fetdata=async ()=>{
-    const response=await axios.get("http://localhost:3000/payments/paymentsall")
+    const response=await axios.get("https://api-sanjeevani.tejusdigi.com/payments/paymentsall")
     setData(response.data)   
   }
   fetdata()
@@ -66,7 +66,7 @@ let id
 
         }
       if (!id) throw new Error("Payment plan not found");
-        const response=await axios.get(`http://localhost:3000/payments?_id=${id}`,)
+        const response=await axios.get(`https://api-sanjeevani.tejusdigi.com/payments?_id=${id}`,)
         const orderDetails={received_payment:response.data.amount,paymentOderID:response.data.id}
        
     
@@ -87,7 +87,8 @@ let id
         razorpayInstance.open();
       
       }catch(error){
-        console.log(error.message)
+        console.log(error.response)
+        console.log(error)
         alert("fail")
       }
      

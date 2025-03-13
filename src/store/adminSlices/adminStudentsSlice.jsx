@@ -28,7 +28,6 @@ export const fetchStudentsRecord = createAsyncThunk(
     "records/fetchStudentsRecords",
     async () => {
       const response = await axios.get(`${API_URL}/existingstudents`);
-      console.log("Fetched Data:", response.data);
       return response.data;
     }
   );
@@ -52,12 +51,13 @@ export const fetchStudentsRecord = createAsyncThunk(
     async (formData, { rejectWithValue }) => {
      
       try {
-        alert("sucess")
-        
+
           const response = await axios.put(`${API_URL}/existingstudents/${formData.get("_id")}`, formData);
-        console.log("Success: student record Edited", _id);
+    
         return response.data;
       } catch (error) {
+        console.error("Error response:", error.response);
+        console.error("Error details:", error);
         return rejectWithValue(error.response?.data || "Error Editing student record");
       }
     }
@@ -137,11 +137,14 @@ const studentSlice = createSlice({
         state.editstatus = "Proccessing";
       })
       .addCase(editStudentData.fulfilled, (state, action) => {
-        alert("succes")
+
         state.editstatus = "save changes";
-        state.addsStudentsRecord = state.addsStudentsRecord.map((data) =>
-          data._id === action.payload._id ? action.payload : data
-        )
+        state.addsStudentsRecord = state.addsStudentsRecord.map((data) => {
+          if (data._id === action.payload._id) {
+            return action.payload;  
+          }
+          return data;  
+        });
         
     })      
       .addCase(editStudentData.rejected, (state, action) => {

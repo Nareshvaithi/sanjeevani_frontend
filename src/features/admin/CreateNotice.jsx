@@ -23,6 +23,7 @@ const CreateNotice = () => {
             await dispatch(addStudentsNotice(values))
             alert("success")
             dispatch(fetchStudentsNotice())
+            formik.resetForm()
         }
     });
 

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { selectLoginImage, setLogin } from "../../store/authSlice/loginSlice";
 import { TextField, FormControl, InputAdornment, FormControlLabel, Checkbox } from "@mui/material";
-import { useFormik } from "formik";
+import { useFormik } from "formik"; 
 import * as Yup from "yup"; 
 import { AccountCircle, Lock } from "@mui/icons-material"; 
 import { useNavigate } from "react-router-dom";
@@ -25,7 +25,7 @@ const Login = () => {
             .required("Password is required")
             .min(6, "Password must be at least 6 characters"),
     });
-    console.log(studentList);
+
     const formik = useFormik({
         initialValues: {
             userName: "",
@@ -34,21 +34,25 @@ const Login = () => {
         },
         validationSchema,
         onSubmit: async (values) => {
-            const resultAction = await dispatch(loginUser(values));
-            
-            if (loginUser.fulfilled.match(resultAction)) {
-                console.log("Login Submitted:", values);
-            
-            dispatch(setLogin());
-            console.log(studentList)
-            const user = studentList.find(({userName}) => userName === values.userName);
-            console.log(user);
-            const userId = user._id;
-            console.log(userId);
-            navigate(`/student/${userId}`);
-            dispatch(fetchSingleStudent(userId));
-            alert('Login successfully');
-            }else{
+         
+            console.log(values)
+            const resultAction = await dispatch(loginUser({...values,loginStatus:true}));
+            if(values.userName!=="admin"){
+                if (loginUser.fulfilled.match(resultAction)) {
+                    console.log("Login Submitted:", values);
+                
+                dispatch(setLogin());
+               console.log(studentList)
+                const user = studentList.find(({userName}) => userName === values.userName);
+                console.log(user);
+                const userId = user._id;
+                console.log(userId);
+                navigate(`/student/${userId}`);
+                dispatch(fetchSingleStudent(userId));
+                alert('Login successfully');
+                }
+            }
+else{
                 const resultAction = await dispatch(loginAdmin(values));
                 if(loginAdmin.fulfilled.match(resultAction)){
                     alert('Login successfully');

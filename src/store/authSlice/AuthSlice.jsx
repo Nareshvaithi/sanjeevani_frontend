@@ -1,15 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-const API_URL = "http://localhost:3000/studentLogin";
-const adminAPI="http://localhost:3000/adminLogin"
+const API_URL = "https://api-sanjeevani.tejusdigi.com/existingstudents";
+const adminAPI="https://api-sanjeevani.tejusdigi.com/adminLogin"
 
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (userData, { rejectWithValue }) => {
     
     try {
-      const response = await axios.post(API_URL, userData);
-      console.log("login")
+      console.log(userData)
+      const response = await axios.get(API_URL, userData);
       localStorage.setItem("token", response.data.token); 
       return response.data;
     } catch (error) {

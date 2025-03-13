@@ -15,7 +15,7 @@ console.log("studentRecords",studentRecords)
 const hanldelSubmit= async ()=>{
 
 try{
-  const updateRecords=await axios.post("http://localhost:3000/student/entroll",studentRecords,{
+  const updateRecords=await axios.post("https://api-sanjeevani.tejusdigi.com/student/entroll",studentRecords,{
     headers: {
       "Content-Type": "multipart/form-data",
     },

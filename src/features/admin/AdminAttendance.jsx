@@ -43,7 +43,7 @@ function AdminAttendance() {
     try {
       console.log("work");
       await axios.post(
-        "http://localhost:3000/existingstudents",
+        "api-sanjeevani.tejusdigi.com/existingstudents",
         attendanceData
       );
      alert("Attendance Updated Sucessfully")

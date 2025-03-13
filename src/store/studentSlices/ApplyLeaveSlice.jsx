@@ -3,7 +3,7 @@ import axios from "axios";
 import { toast } from 'react-toastify';
 
 const initialState = {
-  studentsNoticeList: [],
+  studentsLeaveList: [],
   status: "idle",
   editstatus: "Submit",
   deletestatus: "Submit",
@@ -13,28 +13,27 @@ const initialState = {
 };
 
 const API_URL = import.meta.env.VITE_API_URL;
-console.log("API_URL", API_URL);
 
-// Fetch all student Notice 
-export const fetchStudentsNotice = createAsyncThunk(
-  "notice/fetchStudentsNotice",
+
+// Fetch all student Leave 
+export const fetchStudentsLeave = createAsyncThunk(
+  "leave/fetchStudentsLeave",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${API_URL}/notice`);
+      const response = await axios.get(`${API_URL}/existingstudents`);
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response?.data || "Failed to fetch Notice");
+      return rejectWithValue(error.response?.data || "Failed to fetch Leave");
     }
   }
 );
 
 // Add new event
-export const addStudentsNotice = createAsyncThunk(
-  "notice/addStudentsNotice",
-  async (studentsNoticeData, { rejectWithValue }) => {
+export const addStudentsLeave = createAsyncThunk(
+  "leave/addStudentsLeave",
+  async (studentsLeaveData, { rejectWithValue }) => {
     try {
-
-      const response = await axios.post(`${API_URL}/notice`, studentsNoticeData);
+      const response = await axios.post(`${API_URL}/Leave`, studentsLeaveData);
       toast.success("Event added successfully!");
       return response.data;
     } catch (error) {
@@ -45,12 +44,13 @@ export const addStudentsNotice = createAsyncThunk(
 );
 
 // Delete event
-export const deleteStudentsNotice = createAsyncThunk(
-  "notice/deleteStudentsNotice",
-  async (Id, { rejectWithValue }) => {
+export const deleteStudentsLeave = createAsyncThunk(
+  "leave/deleteStudentsLeave",
+  async (eventId, { rejectWithValue }) => {
     try {
-      await axios.delete(`${API_URL}/notice/${Id}`);
+      await axios.delete(`${API_URL}/leave/${eventId}`);
       toast.success("Event deleted successfully!");
+      alert("success")
       return eventId; // Returning eventId to filter from state
     } catch (error) {
       toast.error("Failed to delete event");
@@ -60,11 +60,11 @@ export const deleteStudentsNotice = createAsyncThunk(
 );
 
 // Edit event
-export const editStudentsNotice = createAsyncThunk(
-  "notice/editStudentsNotice",
+export const editStudentsLeave = createAsyncThunk(
+  "leave/editStudentsLeave",
   async ({ _id, ...updatedData }, { rejectWithValue }) => {
     try {
-      const response = await axios.put(`${API_URL}/notice/${_id}`, updatedData);
+      const response = await axios.put(`${API_URL}/leave/${_id}`, updatedData);
       toast.success("Event edited successfully!");
       return response.data;
     } catch (error) {
@@ -74,8 +74,8 @@ export const editStudentsNotice = createAsyncThunk(
   }
 );
 
-const studentsNoticeSlice = createSlice({
-  name: "studentsNotice",
+const studentsLeaveSlice = createSlice({
+  name: "studentsLeave",
   initialState,
   reducers: {
     addEvent: {
@@ -105,67 +105,65 @@ const studentsNoticeSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchStudentsNotice.pending, (state) => {
+      .addCase(fetchStudentsLeave.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(fetchStudentsNotice.fulfilled, (state, action) => {
+      .addCase(fetchStudentsLeave.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.studentsNoticeList = action.payload;
+        state.studentsLeaveList = action.payload;
       })
-      .addCase(fetchStudentsNotice.rejected, (state, action) => {
+      .addCase(fetchStudentsLeave.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
-        toast.error(action.payload || "Failed to fetch Notice");
+        toast.error(action.payload || "Failed to fetch Leave");
       })
 
       // Add event
-      .addCase(addStudentsNotice.pending, (state) => {
+      .addCase(addStudentsLeave.pending, (state) => {
         state.addstatus = "Processing";
       })
-      .addCase(addStudentsNotice.fulfilled, (state, action) => {
+      .addCase(addStudentsLeave.fulfilled, (state, action) => {
         state.addstatus = "Submit";
-        state.studentsNoticeList.push(action.payload);
+        state.studentsLeaveList.push(action.payload);
       })
-      .addCase(addStudentsNotice.rejected, (state, action) => {
+      .addCase(addStudentsLeave.rejected, (state, action) => {
         state.addstatus = "Submit";
         state.error = action.payload;
       })
 
       // Delete event
-      .addCase(deleteStudentsNotice.pending, (state) => {
+      .addCase(deleteStudentsLeave.pending, (state) => {
         state.deletestatus = "Processing";
       })
-      .addCase(deleteStudentsNotice.fulfilled, (state, action) => {
+      .addCase(deleteStudentsLeave.fulfilled, (state, action) => {
         state.deletestatus = "Submit";
-        state.studentsNoticeList = state.studentsNoticeList.filter(
+        state.studentsLeaveList = state.studentsLeaveList.filter(
           (event) => event._id !== action.payload
         );
       })
-      .addCase(deleteStudentsNotice.rejected, (state, action) => {
+      .addCase(deleteStudentsLeave.rejected, (state, action) => {
         state.deletestatus = "Submit";
         state.error = action.payload;
       })
 
       // Edit event
-      .addCase(editStudentsNotice.pending, (state) => {
+      .addCase(editStudentsLeave.pending, (state) => {
         state.editstatus = "Processing";
       })
-      .addCase(editStudentsNotice.fulfilled, (state, action) => {
+      .addCase(editStudentsLeave.fulfilled, (state, action) => {
         state.editstatus = "Submit";
-        state.studentsNoticeList = state.studentsNoticeList.map((event) =>
+        state.studentsLeaveList = state.studentsLeaveList.map((event) =>
           event._id === action.payload._id ? action.payload : event
         );
       })
-      .addCase(editStudentsNotice.rejected, (state, action) => {
+      .addCase(editStudentsLeave.rejected, (state, action) => {
         state.editstatus = "Submit";
         state.error = action.payload;
       });
   },
 });
 
-export default studentsNoticeSlice.reducer;
-export const selectNotice = (state) => state.studentsNotice.eventList;
-export const SelectNoticeList = (state) => state.studentsNotice.studentsNoticeList;
-export const { addEvent } = studentsNoticeSlice.actions;
-
-
+export default studentsLeaveSlice.reducer;
+export const selectLeave = (state) => state.studentsLeave.eventList;
+export const SelectEventList = (state) => state.studentsLeave.studentsLeaveList;
+export const { addEvent } = studentsLeaveSlice.actions;

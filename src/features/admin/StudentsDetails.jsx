@@ -13,7 +13,7 @@ import {
   selectSingleStudent,
   setSingleStudentRecord,
 } from "../../store/formSlices/StudentDetailsSlice";
-import { format } from "date-fns";
+import { parse,format } from "date-fns";
 
 const StudentDetails = ({ openModule, setOpenModule }) => {
   const currentMonth = format(new Date(), "MMMM");
@@ -63,9 +63,20 @@ const StudentDetails = ({ openModule, setOpenModule }) => {
   useEffect(() => {
     if (dob) setFormattedDob(format(new Date(dob), "dd/MM/yyyy"));
     if (join_date)
-      setFormattedJoinDate(format(new Date(join_date), "dd/MM/yyyy"));
+      setFormattedJoinDate(parseAndFormatDate(join_date));
   }, [dob, join_date, paymentRecords]);
 
+  const parseAndFormatDate = (dateString) => {
+  
+    const parsedDate = parse(dateString, "dd/MM/yyyy", new Date());
+    
+   
+    if (!isNaN(parsedDate)) {
+      return format(parsedDate, "dd/MM/yyyy");
+    }
+    return "";
+  };
+  
   return (
     <motion.div
       initial={{ x: "100%" }}
@@ -181,7 +192,7 @@ const StudentDetails = ({ openModule, setOpenModule }) => {
                 {paymentRecords
                   ? paymentRecords.map((value, index) => {
                       const formattedDate = value.paid_date
-                        ? format(new Date(value.paid_date), "dd/MM/yyyy")
+                        ? parseAndFormatDate(value.paid_date)
                         : "";
                       return (
                         <>

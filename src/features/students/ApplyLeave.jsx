@@ -3,10 +3,12 @@ import InputField from "../../components/Common/InputMUI";
 import { CiCalendarDate } from "react-icons/ci";
 import { MdReportProblem } from "react-icons/md";
 import { useFormik } from "formik";
-
+import { useDispatch, useSelector } from "react-redux";
+import {addStudent} from "../../store/adminSlices/adminStudentsSlice"
 
 const ApplyLeave = ()=>{
     
+    const dispatch=useDispatch()
 
     const formik = useFormik({
         initialValues:{
@@ -15,7 +17,11 @@ const ApplyLeave = ()=>{
             reason:"",
         },
         onSubmit:(values)=>{
+            values.leaveStatus=true
             console.log(values);
+            // dispatch(addStudent(values))
+            dispatch(addStudent(values))
+            alert("success")
         }
     })
     const TotalNoOfDaysLeave = Number(differenceInDays(parseISO(formik.values.toDate),parseISO(formik.values.fromDate))) || 0;
