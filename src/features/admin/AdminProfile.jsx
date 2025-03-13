@@ -12,7 +12,7 @@ const AdminProfile = ({openProfile,setOpenProfile})=>{
             &times;
         </button>
         <div>
-            
+            ddd
         </div>
     </motion.div>
     )

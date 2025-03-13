@@ -6,6 +6,10 @@
     scroll-behavior: smooth;
 }
 
+body{
+  @apply bg-gray-100
+}
+
 .buttonStyle{
     @apply bg-buttonblue hover:bg-buttonblue/60 rounded-md transition-all duration-500
 }

@@ -24,7 +24,7 @@ const StudentLayout = () => {
         <main>
             <StudentSideBar studentDetails={finalStudentDetails} />
             <StudentTopBar studentDetails={finalStudentDetails} />
-            <div className={`${openSidebar ? "pl-0 lg:pl-60" : "pl-0"} pt-16 bg-gray-100 w-full transition-all duration-500 ease-in-out font-mainFont1`}>
+            <div className={`${openSidebar ? "pl-0 lg:pl-60" : "pl-0"} pt-16 w-full transition-all duration-500 ease-in-out font-mainFont1`}>
                 <Outlet context={finalStudentDetails} />
             </div>
         </main>

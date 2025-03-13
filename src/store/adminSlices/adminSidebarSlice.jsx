@@ -75,6 +75,12 @@ const initialState = {
           to: "/admin_dashboard/events",
           subBread: "Students Events",
         },
+        {
+          id: 2,
+          title: "Add Event & Notice",
+          to: "/admin_dashboard/add-event&notice",
+          subBread: "Students Events",
+        },
       ],
       icon: <MdEventAvailable />,
       bread: "Events",

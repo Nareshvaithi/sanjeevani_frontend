@@ -58,7 +58,11 @@ const NewStudents = () => {
                                 </tr>
                             ) : (
                                 newStudentList.map((student) => {
+<<<<<<< HEAD
                                     const { _id, id, fullName, email, gender, phone,studentID,  paymentTotal,payment_status } = student;
+=======
+                                    const { _id, studentID, fullName, email, gender, phone,  paymentTotal,payment_status } = student;
+>>>>>>> refs/remotes/origin/main
                                     const findPayStatus = payment_status ?? false;
 
                                     return (

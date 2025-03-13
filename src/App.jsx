@@ -12,6 +12,7 @@ import NewStudents from "./pages/Admin/NewStudents";
 import AdminAttendance from "./features/admin/AdminAttendance";
 import AdminStudentsEvents from "./features/admin/AdminStudentsEvents";
 import AdminRegistrationProcess from "./pages/Admin/AdminRegistrationProcess";
+import AddEventAndNotice from "./pages/Admin/AddEventAndNotice";
 
 
 function App() {
@@ -25,7 +26,8 @@ function App() {
         <Route path="students" element={<AdminStudentsList />} />
         <Route path="attendance" element={<AdminAttendance />} />
         <Route path="events" element={<AdminStudentsEvents />} />
-        <Route path="new-students" element={<NewStudents/>}/>
+        <Route path="new-students" element={<NewStudents />} />
+        <Route path="add-event&notice" element={<AddEventAndNotice/>}/>
       </Route>
 
       {/* Student Routes */}
