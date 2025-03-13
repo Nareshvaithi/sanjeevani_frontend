@@ -11,9 +11,7 @@ import {
   FormHelperText,
 } from "@mui/material";
 import { selectAllStudents } from "../../store/adminSlices/adminStudentsSlice";
-import { addEvent, selectEvents } from "../../store/adminSlices/EventsSlices";
-import { useState } from "react";
-
+import { addEvent, addStudentsEvents, fetchStudentsEvents, SelectEventList, selectEvents } from "../../store/adminSlices/EventsSlices";
 
 
 const validationSchema = Yup.object({
@@ -33,8 +31,6 @@ const CreateEvent = ()=>{
     const eventsFields = useSelector(selectEventFields);
     const studentList = useSelector(selectAllStudents);
     const eventlist = useSelector(SelectEventList);
-    const eventlist = useSelector(selectEvents);
-    const [openEditEvent,setOpenEditEvent] = useState(false);
     const dispatch = useDispatch()
     const uniqueBatches = studentList?.length 
         ? ["Everyone", ...new Set(studentList.map(({ batchID }) => batchID))] 
@@ -43,16 +39,18 @@ const CreateEvent = ()=>{
       initialValues: {
         title: "",
         batch: "",
+        remarks:'',
         date: "",
         starttime: "",
         endtime: "",
       },
       validationSchema,
-      onSubmit: (values) => {
+      onSubmit: async (values) => {
         console.log("Form Submitted:", values);
-        dispatch(addStudentsEvents(values));
-        alert("sucess")
-        // formik.handleReset();
+        await dispatch(addStudentsEvents(values)).unwrap();
+        alert("sucess");
+        dispatch(fetchStudentsEvents());
+        formik.handleReset();
       },
     });
     return(

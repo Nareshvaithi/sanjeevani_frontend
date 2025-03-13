@@ -50,6 +50,7 @@ export const deleteStudentsEvents = createAsyncThunk(
     try {
       await axios.delete(`${API_URL}/events/${eventId}`);
       toast.success("Event deleted successfully!");
+      alert("success")
       return eventId; // Returning eventId to filter from state
     } catch (error) {
       toast.error("Failed to delete event");

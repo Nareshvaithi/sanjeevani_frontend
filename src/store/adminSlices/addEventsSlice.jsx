@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     eventsFields:[
         {id:1, name:"title", lable:"Title", type:"text"},
+        {id:1, name:"remarks", lable:"Remarks", type:"text"},
         {id:2, name:"batch", lable:"Select Batch", type:"select"},
         {id:3, name:"date", lable:"Happening Date", type:"date"},
         {id:4, name:"starttime", lable:"Start Time", type:"time"},
