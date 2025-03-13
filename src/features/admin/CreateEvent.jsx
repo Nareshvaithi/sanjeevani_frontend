@@ -48,7 +48,7 @@ const CreateEvent = ()=>{
       onSubmit: async (values) => {
         console.log("Form Submitted:", values);
         await dispatch(addStudentsEvents(values)).unwrap();
-        alert("sucess");
+        alert("success");
         dispatch(fetchStudentsEvents());
         formik.handleReset();
       },

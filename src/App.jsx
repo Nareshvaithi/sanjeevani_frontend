@@ -10,7 +10,7 @@ import ProtectedRoute from "./features/ProtectedRoute/ProtectedRoute";
 import ApplyLeave from "./features/students/ApplyLeave";
 import NewStudents from "./pages/Admin/NewStudents";
 import AdminAttendance from "./features/admin/AdminAttendance";
-import AdminStudentsEvents from "./pages/Admin/AdminStudentsEvents";
+import AdminStudentsEvents from "./pages/Admin/AdminStudentsEvents&Notice";
 import AdminRegistrationProcess from "./pages/Admin/AdminRegistrationProcess";
 import EventAndNotice from "./pages/Admin/EventAndNotice";
 
