@@ -96,10 +96,6 @@ const EditStudentForm = ({ openModule, setOpenModule }) => {
 
       formData.append("image", values.image);
     
-
-   
-     
-    
       try {
         await dispatch(editStudentData(formData)).unwrap();
 
@@ -163,7 +159,6 @@ const parseAndFormatDate = (dateString) => {
     return format(parsedDate, "dd/MM/yyyy");
   }
   
-
   return "";
 };
   const formatDate = (date)=>{
@@ -237,10 +232,8 @@ console.log("check date",formatDate("2025-03-01"));
                   { value: "InActive", label: "InActive" },
                 ]}
               />
-
               <InputField icon={<FaRegBuilding />} label="Batch" name="batchID" value={formik.values.batchID} onChange={formik.handleChange} />
               <InputField icon={<RiParentLine />} label="Mobile" name="phone" value={formik.values.phone} onChange={formik.handleChange} />
-
             </div>
           </div>
 

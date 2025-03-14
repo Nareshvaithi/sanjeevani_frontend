@@ -4,21 +4,26 @@ import { useSelector } from "react-redux";
 import { selectStudentSidebar } from "../store/studentSlices/studentSidebarSlice";
 import StudentTopBar from "../features/students/StudentTopBar";
 import { selectSingleStudent } from "../store/formSlices/StudentDetailsSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const StudentLayout = () => {
     const studentDetails = useSelector(selectSingleStudent);
     const openSidebar = useSelector(selectStudentSidebar);
+    const [finalStudentDetails, setFinalStudentDetails] = useState({});
 
     useEffect(() => {
-        if (studentDetails) {
+        // Log the Redux state
+        console.log("Redux Student Details:", studentDetails);
+
+        if (studentDetails && Object.keys(studentDetails).length > 0) {
             sessionStorage.setItem("studentDetails", JSON.stringify(studentDetails));
+            setFinalStudentDetails(studentDetails);
+        } else {
+            // Retrieve from sessionStorage if Redux state is empty
+            const storedDetails = JSON.parse(sessionStorage.getItem("studentDetails") || "{}");
+            setFinalStudentDetails(storedDetails);
         }
     }, [studentDetails]);
-
-    const storedStudentDetails = JSON.parse(sessionStorage.getItem("studentDetails"));
-
-    const finalStudentDetails = studentDetails || storedStudentDetails;
 
     return (
         <main>

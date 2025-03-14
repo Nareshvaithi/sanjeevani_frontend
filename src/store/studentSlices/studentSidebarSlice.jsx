@@ -10,8 +10,7 @@ const initialState = {
     {
       id: 2,
       title: "My Profile",
-      to:"",
-      // to: "/student/:userId/my_profile",
+      to: "/student/:userId/my_profile",
     },
     {
       id: 4,

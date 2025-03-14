@@ -3,16 +3,18 @@ import { selectStudentSidebar, toggleStudentSidebar } from "../../store/studentS
 import { GiHamburgerMenu } from "react-icons/gi";
 import { CiBellOn } from "react-icons/ci";
 import { BiFullscreen } from "react-icons/bi";
-import { FaRegUserCircle } from "react-icons/fa";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { useState } from "react";
 import { setLogout } from "../../store/authSlice/loginSlice";
+import {useNavigate} from "react-router-dom";
+
 const StudentTopBar = ({studentDetails})=>{
     
     const [showProfile,setShowProfile] = useState(false);
     const openSidebar = useSelector(selectStudentSidebar);
-    const {fullName,imageUrls} = studentDetails;
+    const {_id,fullName,imageUrls} = studentDetails;
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     return(
         <section>
@@ -47,7 +49,7 @@ const StudentTopBar = ({studentDetails})=>{
                                         <MdKeyboardArrowDown/>
                                     </div>
                                 </div>
-                                <div className={`p-2 absolute top-12 h-auto w-full bg-white transition-all duration-500 ${showProfile ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"}`}>
+                                <div className={`p-2 absolute top-12 h-auto w-full bg-white transition-all duration-500 ${showProfile ? "visible opacity-100 translate-y-0" : "invisible opacity-0 translate-y-3"}`}>
                                     <div className="border-b border-gray-200">
                                         <div className="flex items-center gap-2 py-2">
                                             <div className="w-10 rounded-full">
@@ -59,10 +61,10 @@ const StudentTopBar = ({studentDetails})=>{
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="border-b border-gray-200 py-2">
+                                    <div onClick={()=>{navigate(`/student/${_id}/my_profile`);setShowProfile(false)}} className="cursor-pointer border-b border-gray-200 py-2">
                                         <p>My Profile</p>
                                     </div>
-                                    <div onClick={()=>{dispatch(setLogout())}} className="py-2">
+                                    <div onClick={()=>{dispatch(setLogout())}} className="py-2 cursor-pointer">
                                         <p>Logout</p>
                                     </div>
                                 </div>
