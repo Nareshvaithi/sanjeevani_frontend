@@ -14,7 +14,7 @@ console.log(studentDetails)
       const response=await axios.get(`${API_URL}/payments/paymentsall`)
     setData(response.data)
     let id
-    if(values.age>18){
+    if(studentDetails.age>18){
       data.map((value)=>{
         if(value.plan=="Adult")
         id=value._id
