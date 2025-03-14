@@ -10,8 +10,7 @@ const initialState = {
     {
       id: 2,
       title: "My Profile",
-      to:"",
-      // to: "/student/:userId/my_profile",
+      to: "/student/:userId/my_profile",
     },
     {
       id: 4,
@@ -49,6 +48,5 @@ export const { setStudentSidebar, toggleStudentSidebar } = studentSidebarSlice.a
 
 export default studentSidebarSlice.reducer;
 
-// Selectors
 export const selectStudentSidebarData = (state) => state.studentSidebar.data;
 export const selectStudentSidebar = (state) => state.studentSidebar.openStudentSidebar;

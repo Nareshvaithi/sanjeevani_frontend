@@ -51,9 +51,9 @@ export const fetchStudentsRecord = createAsyncThunk(
     async (formData, { rejectWithValue }) => {
      
       try {
-
+          alert("work");
           const response = await axios.put(`${API_URL}/existingstudents/${formData.get("_id")}`, formData);
-    
+          alert("success");
         return response.data;
       } catch (error) {
         console.error("Error response:", error.response);

@@ -12,6 +12,7 @@ import studentsEventsReducer from "./adminSlices/EventsSlices"
 import AdminAuthReducer from "./authSlice/adminAuthSlice";
 import addEventsReducer from "./adminSlices/addEventsSlice";
 import studentsNoticeReducer from "./adminSlices/NoticeSlice"
+import editStudentReducer from "./studentSlices/editStudentSlice";
 
 const store = configureStore({
     reducer:{
@@ -27,7 +28,8 @@ const store = configureStore({
         singleStudent:singleStudentRecordReducer,
         newStudent:newStudentReducer,
         studentsEvents:studentsEventsReducer,
-        studentsNotice:studentsNoticeReducer
+        studentsNotice:studentsNoticeReducer,
+        editStudent:editStudentReducer,
     }
 })
 

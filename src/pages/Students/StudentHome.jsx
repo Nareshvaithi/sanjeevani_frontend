@@ -10,7 +10,6 @@ import AttendanceCalendar from "../../features/students/StudentAttendance";
 
 const StudentHome = ()=>{
     const studentDetails = useOutletContext()
-    console.log(studentDetails);
     
     return(
         <section className="bg-gray-100 w-full h-auto">
