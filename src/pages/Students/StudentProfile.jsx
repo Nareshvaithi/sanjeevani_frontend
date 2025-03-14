@@ -62,7 +62,7 @@ const StudentProfile = ()=>{
                       <img
                           src={studentDetails?.imageUrls}
                           alt={studentDetails?.fullName}
-                          className="rounded-xl w-full lg:w-fit"
+                          className="w-full lg:w-60 rounded-xl"
                       />
                       <div>
                           <h3 className="text-2xl">{studentDetails?.studentID}</h3>

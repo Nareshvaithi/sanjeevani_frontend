@@ -14,7 +14,7 @@ const StudentEnrollmentForm = () => {
 const studentRecords=useSelector((state)=>state.studentRecord)
 const API_URL = import.meta.env.VITE_API_URL;
   const dispatch=useDispatch()
-  console.log("studentRecords",studentRecords)
+
   const currentDate = format(new Date(), "yyyy-MM-dd"); 
   const [data, setData] = useState([]);
 const { error, isLoading, Razorpay } = useRazorpay();
@@ -97,7 +97,6 @@ let id
   
     },
   });
-  console.log(formik.errors)
   const lable = {
     fullName: "Full Name",
     dob: "Date of Birth",

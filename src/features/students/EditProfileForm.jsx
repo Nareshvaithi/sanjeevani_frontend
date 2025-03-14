@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { editStudentData } from "../../store/adminSlices/adminStudentsSlice";
-import { setSingleStudentRecord } from "../../store/formSlices/StudentDetailsSlice";
+import { fetchSingleStudent, setSingleStudentRecord } from "../../store/formSlices/StudentDetailsSlice";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { Button, Avatar, Box } from "@mui/material";
@@ -45,6 +45,7 @@ const EditProfileForm = () => {
 
       try {
         await dispatch(editStudentData(formData)).unwrap();
+        dispatch(fetchSingleStudent(studentDetails?._id));
         dispatch(setShowEdit(false));
       } catch (error) {
         console.error("Edit error:", error);

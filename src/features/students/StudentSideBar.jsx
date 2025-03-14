@@ -7,6 +7,8 @@ import { FaHome } from "react-icons/fa";
 import { BsFillExclamationSquareFill } from "react-icons/bs";
 import { FaHandHoldingDollar } from "react-icons/fa6";
 import { MdAccountCircle } from "react-icons/md";
+import { RiCalendarEventLine } from "react-icons/ri";
+
 
 const StudentSideBar = ({studentDetails}) => {
     const userId = studentDetails._id;
@@ -27,7 +29,8 @@ const StudentSideBar = ({studentDetails}) => {
         home:<FaHome/>,
         my_profile:<MdAccountCircle/>,
         apply_leave:<BsFillExclamationSquareFill/>,
-        pay_fees:<FaHandHoldingDollar/>
+        pay_fees:<FaHandHoldingDollar/>,
+        events:<RiCalendarEventLine />
     };
  
 

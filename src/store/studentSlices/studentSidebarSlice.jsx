@@ -20,8 +20,12 @@ const initialState = {
     {
       id: 5,
       title: "Pay Fees",
-      to:"",
-      // to: "/student/:userId/pay_fees",
+      to: "/student/:userId/pay_fees",
+    },
+    {
+      id: 6,
+      title: "Events",
+       to: "/student/:userId/studentsEvents",
     },
   ],
   openStudentSidebar: true,
@@ -44,6 +48,5 @@ export const { setStudentSidebar, toggleStudentSidebar } = studentSidebarSlice.a
 
 export default studentSidebarSlice.reducer;
 
-// Selectors
 export const selectStudentSidebarData = (state) => state.studentSidebar.data;
 export const selectStudentSidebar = (state) => state.studentSidebar.openStudentSidebar;
