@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react";
 import { parse,format } from "date-fns";
 import { useOutletContext } from "react-router-dom";
 import { useRazorpay, RazorpayOrderOptions } from "react-razorpay";
-import { addPayment } from "../../store/adminSlices/adminStudentsSlice";
+
 import { useDispatch } from "react-redux";
-import { fetchSingleStudent, setSingleStudentRecord } from "../../store/formSlices/StudentDetailsSlice";
+import { addPayment, fetchSingleStudent, setSingleStudentRecord } from "../../store/formSlices/StudentDetailsSlice";
 
 function StudentsPayFees() {
   const dispatch=useDispatch()
@@ -48,10 +48,10 @@ const handlePayment=async()=>{
         ...orderDetails,
         paymentId: response.razorpay_payment_id,
       })
+ 
     );
     // dispatch(fetchSingleStudent)
-    dispatch(fetchSingleStudent({ ...orderDetails,
-      paymentId: response.razorpay_payment_id,}))
+    dispatch(fetchSingleStudent(studentDetails?._id))
    
   };
 

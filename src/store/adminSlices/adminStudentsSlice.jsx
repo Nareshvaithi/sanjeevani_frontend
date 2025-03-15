@@ -46,19 +46,6 @@ export const fetchStudentsRecord = createAsyncThunk(
     }
   );
 
-  // add student ........
-  export const addPayment = createAsyncThunk(
-    "existingstudents/addPayment",
-    async (studentData, { rejectWithValue }) => {
-      try {
-        const response = await axios.post(`${API_URL}/existingstudents/existStudentPayment`, studentData);
-        alert("succes");
-        return response.data;
-      } catch (error) {
-        return rejectWithValue(error.response?.data || "Error adding banner");
-      }
-    }
-  );
 
 
   //edit student records.................................
@@ -148,20 +135,6 @@ const studentSlice = createSlice({
             toast.error("Add Failed");
           })
 
-          //for adding payment.......
-          .addCase(addPayment.pending, (state) => {
-            state.addstatus = "Proccessing";
-          })
-          .addCase(addPayment.fulfilled, (state, action) => {
-            state.addstatus = "Submit";
-            console.log(action.payload)
-            state.addsStudentsRecord=action.payload
-          })
-          .addCase(addPayment.rejected, (state, action) => {
-            state.addstatus = "Submit";
-            state.error = action.payload;
-            toast.error("Add Failed");
-          })
     
 //for editing student record........................
       .addCase(editStudentData.pending, (state) => {
