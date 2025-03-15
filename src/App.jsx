@@ -8,7 +8,6 @@ import StudentHome from "./pages/Students/StudentHome";
 import Login from "./pages/auth/Login";
 import ProtectedRoute from "./features/ProtectedRoute/ProtectedRoute";
 import ApplyLeave from "./features/students/ApplyLeave";
-import NewStudents from "./pages/Admin/NewStudents";
 import AdminAttendance from "./features/admin/AdminAttendance";
 import AdminStudentsEvents from "./pages/Admin/AdminStudentsEvents&Notice";
 import AdminRegistrationProcess from "./pages/Admin/AdminRegistrationProcess";
@@ -30,7 +29,6 @@ function App() {
         <Route path="students" element={<AdminStudentsList />} />
         <Route path="attendance" element={<AdminAttendance />} />
         <Route path="events" element={<AdminStudentsEvents />} />
-        <Route path="new-students" element={<NewStudents />} />
         <Route path="add-event&notice" element={<EventAndNotice/>}/>
         <Route path="fees_list" element={<AdminFeesList/>}/>
       </Route>

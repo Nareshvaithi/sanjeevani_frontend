@@ -180,8 +180,8 @@ const AdminStudentsList = () => {
                 const studentStatus = status ? "Active" : "InActive";
                 return <tr key={_id} className="odd:bg-gray-100">
                   <td className="py-4 px-2 whitespace-nowrap">{studentID}</td>
-                  <td className="py-4 px-2  gap-3 items-center whitespace-nowrap ">
-                    {/* <img className="w-10 rounded-full border" src={imageUrls} alt="image" /> */}
+                  <td className="py-4 px-2 flex items-center gap-3 whitespace-nowrap">
+                    <img className="w-10 h-10 rounded-full border object-cover" src={imageUrls} alt="image" />
                     <p>{fullName}</p>
                   </td>
                   {email ? <td className="py-4 px-2 whitespace-nowrap" title={email}>{`${email.substring(0, 20)}...`}</td> : <td className="py-4 px-2 whitespace-nowrap" title={email}>email not provided</td>}

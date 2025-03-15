@@ -23,15 +23,8 @@ const NewStudents = () => {
     }
     };
       
- 
-
-    
-
-
-
-
     return (
-        <section className="bg-gray-100 p-5 pt-20 font-mainFont1">
+        <section className="bg-gray-100 p-5 font-mainFont1">
             <div className="bg-white px-3 py-5 rounded-lg">
                 <div className="flex justify-between pb-5">
                     <h3 className="titleText">New Students List</h3>
