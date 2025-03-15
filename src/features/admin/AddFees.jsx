@@ -5,6 +5,7 @@ import { useFormik } from "formik";
 import { FormControl, Select, TextField, MenuItem, FormHelperText } from "@mui/material";
 import { selectAllStudents } from "../../store/adminSlices/adminStudentsSlice";
 import FeesValidationSchema from "../../schema/FeesSchema";
+import { showToast } from "../../store/tostifySlice";
 
 const AddFees = () => {
     const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const AddFees = () => {
         validationSchema: FeesValidationSchema,
         onSubmit: (values) => {
             console.log(values);
+            dispatch(showToast({ message: "Fees added successfully!", type: "success" }));
         },
     });
 
