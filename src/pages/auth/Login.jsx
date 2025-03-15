@@ -10,6 +10,7 @@ import { selectAllStudents } from "../../store/adminSlices/adminStudentsSlice";
 import { fetchSingleStudent } from "../../store/formSlices/StudentDetailsSlice";
 import { useState } from "react";
 import ForgotPasswordPopup from "../../components/Common/ForgotPassword";
+import { showToast } from "../../store/tostifySlice";
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -49,13 +50,13 @@ const Login = () => {
                 console.log(userId);
                 navigate(`/student/${userId}`);
                 dispatch(fetchSingleStudent(userId));
-                alert('Login successfully');
+                dispatch(showToast({ message: "Login successfully!", type: "success" }));
                 }
             }
 else{
                 const resultAction = await dispatch(loginAdmin(values));
                 if(loginAdmin.fulfilled.match(resultAction)){
-                    alert('Login successfully');
+                    dispatch(showToast({ message: "Login successfully!", type: "success" }));
                     dispatch(setLogin());
                     navigate('/admin_dashboard');
                 }else{

@@ -3,7 +3,7 @@ import { setOpenModuleFees } from "../../store/adminSlices/feesSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import { FormControl, Select, TextField, MenuItem, FormHelperText } from "@mui/material";
-import { selectAllStudents } from "../../store/adminSlices/adminStudentsSlice";
+import { addManualPayment, selectAllStudents } from "../../store/adminSlices/adminStudentsSlice";
 import FeesValidationSchema from "../../schema/FeesSchema";
 import { showToast } from "../../store/tostifySlice";
 
@@ -25,6 +25,7 @@ const AddFees = () => {
         validationSchema: FeesValidationSchema,
         onSubmit: (values) => {
             console.log(values);
+            dispatch(addManualPayment(values))
             dispatch(showToast({ message: "Fees added successfully!", type: "success" }));
         },
     });

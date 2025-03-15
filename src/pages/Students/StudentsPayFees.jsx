@@ -6,6 +6,7 @@ import { useRazorpay, RazorpayOrderOptions } from "react-razorpay";
 
 import { useDispatch } from "react-redux";
 import { addPayment, fetchSingleStudent, setSingleStudentRecord } from "../../store/formSlices/StudentDetailsSlice";
+import { showToast } from "../../store/tostifySlice";
 
 function StudentsPayFees() {
   const dispatch=useDispatch()
@@ -21,7 +22,7 @@ function StudentsPayFees() {
     };
     payment();
   }, []);
-console.log(data)
+
 const handlePayment=async()=>{
   let id;
   if (data.age > 18) {
@@ -42,7 +43,6 @@ const handlePayment=async()=>{
       ...orderDetails,
       paymentId: response.razorpay_payment_id,
     };
-    console.log(order)
     dispatch(
       addPayment({
         ...orderDetails,
@@ -50,7 +50,7 @@ const handlePayment=async()=>{
       })
  
     );
-    // dispatch(fetchSingleStudent)
+    dispatch(showToast({ message: "Payment successfully!", type: "success" }));
     dispatch(fetchSingleStudent(studentDetails?._id))
    
   };

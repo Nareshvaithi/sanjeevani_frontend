@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-
-const API_URL = `${import.meta.env.VITE_API_URL}/existingstudents`;
+import { ToastContainer, toast } from 'react-toastify';
+const API_URL = `${import.meta.env.VITE_API_URL}`;
 
 const initialValue = {
     singleStudentDetails: {},
@@ -14,8 +14,8 @@ export const fetchSingleStudent = createAsyncThunk(
     "single/fetchSingleStudent",
     async (id, { rejectWithValue }) => {
         try {
-            const response = await axios.get(`${API_URL}/${id}`);
-            console.log("edit",response.data)
+            const response = await axios.get(`${API_URL}/existingstudents/${id}`);
+ 
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response?.data || "Failed to fetch student details");
@@ -28,8 +28,8 @@ export const fetchSingleStudent = createAsyncThunk(
     "single/addPayment",
     async (studentData, { rejectWithValue }) => {
       try {
+
         const response = await axios.post(`${API_URL}/existingstudents/existStudentPayment`, studentData);
-        alert("succes");
         return response.data;
       } catch (error) {
         return rejectWithValue(error.response?.data || "Error adding banner");
@@ -67,11 +67,13 @@ const studentDetailsSingle = createSlice({
                       .addCase(addPayment.fulfilled, (state, action) => {
                         state.addstatus = "Submit";
                         console.log("action.payload",action.payload)
-                        state.addsStudentsRecord=action.payload
+                        state.singleStudentDetails=action.payload
                       })
                       .addCase(addPayment.rejected, (state, action) => {
                         state.addstatus = "Submit";
                         state.error = action.payload;
+                        console.log(action.payload,state.error); 
+                        console.log("State error after rejection:", state.error);
                         toast.error("Add Failed");
                       })
             

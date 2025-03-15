@@ -38,7 +38,21 @@ export const fetchStudentsRecord = createAsyncThunk(
     async (studentData, { rejectWithValue }) => {
       try {
         const response = await axios.post(`${API_URL}/existingstudents`, studentData);
-        alert("succes");
+    
+        return response.data;
+      } catch (error) {
+        return rejectWithValue(error.response?.data || "Error adding banner");
+      }
+    }
+  );
+
+  // add manual payment ........
+  export const addManualPayment = createAsyncThunk(
+    "existingstudents/addManualPayment",
+    async (studentData, { rejectWithValue }) => {
+      try {
+console.log("studentData",studentData)
+        const response = await axios.post(`${API_URL}/existingstudents/existStudentManualPayment`, studentData);
         return response.data;
       } catch (error) {
         return rejectWithValue(error.response?.data || "Error adding banner");
@@ -47,16 +61,15 @@ export const fetchStudentsRecord = createAsyncThunk(
   );
 
 
-
   //edit student records.................................
   export const editStudentData = createAsyncThunk(
     "existingstudents/editStudentData",
     async (formData, { rejectWithValue }) => {
      
       try {
-          alert("work");
+        
           const response = await axios.put(`${API_URL}/existingstudents/${formData.get("_id")}`, formData);
-          alert("success");
+  
         return response.data;
       } catch (error) {
         console.error("Error response:", error.response);
@@ -111,6 +124,23 @@ const studentSlice = createSlice({
           .addCase(fetchStudentsRecord.pending, (state, action) => {
             state.status = "loading";
           })
+                                //for adding payment.......
+                                .addCase(addManualPayment.pending, (state) => {
+                                  state.addstatus = "Proccessing";
+                                })
+                                .addCase(addManualPayment.fulfilled, (state, action) => {
+                                  state.addstatus = "Submit";
+                                  console.log("action.payload",action.payload)
+                                  // state.addsStudentsRecord=action.payload
+                                })
+                                .addCase(addManualPayment.rejected, (state, action) => {
+                                  state.addstatus = "Submit";
+                                  state.error = action.payload;
+                                  console.log(action.payload,state.error); 
+                                  console.log("State error after rejection:", state.error);
+                                  toast.error("Add Failed");
+                                })
+          
 
           // for adding
 
