@@ -13,13 +13,16 @@ import AdminAuthReducer from "./authSlice/adminAuthSlice";
 import addEventsReducer from "./adminSlices/addEventsSlice";
 import studentsNoticeReducer from "./adminSlices/NoticeSlice"
 import editStudentReducer from "./studentSlices/editStudentSlice";
-
+import feesReducer from "./adminSlices/feesSlice";
+import toastReducer from "./tostifySlice";
 const store = configureStore({
     reducer:{
+        toast:toastReducer,
         adminSideBar:adminSidebarReducer,
         students:studentsReducer,
         studentSidebar:studentSidebarReducer,
         studentsEnrollment:studentEnrollmentReducer,
+        fees:feesReducer,
         studentRecord:studentRecordReducer,
         addEvents:addEventsReducer,
         login:loginReducer,

@@ -45,9 +45,9 @@ const initialState = {
       sublinks: [
         {
           id: 1,
-          title: "Fees Collection",
-          to: "",
-          subBread: "Fees Collection",
+          title: "Fees List",
+          to: "/admin_dashboard/fees_list",
+          subBread: "Fees List",
         },
       ],
     },

@@ -24,7 +24,7 @@ const ShowNotice = () => {
         <div>
         {noticeList.length > 0 ? (
   [...noticeList].reverse().map((value, index) => (
-    <div className="flex items-center gap-4">
+    <div key={index} className="flex items-center gap-4">
     <div key={index} className="w-full flex items-center gap-4 border bg-slate-300 shadow-lg p-4 text-gray-800 rounded-md mb-2">
       <p className="text-[#000380]">
         <LuNotebookPen size={40} />

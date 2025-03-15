@@ -16,6 +16,7 @@ import EventAndNotice from "./pages/Admin/EventAndNotice";
 import StudentProfile from "./pages/Students/StudentProfile";
 import StudentEvents from "./pages/Students/StudentEvents";
 import StudentsPayFees from "./pages/Students/StudentsPayFees";
+import AdminFeesList from "./pages/Admin/AdminFeesList";
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
         <Route path="events" element={<AdminStudentsEvents />} />
         <Route path="new-students" element={<NewStudents />} />
         <Route path="add-event&notice" element={<EventAndNotice/>}/>
+        <Route path="fees_list" element={<AdminFeesList/>}/>
       </Route>
 
       {/* Student Routes */}
