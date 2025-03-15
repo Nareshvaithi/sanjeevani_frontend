@@ -10,10 +10,12 @@ import { selectAllStudents } from "../../store/adminSlices/adminStudentsSlice";
 import { fetchSingleStudent } from "../../store/formSlices/StudentDetailsSlice";
 import { useState } from "react";
 import ForgotPasswordPopup from "../../components/Common/ForgotPassword";
-
+import { Visibility, VisibilityOff } from "@mui/icons-material"; 
+import { IconButton } from "@mui/material";
 const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [showPassword, setShowPassword] = useState(false);
     const [ForgotPass,setForgotPass] = useState(false);
     const loginImg = useSelector(selectLoginImage);
     const studentList = useSelector(selectAllStudents);
@@ -113,7 +115,7 @@ else{
                             <FormControl fullWidth>
                                 <TextField
                                     label="Password"
-                                    type="password"
+                                    type={showPassword ? "text" : "password"} // Toggle between "text" and "password"
                                     name="password"
                                     onBlur={formik.handleBlur}
                                     onChange={formik.handleChange}
@@ -123,12 +125,14 @@ else{
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
-                                                <Lock />
+                                                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                                </IconButton>
                                             </InputAdornment>
                                         ),
                                     }}
                                 />
-                            </FormControl>
+                            </FormControl>;
                         </div>
 
                         {/* Remember Me & Forget Password */}

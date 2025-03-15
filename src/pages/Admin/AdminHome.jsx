@@ -12,7 +12,10 @@ import Breadcrumb from "../../components/Common/BreadCrumb";
 import { fetchStudentsRecord, selectAllStudents } from "../../store/adminSlices/adminStudentsSlice";
 import { useEffect } from "react";
 import { selectNewStudents } from "../../store/adminSlices/newStudentSlice";
+import NewStudents from "./NewStudents";
+import { CalculateTotalFees } from "../../utils/CalculateTotalFees";
 const AdminHome = ()=>{
+    const studentsList = useSelector(selectAllStudents);
    const newStudentList = useSelector(selectNewStudents);
     const studentList = useSelector((state) => state.students.addsStudentsRecord);
     const month=useSelector((state)=>state.month)
@@ -49,10 +52,15 @@ const AdminHome = ()=>{
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-5 pt-5">
                     <QuickBox title={"Total Students"} icon={totalStudentImg} count={`${studentList.length}`}/>
-                    <QuickBox title={"New Students"} icon={newStudentImg} count={`${newStudentList.length}`} link={'new-students'}/>
+                    <QuickBox title={"New Students"} icon={newStudentImg} count={`${newStudentList.length}`}/>
                     <QuickBox title={"Un Paid Students"} icon={nonPaidImg} count={`${unpaid.length}`}/>
-                    {/* <QuickBox title={"Fees Collections"} icon={feesCollectionImg} count={`${studentList[0].paymentTotal}`}/> */}
+                    <QuickBox title={"Fees Collections"} icon={feesCollectionImg} count={`${CalculateTotalFees(studentList)}`}/>
                 </div>
+           </div>
+           <div>
+            {
+                newStudentList.length > 0 && newStudentList.length !== 0 && newStudentList !== null && <NewStudents/>
+            }
            </div>
            <div className="w-full grid grid-col-1 lg:grid-cols-2 gap-5 px-2 lg:px-5">
                 <div className="bg-white p-5 rounded-xl">
