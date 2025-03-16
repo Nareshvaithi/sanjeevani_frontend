@@ -114,7 +114,7 @@ const handlePayment=async()=>{
                             <td className="border">{index + 1}</td>
                             <td className="border">{studentDetails.batchID}</td>
                             <td className="border">Monthly</td>
-                            <td className="border">Monthly</td>
+                            <td className="border">{value.invoiceNumber}</td>
                             <td className="border">{formattedDate}</td>
                             <td className="border">{value.received_payment ? value.received_payment : 0}</td>
                             <td className="border">{value.paymentId ? "UPI" : "Cash"}</td>

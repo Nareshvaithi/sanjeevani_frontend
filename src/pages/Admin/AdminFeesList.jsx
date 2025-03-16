@@ -36,16 +36,21 @@ const AdminFeesList = () => {
     };
 
     // Filter student list based on search query
-    const filteredStudentList = studentList.filter((student) => {
-        return (
-            (searchQuery.id === "" || student.studentID?.toLowerCase().includes(searchQuery.id)) &&
-            (searchQuery.name === "" || student.fullName?.toLowerCase().includes(searchQuery.name)) &&
-            (searchQuery.batch === "" || (student.batchID && student.batchID.toLowerCase().includes(searchQuery.batch))) &&
-            (searchQuery.invoice === "" || student.paymentRecords.some((payment) =>
-                payment.invoiceNumber?.toLowerCase().includes(searchQuery.invoice)
-            ))
-        );
-    });
+    let filteredStudentList
+    console.log("studentList",studentList)
+    if(studentList){
+        filteredStudentList = studentList.filter((student) => {
+            return (
+                (searchQuery.id === "" || student.studentID?.toLowerCase().includes(searchQuery.id)) &&
+                (searchQuery.name === "" || student.fullName?.toLowerCase().includes(searchQuery.name)) &&
+                (searchQuery.batch === "" || (student.batchID && student.batchID.toLowerCase().includes(searchQuery.batch))) &&
+                (searchQuery.invoice === "" || student.paymentRecords.some((payment) =>
+                    payment.invoiceNumber?.toLowerCase().includes(searchQuery.invoice)
+                ))
+            );
+        });
+    
+    }
 
     return (
         <section className="pt-20 px-2 lg:px-5 w-full h-full font-mainFont1">

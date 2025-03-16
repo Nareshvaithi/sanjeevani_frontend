@@ -124,24 +124,7 @@ const studentSlice = createSlice({
           .addCase(fetchStudentsRecord.pending, (state, action) => {
             state.status = "loading";
           })
-                                //for adding payment.......
-                                .addCase(addManualPayment.pending, (state) => {
-                                  state.addstatus = "Proccessing";
-                                })
-                                .addCase(addManualPayment.fulfilled, (state, action) => {
-                                  state.addstatus = "Submit";
-                                  console.log("action.payload",action.payload)
-                                  // state.addsStudentsRecord=action.payload
-                                })
-                                .addCase(addManualPayment.rejected, (state, action) => {
-                                  state.addstatus = "Submit";
-                                  state.error = action.payload;
-                                  console.log(action.payload,state.error); 
-                                  console.log("State error after rejection:", state.error);
-                                  toast.error("Add Failed");
-                                })
-          
-
+                               
           // for adding
 
           .addCase(addStudent.pending, (state) => {
@@ -164,6 +147,23 @@ const studentSlice = createSlice({
             state.error = action.payload;
             toast.error("Add Failed");
           })
+ //for adding payment.......
+ .addCase(addManualPayment.pending, (state) => {
+  state.addstatus = "Proccessing";
+})
+.addCase(addManualPayment.fulfilled, (state, action) => {
+  state.addstatus = "Submit";
+  console.log("action.payload",action.payload)
+  // state.addsStudentsRecord=action.payload
+})
+.addCase(addManualPayment.rejected, (state, action) => {
+  state.addstatus = "Submit";
+  state.error = action.payload;
+  console.log(action.payload,state.error); 
+  console.log("State error after rejection:", state.error);
+  toast.error("Add Failed");
+})
+
 
     
 //for editing student record........................
