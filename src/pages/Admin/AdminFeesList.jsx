@@ -7,9 +7,9 @@ import { FaPlus } from "react-icons/fa";
 import { selectFeesListField, selectOpenModuleOfFees, setOpenModuleFees } from "../../store/adminSlices/feesSlice";
 import AddFees from "../../features/admin/AddFees";
 import { selectAllStudents } from "../../store/adminSlices/adminStudentsSlice";
-import { tr } from "date-fns/locale";
 import { FiEdit } from "react-icons/fi";
 import EditFees from "../../features/admin/EditFees";
+import { format, parse } from "date-fns";
 
 const AdminFeesList = () => {
     const studentList = useSelector(selectAllStudents);
@@ -101,7 +101,12 @@ const AdminFeesList = () => {
                                 const { _id, fullName, studentID, batchID, paymentRecords, paymentDue } = student || {};
                                 const { paymentId, paid_date, invoiceNumber, received_payment, payment_status } =
                                     paymentRecords[paymentRecords.length - 1] || {};
-
+                                    console.log(paid_date)
+                                const parsedPaidDate = parse(paid_date,'dd/MM/yyyy',new Date());
+                                const PaidMonth = format(new Date(parsedPaidDate),'MMMM');
+                                const currentMonth = format(new Date(),'MMMM');
+                                const paymentStatusForThisMonth = PaidMonth.toLowerCase() === currentMonth.toLowerCase() ? "Paid" : "Unpaid";
+                                
                                 return (
                                     <tr className="border-b border-gray-300" key={_id}>
                                         <td className="py-4 px-2 whitespace-nowrap">{studentID}</td>
@@ -113,8 +118,8 @@ const AdminFeesList = () => {
                                         <td className="py-4 px-2 whitespace-nowrap">{invoiceNumber}</td>
                                         <td className="py-4 px-2 whitespace-nowrap">{paymentDue}</td>
                                         <td className="py-4 px-2 whitespace-nowrap">
-                                            <div className={`text-[12px] text-white w-fit py-1 px-2 rounded-md ${payment_status ? "bg-green-500" : "bg-red-500"}`}>
-                                                {payment_status ? "Paid" : "Unpaid"}
+                                            <div className={`text-[12px] text-white w-fit py-1 px-2 rounded-md ${paymentStatusForThisMonth === 'Paid' ? "bg-green-500" : "bg-red-500"}`}>
+                                               {paymentStatusForThisMonth}
                                             </div>
                                         </td>
                                         <td className="py-4 px-2 whitespace-nowrap">{received_payment}</td>
