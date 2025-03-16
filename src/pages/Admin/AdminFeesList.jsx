@@ -15,7 +15,6 @@ const AdminFeesList = () => {
     const studentList = useSelector(selectAllStudents);
     const openFeesModule = useSelector(selectOpenModuleOfFees);
     const dispatch = useDispatch();
-
     const breadcrumbItems = useSelector(selectBreadCrumb).map((item) => ({
         label: item,
         link: null,
