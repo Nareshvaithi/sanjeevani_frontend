@@ -4,7 +4,9 @@ import { GrCheckmark } from "react-icons/gr";
 import { useDispatch, useSelector } from "react-redux";
 import { setEnrollProcess } from "../../store/studentSlices/studentsEnrollmentSlice";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const ConfirmNewStudent = () => {
+  const navigate = useNavigate();
   const API_URL = import.meta.env.VITE_API_URL;
   const [showConfetti, setShowConfetti] = useState(false);
   const studentRecords=useSelector((state)=>state.studentRecord)
@@ -43,8 +45,10 @@ try{
             <p className="text-3xl">Thank you for your registration</p>
           <div className="text-xl mt-4">🎉 Username and Password Created Successfully! 🎉</div>
           <div className=" flex justify-center">
-            <button className="border px-4 py-1 bg-green-800 text-white rounded-md mt-4" onClick={()=>hanldelSubmit()}>
-          Conform</button></div>
+            <button className="border px-4 py-1 bg-green-800 text-white rounded-md mt-4" onClick={()=>{hanldelSubmit();navigate('/')}}>
+              Conform
+            </button>
+          </div>
 
             </div>
 

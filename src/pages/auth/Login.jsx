@@ -68,6 +68,7 @@ else{
         },
     });
 
+    
     return (
         <section className="flex justify-center items-center w-full h-auto lg:h-screen font-mainFont1">
             <div className="w-full lg:w-7/12 flex flex-col lg:flex-row gap-5 justify-between rounded-none lg:rounded-xl shadow-md shadow-black/20 ">
