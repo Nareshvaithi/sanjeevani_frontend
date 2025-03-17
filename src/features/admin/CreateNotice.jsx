@@ -21,7 +21,6 @@ const CreateNotice = () => {
         onSubmit: async(values) => {
             console.log("Notice", values);
             await dispatch(addStudentsNotice(values))
-            alert("success")
             dispatch(fetchStudentsNotice())
             formik.resetForm()
         }

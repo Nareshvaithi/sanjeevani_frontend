@@ -148,7 +148,6 @@ const EditStudentForm = ({ openModule, setOpenModule }) => {
       reader.readAsDataURL(file);
     }
   };
-console.log(formik.values);
 
 const parseAndFormatDate = (dateString) => {
 

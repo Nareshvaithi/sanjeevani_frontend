@@ -32,7 +32,7 @@ const ShowStudentEvents = ()=>{
     const handleDeleteEvent = (id)=>{
       console.log("delete")
       dispatch(deleteStudentsEvents(id));
-      alert("success");
+      
     }
     return(
         <div className="border bg-white p-4 w-full rounded-lg">

@@ -95,7 +95,7 @@ const StudentDetails = ({ openModule, setOpenModule }) => {
         &times;
       </button>
 
-      <div id="student-details" className="p-5 font-mainFont1">
+      <div className="p-5 font-mainFont1">
         <h3 className="text-2xl pb-5">Student Details</h3>
 
         <div className="w-full h-full flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5 bg-gray-100 p-5 rounded-xl text-center">
@@ -111,13 +111,58 @@ const StudentDetails = ({ openModule, setOpenModule }) => {
           <div>
             <h3 className="text-2xl">{fullName}</h3>
             <p className="text-sm text-gray-600">Name</p>
-            {/* <p className="text-sm text-gray-600">{batchID}</p> */}
-          </div>
-          <div>
-            {/* <h3 className="text-2xl">98.7%</h3>
-            <p className="text-sm text-gray-600">Attendance</p> */}
           </div>
         </div>
+
+        {/* Academic Details */}
+        <Section title="Academic Details">
+          <Detail icon={LuUser} label="Student Id" value={studentID} />
+          <Detail
+            icon={MdOutlineDateRange}
+            label="Date of Join"
+            value={formattedJoinDate}
+          />
+          <Detail
+            icon={LuUser}
+            label="Payment Status"
+            value={paymentstatus(paymentRecords)}
+          />
+          <Detail
+            icon={LuUser}
+            label="Student Status"
+            value={status ? "Active" : "InActive"}
+          />
+          <Detail icon={FaRegBuilding} label="Batch" value={batchID} />
+          <Detail
+            icon={FaRegBuilding}
+            label="Total Payment"
+            value={paymentTotal}
+          />
+        </Section>
+
+        {/* Personal Details */}
+        <Section title="Personal Details">
+          <Detail icon={LuUser} label="Name" value={fullName} />
+          <Detail icon={LuUser} label="Father Name" value={fatherName} />
+          <Detail icon={LuUser} label="Mother Name" value={motherName} />
+          <Detail
+            icon={RiParentLine}
+            label="Parents Mobile"
+            value={fatherPhone}
+          />
+          <Detail icon={MdOutlineMail} label="Email" value={email} />
+          <Detail icon={BsGenderAmbiguous} label="Gender" value={gender} />
+          <Detail
+            icon={MdOutlineDateRange}
+            label="Date of Birth"
+            value={formattedDob}
+          />
+          <Detail
+            icon={IoLocationOutline}
+            label="Address"
+            value={residentialAddress}
+          />
+        </Section>
 
         {/* Academic Details */}
         <Section title="Academic Details">
