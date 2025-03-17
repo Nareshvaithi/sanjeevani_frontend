@@ -6,14 +6,14 @@ export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (userData, { rejectWithValue }) => {
     try {
-      console.log(userData)
-      const response = await axios.get(`${API_URL}/existingstudents`, userData);
+      const response = await axios.post(`${API_URL}/existingstudents/login`, userData);
       localStorage.setItem("token", response.data.token); 
       return response.data;
     } catch (error) {
+      
       return rejectWithValue(error.response?.data?.message || "Login Failed");
     }
-  }
+  } 
 );
 
 export const loginAdmin = createAsyncThunk(
@@ -22,7 +22,7 @@ export const loginAdmin = createAsyncThunk(
         
         try {
           const response = await axios.post(`${API_URL}/adminLogin`, adminData);
-          console.log("admin")
+  
           localStorage.setItem("token", response.data.token); 
           return response.data;
         } catch (error) {

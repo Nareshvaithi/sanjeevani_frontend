@@ -18,7 +18,7 @@ const AdminCredentialsForm = () => {
         },
         validationSchema: userCredentialSchema,
         onSubmit: (values) => {
-            console.log("Form submitted:", values);
+           
             navigate('/');
             
         },

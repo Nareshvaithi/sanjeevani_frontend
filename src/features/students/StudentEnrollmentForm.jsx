@@ -8,8 +8,12 @@ import { useRazorpay, RazorpayOrderOptions } from "react-razorpay";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { selectEnrollProcess, setEnrollProcess } from "../../store/studentSlices/studentsEnrollmentSlice";
+import { showToast } from "../../store/tostifySlice";
+import { ulid } from 'ulid';
 
 const StudentEnrollmentForm = () => {
+  const fullUlid = ulid();
+const shortUlid = parseInt(fullUlid.slice(0, 6), 36);
   const [order,setOrder]=useState({})
 const studentRecords=useSelector((state)=>state.studentRecord)
 const API_URL = import.meta.env.VITE_API_URL;
@@ -46,9 +50,9 @@ useEffect( ()=>{
       Object.keys(values).forEach((key) => {
         formData.append(key, values[key]);
       });
-      for (let [key, value] of formData.entries()) {
-        console.log(key, value);
-      }
+      // for (let [key, value] of formData.entries()) {
+      //   console.log(key, value);
+      // }
       
 
        try{
@@ -67,8 +71,8 @@ let id
         }
       if (!id) throw new Error("Payment plan not found");
         const response=await axios.get(`${API_URL}/payments?_id=${id}`,)
-        const orderDetails={received_payment:response.data.amount,paymentOderID:response.data.id}
-       
+        const orderDetails={received_payment:response.data.amount,paymentOderID:response.data.id, invoiceNumber: "IN" + shortUlid,}
+       console.log("invoiceNumber",orderDetails.invoiceNumber)
     
         const  handler= (response) => {
           const formDataObject = Object.fromEntries(formData.entries());
@@ -76,24 +80,20 @@ let id
             ...values,
             ...orderDetails,
             paymentId: response.razorpay_payment_id,
-            
+           
           });
           dispatch(setEnrollProcess("payment"))
       
          dispatch(addStudentRecord({ ...formDataObject, ...orderDetails, paymentId: response.razorpay_payment_id }))
         }
         const razorpayInstance = new Razorpay({...response.data,key:"rzp_test_Rk1g9fTmim96jn",handler});
-        console.log("razorpayInstance",razorpayInstance.options.amount)
+     
         razorpayInstance.open();
       
       }catch(error){
-        console.log(error.response)
-        console.log(error)
-        alert("fail")
+        dispatch(showToast({ message: "User Not Found!", type: "error" }));
       }
      
-      console.log("Form Errors:", formik.errors);
-      console.log("Form Data Submitted:", values);
   
     },
   });

@@ -7,14 +7,19 @@ import { useRazorpay, RazorpayOrderOptions } from "react-razorpay";
 import { useDispatch } from "react-redux";
 import { addPayment, fetchSingleStudent, setSingleStudentRecord } from "../../store/formSlices/StudentDetailsSlice";
 import { showToast } from "../../store/tostifySlice";
+import PaymentReceipt from "./PaymentReceipt";
+import { showPaymentReceipt } from "../../store/studentSlices/PaymentReceiptSlice";
+import { ulid } from 'ulid';
 
 function StudentsPayFees() {
+  const fullUlid = ulid();
+  const shortUlid = parseInt(fullUlid.slice(0, 6), 36);
   const dispatch=useDispatch()
   const API_URL = import.meta.env.VITE_API_URL;
   const studentDetails = useOutletContext();
   const { error, isLoading, Razorpay } = useRazorpay();
   const [data, setData] = useState([]);
-  console.log(studentDetails);
+
   useEffect(() => {
     const payment = async () => {
       const response = await axios.get(`${API_URL}/payments/paymentsall`);
@@ -47,12 +52,16 @@ const handlePayment=async()=>{
       addPayment({
         ...orderDetails,
         paymentId: response.razorpay_payment_id,
+      
       })
- 
+    
     );
+    // dispatch(showPaymentReceipt({...orderDetails,
+    //   paymentId: response.razorpay_payment_id,
+    //  }))
     dispatch(showToast({ message: "Payment successfully!", type: "success" }));
     dispatch(fetchSingleStudent(studentDetails?._id))
-   
+     
   };
 
   const razorpayInstance = new Razorpay({
@@ -60,7 +69,7 @@ const handlePayment=async()=>{
     key: "rzp_test_Rk1g9fTmim96jn",
     handler,
   });
-  // console.log("razorpayInstance", razorpayInstance.options.amount);
+
   razorpayInstance.open();
 
 }
@@ -77,6 +86,9 @@ const handlePayment=async()=>{
     };
   return (
     <div className=" p-4">
+      <div>
+            <PaymentReceipt />
+      </div>
               <section title="Payment Details">
           <div className="flex justify-between items-center ">
             <h2 className="text-xl">Payment Details</h2>

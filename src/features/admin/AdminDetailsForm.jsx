@@ -20,7 +20,7 @@ const AdminDetailsForm = () => {
         },
         validationSchema: AdminRegSchema,
         onSubmit: (values) => {
-            console.log("Form submitted:", values);
+     
             dispatch(setAdminRegProcess('userCredentials'));
         },
     });

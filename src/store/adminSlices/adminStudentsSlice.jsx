@@ -31,12 +31,13 @@ export const fetchStudentsRecord = createAsyncThunk(
       return response.data;
     }
   );
-
+ 
   // add student ........
   export const addStudent = createAsyncThunk(
     "existingstudents/addStudent",
     async (studentData, { rejectWithValue }) => {
       try {
+     
         const response = await axios.post(`${API_URL}/existingstudents`, studentData);
     
         return response.data;

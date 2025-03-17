@@ -8,8 +8,6 @@ const NewStudents = () => {
     const dispatch = useDispatch();
     const studentDataTitle = useSelector(selectStudentDataTitle);
     const newStudentList = useSelector(selectNewStudents);
-    
-
     const addToExistingStudent = async(studentData) => {
         try{
         console.log("Adding student:", studentData);

@@ -18,7 +18,7 @@ const EditStudentForm = ({ openModule, setOpenModule }) => {
   if (openModule !== 'edit') return null;
 
   const studentDetails = useSelector(selectSingleStudent);
-  console.log("studentDetails",studentDetails)
+
   const dispatch = useDispatch();
 
   const {
@@ -65,7 +65,7 @@ const EditStudentForm = ({ openModule, setOpenModule }) => {
       if (values.image) {}
     
       const formData = new FormData();
-      console.log("values.image", values.image);
+     
   
       values.status = values.status === "Active" ? true : false;
     
@@ -148,7 +148,7 @@ const EditStudentForm = ({ openModule, setOpenModule }) => {
       reader.readAsDataURL(file);
     }
   };
-console.log(formik.values);
+
 
 const parseAndFormatDate = (dateString) => {
 
@@ -162,10 +162,10 @@ const parseAndFormatDate = (dateString) => {
   return "";
 };
   const formatDate = (date)=>{
-    console.log(date);
+
   return date && parseAndFormatDate(date);
 }
-console.log("check date",formatDate("2025-03-01"));
+
 
 
 

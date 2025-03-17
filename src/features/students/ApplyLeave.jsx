@@ -18,8 +18,6 @@ const ApplyLeave = ()=>{
         },
         onSubmit:(values)=>{
             values.leaveStatus=true
-            console.log(values);
-            // dispatch(addStudent(values))
             dispatch(addStudent(values))
             alert("success")
         }

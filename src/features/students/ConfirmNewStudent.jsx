@@ -11,7 +11,7 @@ const ConfirmNewStudent = () => {
   const [showConfetti, setShowConfetti] = useState(false);
   const studentRecords=useSelector((state)=>state.studentRecord)
   const dispatch=useDispatch()
-console.log("studentRecords",studentRecords)
+
   useEffect(() => {
     setTimeout(() => setShowConfetti(true), 500); 
   }, []);

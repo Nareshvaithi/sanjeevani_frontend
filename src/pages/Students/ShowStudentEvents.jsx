@@ -30,9 +30,9 @@ const ShowStudentEvents = ()=>{
       }
     }
     const handleDeleteEvent = (id)=>{
-      console.log("delete")
+
       dispatch(deleteStudentsEvents(id));
-      alert("success");
+       dispatch(showToast({ message: "Delete successfully!", type: "success" }));
     }
     return(
         <div className="border bg-white p-4 w-full rounded-lg">

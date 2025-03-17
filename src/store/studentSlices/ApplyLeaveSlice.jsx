@@ -49,8 +49,8 @@ export const deleteStudentsLeave = createAsyncThunk(
   async (eventId, { rejectWithValue }) => {
     try {
       await axios.delete(`${API_URL}/leave/${eventId}`);
-      toast.success("Event deleted successfully!");
-      alert("success")
+    
+    dispatch(showToast({ message: "Delete successfully!", type: "success" }));
       return eventId; // Returning eventId to filter from state
     } catch (error) {
       toast.error("Failed to delete event");
@@ -80,13 +80,13 @@ const studentsLeaveSlice = createSlice({
   reducers: {
     addEvent: {
       reducer: (state, action) => {
-        console.log("New Event Payload:", action.payload);
+
         if (!action.payload) {
           console.error("Event data is undefined!");
           return;
         }
         state.eventList.push(action.payload);
-        console.log("Updated event list:", state.eventList);
+
       },
       prepare: (eventData) => {
         if (!eventData || typeof eventData !== "object") {

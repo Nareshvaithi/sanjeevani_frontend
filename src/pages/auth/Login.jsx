@@ -5,7 +5,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup"; 
 import { AccountCircle, Lock } from "@mui/icons-material"; 
 import { useNavigate } from "react-router-dom";
-import { loginAdmin, loginUser } from "../../store/authSlice/AuthSlice";
+import { loginAdmin, loginUser } from "../../store/authSlice/AuthSlice"; 
 import { selectAllStudents } from "../../store/adminSlices/adminStudentsSlice";
 import { fetchSingleStudent } from "../../store/formSlices/StudentDetailsSlice";
 import { useState } from "react";
@@ -42,17 +42,20 @@ const Login = () => {
             const resultAction = await dispatch(loginUser({...values,loginStatus:true}));
             if(values.userName!=="admin"){
                 if (loginUser.fulfilled.match(resultAction)) {
-                    console.log("Login Submitted:", values);
+                 
                 
                 dispatch(setLogin());
-               console.log(studentList)
+            
                 const user = studentList.find(({userName}) => userName === values.userName);
-                console.log(user);
+                console.log(studentList)
                 const userId = user._id;
-                console.log(userId);
                 navigate(`/student/${userId}`);
                 dispatch(fetchSingleStudent(userId));
                 dispatch(showToast({ message: "Login successfully!", type: "success" }));
+                }else{
+        
+                    dispatch(showToast({ message: "User Not Found!", type: "error" }));
+                 
                 }
             }
 else{
@@ -62,7 +65,7 @@ else{
                     dispatch(setLogin());
                     navigate('/admin_dashboard');
                 }else{
-                    alert("user not found")
+                    dispatch(showToast({ message: "User Not Found!", type: "error" }));
                 }
             }
         },

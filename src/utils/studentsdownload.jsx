@@ -7,7 +7,7 @@ export const handleDownloadPDF = (studentList) => {
     return;
   }
 
-  console.log("Generating PDF for students:", studentList);
+  
 
   const doc = new jsPDF();
   doc.text("Student List", 14, 15);

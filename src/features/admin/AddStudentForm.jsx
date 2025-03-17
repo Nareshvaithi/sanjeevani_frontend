@@ -3,8 +3,12 @@ import { TextField, Select, MenuItem, FormControl, InputLabel, Button } from "@m
 import { useFormik } from "formik";
 import { differenceInYears, parse } from "date-fns";
 import { studentRegistrationSchema } from "../../schema/registrationSchema";
+import { addStudent } from "../../store/adminSlices/adminStudentsSlice";
+import { useDispatch } from "react-redux";
+import { addExistingStudent } from "../../store/adminSlices/newStudentSlice";
 
 const AddStudentForm = ({ setOpenModule }) => {
+  const dispatch=useDispatch()
   // Formik setup
   const formik = useFormik({
     initialValues: {
@@ -19,12 +23,30 @@ const AddStudentForm = ({ setOpenModule }) => {
       motherName: "",
       fatherPhone: "",
       residentialAddress: "",
-      profilePic: null,
-      payment_status:""
+      image: null,
+      payment_status:"",
+      received_payment:""
     },
     // validationSchema:studentRegistrationSchema,
-    onSubmit: (values) => {
-      console.log("Form Data Submitted:", values);
+    onSubmit: async(values) => {
+
+      const formData = new FormData();
+      values.status = values.status === "Active" ? true : false;
+      Object.keys(values).forEach((key) => {
+        if (key !== "image" && key !== "imageUrls") {
+          formData.append(key, values[key]);
+        }
+      });
+      formData.append("image", values.image);
+      
+            try {
+              // await dispatch(addExistingStudent(formData)).unwrap();
+      
+              // dispatch(fetchStudentsRecord());
+              setOpenModule(null);
+            } catch (error) {
+              console.log(error);
+            }
     //   setOpenModule({ type: null }); // Close the form after submission
     },
   });
@@ -123,7 +145,7 @@ const AddStudentForm = ({ setOpenModule }) => {
                 InputLabelProps={{ shrink: true }}
                 fullWidth
               />
-            ) : field === "profilePic" ? (
+            ) : field === "image" ? (
               <input
                 type="file"
                 accept="image/png,image/jpg"

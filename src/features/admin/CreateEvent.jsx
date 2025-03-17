@@ -46,9 +46,8 @@ const CreateEvent = ()=>{
       },
       validationSchema,
       onSubmit: async (values) => {
-        console.log("Form Submitted:", values);
         await dispatch(addStudentsEvents(values)).unwrap();
-        alert("success");
+         dispatch(showToast({ message: "Event Create successfully!", type: "success" }));
         dispatch(fetchStudentsEvents());
         formik.handleReset();
       },

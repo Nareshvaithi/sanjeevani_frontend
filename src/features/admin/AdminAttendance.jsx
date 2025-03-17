@@ -41,7 +41,7 @@ function AdminAttendance() {
 
   const handleClick = async () => {
     try {
-      console.log("work");
+
       await axios.post(
         "api-sanjeevani.tejusdigi.com/existingstudents",
         attendanceData
@@ -53,7 +53,7 @@ function AdminAttendance() {
   };
 
   const handleCheckboxChange = (studentId, fullName, _id, day, checked) => {
-    console.log(studentId, fullName, _id, day + 1, checked);
+
     if (checked) {
       const newObj = {
         _id: _id,
@@ -69,7 +69,7 @@ function AdminAttendance() {
       );
     }
   };
-  console.log(attendanceData);
+
   var cond;
   return (
     <div className="pt-20 w-full">

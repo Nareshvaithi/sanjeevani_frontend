@@ -45,7 +45,7 @@ const StudentDetails = ({ openModule, setOpenModule }) => {
     paymentRecords,
     status,
   } = studentDetails || {};
-  console.log("paymentRecords", paymentRecords);
+
   const date = new Date("2025-05-03T04:00:00.000Z");
   const formattedDate = date.toISOString().split("T")[0];
   const paymentstatus = (payment) => {

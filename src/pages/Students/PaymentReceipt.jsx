@@ -5,10 +5,20 @@ import { addStudentRecord } from "../../store/formSlices/RegisterFormSlice";
 import logo from "../../assets/images/sanjeevani.png";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import { selectPaymentRecord } from "../../store/studentSlices/PaymentReceiptSlice";
+import { useOutletContext } from "react-router-dom";
+import { ulid } from 'ulid';
 
-function Payments() {
-  
-  const studentRecords = useSelector((state) => state.studentRecord);
+function PaymentReceipt() {
+    const fullUlid = ulid();
+  const shortUlid = parseInt(fullUlid.slice(0, 6), 36);
+  const dispatch = useDispatch();
+ 
+ 
+  const studentDetails = useOutletContext();
+ 
+  const paymentRecords=studentDetails.paymentRecords
+  console.log("paymentRecords",paymentRecords)
 
   const receiptRef = useRef();
   const downloadReceipt = () => {
@@ -37,13 +47,14 @@ function Payments() {
     11: "November",
     12: "December",
   };
-  const dispatch = useDispatch();
+
   const today = new Date();
   const day = String(today.getDate()).padStart(2, "0");
   const month = String(today.getMonth() + 1).padStart(2, "0");
   const year = today.getFullYear();
   return (
     <div className="flex justify-center">
+      
       <div className="border shadow-lg py-4 px-2">
       <div
         ref={receiptRef}
@@ -66,19 +77,19 @@ function Payments() {
               FEES RECEIPT
             </p>
             <div className="text-md">
-              <p>Receipt No: {studentRecords.invoiceNumber} </p>
+              {/* <p>Receipt No: {paymentRecords.invoiceNumber}</p> */}
               <p>Date:{`${day}/${month}/${year}`}</p>
-              <div className="mt-4">
+              {/* <div className="mt-4">
                 <p>
-                  Received with thanks from {`${studentRecords.fullName}`} for
+                  Received with thanks from {`${studentDetails.fullName}`} for
                   the month of {`${months[today.getMonth() + 1]}`} for
                 </p>
                 <p>
                   Student Batch 1 an amount of ₹{" "}
-                  {`${Math.floor(Number(studentRecords.received_payment) / 100)}`}
+                  {`${Math.floor(Number(paymentRecords.received_payment) / 100)}`}
                 </p>
-                <p>Payment Mode: {studentRecords.paymentId ? "UPI" : "Cash"}</p>
-              </div>
+                <p>Payment Mode: {paymentRecords.paymentId ? "UPI" : "Cash"}</p>
+              </div> */}
               <div className="mt-4">
                 <p>Signature</p>
                 <p>Durga Ramkishnan</p>
@@ -88,6 +99,7 @@ function Payments() {
             </div>
 
           </div>
+          
         </div>
 
       </div>
@@ -98,11 +110,14 @@ function Payments() {
                 >
                   Download Receipt
                 </button>
-                <button className="mt-4 px-4 py-2 bg-green-400 text-white rounded shadow curser-pointer" onClick={()=>dispatch(setEnrollProcess("userCredential"))}>Next</button>
+                {/* <button className="mt-4 px-4 py-2 bg-green-400 text-white rounded shadow curser-pointer" onClick={()=>dispatch(setEnrollProcess("userCredential"))}>Next</button> */}
               </div>
               </div>
     </div>
   );
 }
 
-export default Payments;
+
+
+
+export default PaymentReceipt

@@ -31,7 +31,7 @@ const EditProfileForm = () => {
     onSubmit: async (values) => {
       const formData = new FormData();
       formData.append("_id", studentDetails?._id);      
-      console.log(studentDetails._id);
+
 
       Object.keys(values).forEach((key) => {
         if (key !== "image") {

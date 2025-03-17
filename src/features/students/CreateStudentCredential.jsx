@@ -9,7 +9,7 @@ import { addStudentRecord } from "../../store/formSlices/RegisterFormSlice";
 const CreateStudentCredentials = () => {
     const dispatch = useDispatch();
     const studentRecords=useSelector((state)=>state.studentRecord)
-    console.log(studentRecords)
+
     const formik = useFormik({
         initialValues: {
             userName: "",
@@ -19,9 +19,9 @@ const CreateStudentCredentials = () => {
     validationSchema:userCredentialSchema,
     onSubmit:(values)=>{
   
-        console.log(values);
+
         dispatch(addStudentRecord(values))
-        console.log("dispatch after");
+     
         dispatch(setEnrollProcess('confirm'));
     }
   });

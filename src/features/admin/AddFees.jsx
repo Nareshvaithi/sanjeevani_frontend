@@ -24,7 +24,7 @@ const AddFees = () => {
         },
         validationSchema: FeesValidationSchema,
         onSubmit: (values) => {
-            console.log(values);
+
             dispatch(addManualPayment(values))
             dispatch(showToast({ message: "Fees added successfully!", type: "success" }));
         },

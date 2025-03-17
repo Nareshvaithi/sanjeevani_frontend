@@ -19,9 +19,9 @@ const CreateNotice = () => {
         },
         validationSchema, 
         onSubmit: async(values) => {
-            console.log("Notice", values);
+
             await dispatch(addStudentsNotice(values))
-            alert("success")
+        dispatch(showToast({ message: "Notice Create Successfully!", type: "success" }));
             dispatch(fetchStudentsNotice())
             formik.resetForm()
         }

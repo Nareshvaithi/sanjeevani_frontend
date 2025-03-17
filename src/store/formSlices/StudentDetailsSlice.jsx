@@ -54,7 +54,7 @@ const studentDetailsSingle = createSlice({
                
                 state.status = "succeeded";
                 state.singleStudentDetails = action.payload;
-                console.log(action.payload);
+
             })
             .addCase(fetchSingleStudent.rejected, (state, action) => {
                 state.status = "failed";
@@ -66,14 +66,13 @@ const studentDetailsSingle = createSlice({
                       })
                       .addCase(addPayment.fulfilled, (state, action) => {
                         state.addstatus = "Submit";
-                        console.log("action.payload",action.payload)
+                       
                         state.singleStudentDetails=action.payload
                       })
                       .addCase(addPayment.rejected, (state, action) => {
                         state.addstatus = "Submit";
                         state.error = action.payload;
-                        console.log(action.payload,state.error); 
-                        console.log("State error after rejection:", state.error);
+                       
                         toast.error("Add Failed");
                       })
             
