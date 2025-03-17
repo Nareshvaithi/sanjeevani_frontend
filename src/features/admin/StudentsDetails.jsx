@@ -98,11 +98,11 @@ const StudentDetails = ({ openModule, setOpenModule }) => {
       <div id="student-details" className="p-5 font-mainFont1">
         <h3 className="text-2xl pb-5">Student Details</h3>
 
-        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5 bg-gray-100 p-5 rounded-xl text-center">
+        <div className="w-full h-full flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5 bg-gray-100 p-5 rounded-xl text-center">
           <img
             src={imageUrls}
             alt={fullName}
-            className="rounded-xl w-full lg:w-fit"
+            className="rounded-xl w-full lg:w-48 lg:h-48 h-full"
           />
           <div>
             <h3 className="text-2xl">{studentID}</h3>

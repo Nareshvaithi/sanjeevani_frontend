@@ -48,7 +48,7 @@ const AdminTopBar = ()=>{
                                     <MdKeyboardArrowDown/>
                                 </div>
                             </div>
-                            <div className={`px-2 absolute top-12 h-auto w-full bg-white transition-all duration-500 ${showProfile ? "block opacity-100 translate-y-0" : "hidden opacity-0 translate-y-3"}`}>
+                            <div className={`px-2 absolute top-12 h-auto w-full bg-white transition-all duration-500 ${showProfile ? "visible opacity-100 translate-y-0" : "invisible opacity-0 translate-y-3"}`}>
                                     <div className="border-b border-gray-300">
                                         <div className="flex items-center gap-3 py-2">
                                             <div className="w-fit rounded-full">

@@ -1,14 +1,21 @@
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { selectAdminCredentialsField } from "../../store/authSlice/adminAuthSlice";
-import { FormControl, TextField, FormHelperText, Button } from "@mui/material";
+import { FormControl, TextField, FormHelperText, Button, IconButton, InputAdornment } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useFormik } from "formik";
 import { userCredentialSchema } from "../../schema/userCredentialsSchema";
-import {useNavigate} from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 
 const AdminCredentialsForm = () => {
     const fields = useSelector(selectAdminCredentialsField);
     const navigate = useNavigate();
+    
+    const [showPassword, setShowPassword] = useState({});
+
+    const handleTogglePassword = (fieldName) => {
+        setShowPassword((prev) => ({ ...prev, [fieldName]: !prev[fieldName] }));
+    };
 
     const formik = useFormik({
         initialValues: {
@@ -20,7 +27,6 @@ const AdminCredentialsForm = () => {
         onSubmit: (values) => {
             console.log("Form submitted:", values);
             navigate('/');
-            
         },
     });
 
@@ -36,10 +42,19 @@ const AdminCredentialsForm = () => {
                                     <TextField
                                         name={field.name}
                                         label={field.label}
-                                        type={field.type}
+                                        type={field.type.includes("password") && showPassword[field.name] ? "text" : field.type}
                                         value={formik.values[field.name]}
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
+                                        InputProps={field.type.includes("password") ? {
+                                            endAdornment: (
+                                                <InputAdornment position="end">
+                                                    <IconButton onClick={() => handleTogglePassword(field.name)} edge="end">
+                                                        {showPassword[field.name] ? <VisibilityOff /> : <Visibility />}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            )
+                                        } : {}}
                                     />
                                     {formik.touched[field.name] && formik.errors[field.name] && (
                                         <FormHelperText>{formik.errors[field.name]}</FormHelperText>

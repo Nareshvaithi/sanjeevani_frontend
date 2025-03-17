@@ -58,9 +58,7 @@ const AdminHome = ()=>{
                 </div>
            </div>
            <div>
-            {
-                newStudentList.length > 0 && newStudentList.length !== 0 && newStudentList !== null && <NewStudents/>
-            }
+                <NewStudents/>
            </div>
            <div className="w-full grid grid-col-1 lg:grid-cols-2 gap-5 px-2 lg:px-5">
                 <div className="bg-white p-5 rounded-xl">
