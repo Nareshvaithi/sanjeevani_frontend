@@ -9,7 +9,6 @@ const ShowNotice = () => {
  const dispatch=useDispatch()
   const handleClick=(id)=>{
     dispatch(deleteStudentsNotice(id))
-    alert("Delete Sucessfully")
     dispatch(fetchStudentsNotice())
   }
   return (

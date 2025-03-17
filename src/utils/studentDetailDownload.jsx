@@ -1,10 +1,10 @@
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
-// Function to convert an image URL to Base64
+// Convert an image URL to Base64
 const getBase64Image = async (imgUrl) => {
   try {
-    const response = await fetch(imgUrl, { mode: "cors" }); // Ensure CORS mode is enabled
+    const response = await fetch(imgUrl, { mode: "cors" });
     const blob = await response.blob();
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -33,22 +33,31 @@ const detailsDownload = async (fullName, imageUrls) => {
       allowTaint: true,
     });
 
-    const imgData = canvas.toDataURL("image/jpg");
+    const imgData = canvas.toDataURL("image/jpeg");
     const pdf = new jsPDF("p", "mm", "a4");
 
     let imgWidth = 190;
     let imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-    // ✅ Convert external image URL to Base64
-    let profileImageBase64 = await getBase64Image(imageUrls);
+    let yOffset = 10;
 
+    // ✅ Add Profile Image (if available)
+    let profileImageBase64 = await getBase64Image(imageUrls);
     if (profileImageBase64) {
-      pdf.addImage(profileImageBase64, "JPG", 75, 10, 50, 50); // Student image
-      pdf.text(fullName, 105, 70, { align: "center" }); // Student name below image
+      pdf.addImage(profileImageBase64, "JPEG", 75, yOffset, 50, 50); // Student image
+      pdf.text(fullName, 105, yOffset + 60, { align: "center" }); // Name
+      yOffset += 70; // Move down
     }
 
-    // ✅ Add the student details content
-    pdf.addImage(imgData, "JPG", 10, profileImageBase64 ? 80 : 10, imgWidth, imgHeight);
+    // ✅ Add HTML content
+    if (imgHeight > 270) {
+      pdf.addImage(imgData, "JPEG", 10, yOffset, imgWidth, 270);
+      pdf.addPage();
+      pdf.addImage(imgData, "JPEG", 10, 10, imgWidth, imgHeight - 270);
+    } else {
+      pdf.addImage(imgData, "JPEG", 10, yOffset, imgWidth, imgHeight);
+    }
+
     pdf.save(`${fullName}-Details.pdf`);
   } catch (error) {
     console.error("Error generating PDF:", error);

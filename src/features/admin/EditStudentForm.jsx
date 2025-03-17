@@ -148,7 +148,10 @@ const EditStudentForm = ({ openModule, setOpenModule }) => {
       reader.readAsDataURL(file);
     }
   };
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/main
 
 const parseAndFormatDate = (dateString) => {
 

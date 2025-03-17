@@ -25,10 +25,10 @@ const NewStudents = () => {
         <section className="bg-gray-100 p-5 font-mainFont1">
             <div className="bg-white px-3 py-5 rounded-lg">
                 <div className="flex justify-between pb-5">
-                    <h3 className="titleText">New Students List</h3>
+                    <h3 className="titleText">Waiting Students List</h3>
                 </div>
                 <div className="w-full overflow-x-auto">
-                    <table className="min-w-max w-full border-collapse text-left">
+                    {newStudentList.length === 0 ? <p className="text-sm">No Waiting Students Available</p> :<table className="min-w-max w-full border-collapse text-left">
                         <thead>
                             <tr>
                                 {studentDataTitle.map(({ id, title }) => (
@@ -42,14 +42,8 @@ const NewStudents = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {newStudentList.length === 0 ? (
-                                <tr>
-                                    <td colSpan={studentDataTitle.length} className="text-center py-4">
-                                        No new students available
-                                    </td>
-                                </tr>
-                            ) : (
-                                newStudentList.map((student) => {
+                            {
+                                newStudentList?.reverse().slice(0,11).map((student) => {
                                     const { _id, studentID, fullName, email, gender, phone,  paymentTotal,payment_status } = student;
                                     const findPayStatus = payment_status ?? false;
 
@@ -88,9 +82,9 @@ const NewStudents = () => {
                                         </tr>
                                     );
                                 })
-                            )}
+                            }
                         </tbody>
-                    </table>
+                    </table>}
                 </div>
             </div>
         </section>

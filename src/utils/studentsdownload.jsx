@@ -1,9 +1,12 @@
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import { useDispatch } from "react-redux";
+import { showToast } from "../store/tostifySlice";
 
 export const handleDownloadPDF = (studentList) => {
+  const dispatch = useDispatch();
   if (!Array.isArray(studentList) || studentList.length === 0) {
-    alert("No student data available for download.");
+    dispatch(showToast({ message: "No Students Available for Download", type: "error" }));
     return;
   }
 
@@ -12,14 +15,14 @@ export const handleDownloadPDF = (studentList) => {
   const doc = new jsPDF();
   doc.text("Student List", 14, 15);
 
-  const columns = ["ID", "Name", "Email", "Gender", "Department", "Payment", "Status"];
-  const rows = studentList.map(({ id, name, email, gender, department, payment, status }) => [
+ 
+  const columns = ["ID", "Name", "Email", "Gender", "Department", "Status"];
+  const rows = studentList.map(({ id, name, email, gender, department, status }) => [
     id || "N/A",
     name || "N/A",
     email || "N/A",
     gender || "N/A",
     department || "N/A",
-    payment || "N/A",
     status || "N/A",
   ]);
 

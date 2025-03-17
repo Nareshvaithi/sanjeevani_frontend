@@ -52,7 +52,6 @@ const handlePayment=async()=>{
       addPayment({
         ...orderDetails,
         paymentId: response.razorpay_payment_id,
-      
       })
     
     );

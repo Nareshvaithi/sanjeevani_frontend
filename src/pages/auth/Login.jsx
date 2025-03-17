@@ -64,8 +64,9 @@ else{
                     dispatch(showToast({ message: "Login successfully!", type: "success" }));
                     dispatch(setLogin());
                     navigate('/admin_dashboard');
-                }else{
-                    dispatch(showToast({ message: "User Not Found!", type: "error" }));
+                }
+                else{
+                    dispatch(showToast({message:"User Not Found",type:"error"}));
                 }
             }
         },

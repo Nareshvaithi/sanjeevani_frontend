@@ -1,57 +1,53 @@
 import { useState, useEffect } from "react";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import { format, parse, startOfDay, getDay } from "date-fns";
-import { enUS } from "date-fns/locale"; 
+import { enUS } from "date-fns/locale";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Tooltip } from "@mui/material";
+import { useSelector } from "react-redux";
+import { selectAllStudents } from "../../store/adminSlices/adminStudentsSlice";
 
 const localizer = dateFnsLocalizer({
   format,
   parse,
-  startOfWeek: () => 0, 
+  startOfWeek: () => 0,
   getDay,
-  locales: { "en-US": enUS }, 
+  locales: { "en-US": enUS },
 });
-
-const attendance = ["2025-03-01", "2025-03-02", "2025-03-03", "2025-03-04"];
-const eventsData = [{ date: "2025-03-04", title: "Dance competition" }];
-const joinDate = "2025-03-01";
-const currentDate = new Date().toISOString().split("T")[0];
 
 const AttendanceCalendar = () => {
   const [markedDates, setMarkedDates] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState("");
+  const studentList = useSelector(selectAllStudents);
 
   useEffect(() => {
     const tempMarked = [];
-    const joinDateObj = new Date(joinDate);
-    const currentDateObj = new Date(currentDate);
 
-    for (let d = new Date(joinDateObj); d <= currentDateObj; d.setDate(d.getDate() + 1)) {
-      const dateStr = format(d, "yyyy-MM-dd");
-      const event = eventsData.find((event) => event.date === dateStr);
+    studentList.forEach((student) => {
+      const joinDateObj = new Date(student.join_date);
+      const currentDateObj = new Date();
 
-      if (event) {
-        tempMarked.push({
-          type: "event",
-          title: event.title,
-          date: startOfDay(new Date(dateStr)),
-        });
-      } else if (attendance.includes(dateStr) || dateStr === joinDate) {
-        tempMarked.push({
-          type: "present",
-          date: startOfDay(new Date(dateStr)),
-        });
-      } else {
-        tempMarked.push({
-          type: "absent",
-          date: startOfDay(new Date(dateStr)),
-        });
+      for (let d = new Date(joinDateObj); d <= currentDateObj; d.setDate(d.getDate() + 1)) {
+        const dateStr = format(d, "yyyy-MM-dd");
+        const attendanceRecord = student.attentance?.find((att) => att.attentancemonth === format(d, "MMMM"));
+        const isPresent = attendanceRecord?.details?.some((entry) => entry.attentanceDate === dateStr && entry.attentanceStatus);
+
+        if (isPresent) {
+          tempMarked.push({
+            type: "present",
+            date: startOfDay(new Date(dateStr)),
+          });
+        } else {
+          tempMarked.push({
+            type: "absent",
+            date: startOfDay(new Date(dateStr)),
+          });
+        }
       }
-    }
+    });
 
     setMarkedDates(tempMarked);
-  }, []);
+  }, [studentList]);
 
   const handleSelectEvent = (event) => {
     if (event.type === "event") {
@@ -71,9 +67,6 @@ const AttendanceCalendar = () => {
     } else if (event.type === "absent") {
       backgroundColor = "lightcoral";
       color = "red";
-    } else if (event.type === "event") {
-      backgroundColor = "gold";
-      color = "black";
     }
 
     return {
@@ -90,7 +83,6 @@ const AttendanceCalendar = () => {
   return (
     <div className="flex flex-col items-center p-6 bg-gray-100">
       <h2 className="text-3xl font-bold text-gray-800 mb-6">Attendance Calendar</h2>
-
       <div className="w-full bg-white p-4 shadow-lg rounded-xl">
         <Calendar
           localizer={localizer}
@@ -111,7 +103,6 @@ const AttendanceCalendar = () => {
           style={{ height: 500 }}
         />
       </div>
-
       {selectedEvent && (
         <div className="mt-4 p-3 bg-yellow-100 text-yellow-800 rounded-md shadow-md">
           <strong>Event:</strong> {selectedEvent}
