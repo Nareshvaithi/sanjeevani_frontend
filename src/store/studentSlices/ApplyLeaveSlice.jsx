@@ -49,12 +49,7 @@ export const deleteStudentsLeave = createAsyncThunk(
   async (eventId, { rejectWithValue }) => {
     try {
       await axios.delete(`${API_URL}/leave/${eventId}`);
-<<<<<<< HEAD
-    
-    dispatch(showToast({ message: "Delete successfully!", type: "success" }));
-=======
       toast.success("Event deleted successfully!");
->>>>>>> refs/remotes/origin/main
       return eventId; // Returning eventId to filter from state
     } catch (error) {
       toast.error("Failed to delete event");

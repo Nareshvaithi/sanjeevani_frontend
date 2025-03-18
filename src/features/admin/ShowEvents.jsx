@@ -32,10 +32,7 @@ const ShowEvents = ()=>{
     const handleDeleteEvent = (id)=>{
     
       dispatch(deleteStudentsEvents(id));
-<<<<<<< HEAD
        dispatch(showToast({ message: "Delete successfully!", type: "success" }));
-=======
->>>>>>> refs/remotes/origin/main
     }
     return(
         <div className="border bg-white p-4 w-1/2 rounded-lg">

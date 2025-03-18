@@ -9,9 +9,6 @@ import { addStudentRecord } from "../../store/formSlices/RegisterFormSlice";
 
 const CreateStudentCredentials = () => {
     const dispatch = useDispatch();
-<<<<<<< HEAD
-    const studentRecords=useSelector((state)=>state.studentRecord)
-=======
     const studentRecords = useSelector((state) => state.studentRecord);
     console.log(studentRecords);
 
@@ -23,7 +20,6 @@ const CreateStudentCredentials = () => {
     const handleTogglePassword = (field) => {
         setShowPassword((prev) => ({ ...prev, [field]: !prev[field] }));
     };
->>>>>>> refs/remotes/origin/main
 
     const formik = useFormik({
         initialValues: {
@@ -31,17 +27,6 @@ const CreateStudentCredentials = () => {
             password: "",
             confirm_password: "",
         },
-<<<<<<< HEAD
-    validationSchema:userCredentialSchema,
-    onSubmit:(values)=>{
-  
-
-        dispatch(addStudentRecord(values))
-     
-        dispatch(setEnrollProcess('confirm'));
-    }
-  });
-=======
         validationSchema: userCredentialSchema,
         onSubmit: (values) => {
             console.log(values);
@@ -50,7 +35,6 @@ const CreateStudentCredentials = () => {
             dispatch(setEnrollProcess('confirm'));
         }
     });
->>>>>>> refs/remotes/origin/main
 
     const fields = {
         userName: { label: "UserName", type: "text" },

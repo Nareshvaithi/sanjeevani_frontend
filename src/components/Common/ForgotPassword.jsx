@@ -3,14 +3,16 @@ import { FormControl, FormHelperText, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import { motion } from "framer-motion";
 import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+import { sendOTP, validOTP } from "../../store/authSlice/ResetPasswordSlice";
 
 const ForgotPasswordPopup = ({ forgotPass, setForgotPass }) => {
   const [showOtpInput, setShowOtpInput] = useState(false);
   const [timer, setTimer] = useState(120);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
-
+ const dispatch=useDispatch()
   // Validation Schema
-  const validationSchema = Yup.object({
+  const validationSchema = Yup.object({ 
     email: Yup.string()
       .email("Invalid email address")
       .required("Email is required"),
@@ -32,8 +34,11 @@ const ForgotPasswordPopup = ({ forgotPass, setForgotPass }) => {
     onSubmit: (values) => {
       if (showOtpInput) {
         console.log("OTP submitted:", values.otp);
+        dispatch(validOTP(values.otp))
+       
       } else {
         console.log("Email submitted:", values.email);
+        dispatch(sendOTP(values.email))
         setShowOtpInput(true);
         setIsTimerRunning(true);
         formik.handleReset;

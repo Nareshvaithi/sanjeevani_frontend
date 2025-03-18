@@ -12,6 +12,7 @@ import { showPaymentReceipt } from "../../store/studentSlices/PaymentReceiptSlic
 import { ulid } from 'ulid';
 
 function StudentsPayFees() {
+    const [show,setShow]=useState(false)
   const fullUlid = ulid();
   const shortUlid = parseInt(fullUlid.slice(0, 6), 36);
   const dispatch=useDispatch()
@@ -59,6 +60,7 @@ const handlePayment=async()=>{
     //   paymentId: response.razorpay_payment_id,
     //  }))
     dispatch(showToast({ message: "Payment successfully!", type: "success" }));
+ setShow(true)
     dispatch(fetchSingleStudent(studentDetails?._id))
      
   };
@@ -85,9 +87,7 @@ const handlePayment=async()=>{
     };
   return (
     <div className=" p-4">
-      <div>
-            <PaymentReceipt />
-      </div>
+     
               <section title="Payment Details">
           <div className="flex justify-between items-center ">
             <h2 className="text-xl">Payment Details</h2>
@@ -141,7 +141,9 @@ const handlePayment=async()=>{
             </table>
           </div>
         </section>
-
+        <div className={`${show ? "block" : "hidden"} absolute top-20 left-1/3 bg-white `}>
+            <PaymentReceipt show={show} setShow={setShow}  />
+      </div>
     </div>
   );
 }

@@ -148,10 +148,6 @@ const EditStudentForm = ({ openModule, setOpenModule }) => {
       reader.readAsDataURL(file);
     }
   };
-<<<<<<< HEAD
-
-=======
->>>>>>> refs/remotes/origin/main
 
 const parseAndFormatDate = (dateString) => {
 
@@ -168,9 +164,6 @@ const parseAndFormatDate = (dateString) => {
 
   return date && parseAndFormatDate(date);
 }
-
-
-
 
   return (
     <motion.div

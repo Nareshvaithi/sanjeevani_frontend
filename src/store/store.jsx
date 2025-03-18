@@ -16,6 +16,8 @@ import editStudentReducer from "./studentSlices/editStudentSlice";
 import feesReducer from "./adminSlices/feesSlice";
 import toastReducer from "./tostifySlice";
 import studentPaymentReceiptReducer from "./studentSlices/PaymentReceiptSlice"
+import sendOTPReducer from "./authSlice/ResetPasswordSlice"
+
 const store = configureStore({
     reducer:{
         toast:toastReducer,
@@ -34,7 +36,8 @@ const store = configureStore({
         studentsEvents:studentsEventsReducer,
         studentsNotice:studentsNoticeReducer,
         editStudent:editStudentReducer,
-        paymentReceipt:studentPaymentReceiptReducer
+        paymentReceipt:studentPaymentReceiptReducer,
+        sendOTP:sendOTPReducer
     }
 })
 

@@ -47,10 +47,7 @@ const CreateEvent = ()=>{
       validationSchema,
       onSubmit: async (values) => {
         await dispatch(addStudentsEvents(values)).unwrap();
-<<<<<<< HEAD
          dispatch(showToast({ message: "Event Create successfully!", type: "success" }));
-=======
->>>>>>> refs/remotes/origin/main
         dispatch(fetchStudentsEvents());
         formik.handleReset();
       },

@@ -21,10 +21,6 @@ const CreateNotice = () => {
         onSubmit: async(values) => {
 
             await dispatch(addStudentsNotice(values))
-<<<<<<< HEAD
-        dispatch(showToast({ message: "Notice Create Successfully!", type: "success" }));
-=======
->>>>>>> refs/remotes/origin/main
             dispatch(fetchStudentsNotice())
             formik.resetForm()
         }
