@@ -42,7 +42,6 @@ export const deleteNewStudent = createAsyncThunk(
     async (studentId, { rejectWithValue }) => {
       try {
         const response = await axios.delete(`${API_URL}/student/entroll/${studentId}`);
-        console.log("Success:  deleted", studentId);
         return studentId;
       } catch (error) {
         return rejectWithValue(error.response?.data || "Error deleting ");
@@ -100,14 +99,6 @@ const newStudentSlice = createSlice({
                 state.newStudentsList = state.newStudentsList.filter(
                   (student) => student._id !== action.payload
                 )
-                toast.success("Delete Successful!", {
-                  position: "top-right",
-                  autoClose: 3000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-              });
               })
               .addCase(deleteNewStudent.rejected, (state, action) => {
                 state.deletestatus = "Submit";
