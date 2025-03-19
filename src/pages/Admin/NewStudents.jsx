@@ -68,9 +68,6 @@ const NewStudents = () => {
                                             <td className="py-4 px-2 whitespace-nowrap">{paymentTotal}</td>
                                             <td className="py-4 px-2 whitespace-nowrap">
                                                 <div className="flex items-center gap-3">
-                                                    <button className="w-fit bg-gray-200 hover:bg-buttonblue hover:text-white rounded-full p-2 transition-colors duration-300">
-                                                        <FiEdit />
-                                                    </button>
                                                     <button 
                                                         onClick={() => addToExistingStudent(student)}
                                                         className="w-fit bg-gray-200 hover:bg-buttonblue hover:text-white rounded-full p-2 transition-colors duration-300"
