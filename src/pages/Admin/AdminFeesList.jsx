@@ -9,7 +9,7 @@ import AddFees from "../../features/admin/AddFees";
 import { selectAllStudents } from "../../store/adminSlices/adminStudentsSlice";
 import { FiEdit } from "react-icons/fi";
 import EditFees from "../../features/admin/EditFees";
-import { format, parse } from "date-fns";
+import { differenceInMonths, format, parse } from "date-fns";
 
 const AdminFeesList = () => {
     const studentList = useSelector(selectAllStudents);
@@ -110,23 +110,24 @@ const AdminFeesList = () => {
                                 const PaidMonth = format(new Date(parsedPaidDate),'MMMM');
                                 const currentMonth = format(new Date(),'MMMM');
                                 const paymentStatusForThisMonth = PaidMonth.toLowerCase() === currentMonth.toLowerCase() ? "Paid" : "Unpaid";
-                                
+                                const dueMonths = differenceInMonths(new Date(), parsedPaidDate);
+                                console.log(dueMonths);
                                 return (
                                     <tr className="border-b border-gray-300" key={_id}>
                                         <td className="py-4 px-2 whitespace-nowrap">{studentID}</td>
                                         <td className="py-4 px-2 whitespace-nowrap">{fullName}</td>
                                         <td className="py-4 px-2 whitespace-nowrap">{batchID === null ? "Batch-No" : batchID}</td>
-                                        <td className="py-4 px-2 whitespace-nowrap">Monthly</td>
-                                        <td className="py-4 px-2 whitespace-nowrap">{paymentId ? "UPI" : "Cash"}</td>
-                                        <td className="py-4 px-2 whitespace-nowrap">{paid_date}</td>
-                                        <td className="py-4 px-2 whitespace-nowrap">{invoiceNumber}</td>
-                                        <td className="py-4 px-2 whitespace-nowrap">{paymentDue}</td>
+                                        <td className="py-4 px-2 whitespace-nowrap">{paymentStatusForThisMonth === "Paid" ? "Monthly" : "N/A"}</td>
+                                        <td className="py-4 px-2 whitespace-nowrap">{paymentStatusForThisMonth === 'Paid' ? paymentId ? "UPI" : "Cash" : 'N/A'}</td>
+                                        <td className="py-4 px-2 whitespace-nowrap">{paymentStatusForThisMonth === 'Paid' ? paid_date : 'N/A'}</td>
+                                        <td className="py-4 px-2 whitespace-nowrap">{paymentStatusForThisMonth === 'Paid' ? invoiceNumber : 'N/A'}</td>
+                                        <td className="py-4 px-2 whitespace-nowrap">{dueMonths}</td>
                                         <td className="py-4 px-2 whitespace-nowrap">
                                             <div className={`text-[12px] text-white w-fit py-1 px-2 rounded-md ${paymentStatusForThisMonth === 'Paid' ? "bg-green-500" : "bg-red-500"}`}>
                                                {paymentStatusForThisMonth}
                                             </div>
                                         </td>
-                                        <td className="py-4 px-2 whitespace-nowrap">{received_payment}</td>
+                                        <td className="py-4 px-2 whitespace-nowrap">{paymentStatusForThisMonth === 'Paid' ? received_payment : 'N/A'}</td>
                                         <td className="py-4 px-2 whitespace-nowrap flex items-center justify-center">
                                             <div onClick={()=>{dispatch(setOpenModuleFees('edit'))}} className="bg-gray-200 p-2 rounded-full hover:bg-buttonblue hover:text-white transition-all duration-500">
                                                 <FiEdit />
